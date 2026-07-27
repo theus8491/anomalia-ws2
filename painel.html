@@ -1,896 +1,177 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Adm - Guilda Anomalia</title>
-    <!-- Tailwind CSS v4 -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Supabase JS Client -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guilda Anomalia - BR-Tourmaline</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-        /* ===== GLASSMORPHISM ===== */
-        .glass-card {
-            background: rgba(40, 40, 45, 0.35) !important;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(120, 120, 130, 0.15) !important;
-        }
-        .glass-card-dark {
-            background: rgba(30, 30, 35, 0.4) !important;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border: 1px solid rgba(80, 80, 90, 0.12) !important;
-        }
-        .glass-header {
-            background: rgba(35, 35, 40, 0.4) !important;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 2px solid rgba(120, 120, 130, 0.2) !important;
-        }
-        .glass-input {
-            background: rgba(25, 25, 30, 0.35) !important;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(80, 80, 90, 0.3) !important;
-            color: #d0d0d0 !important;
-        }
-        .glass-input:focus {
-            border-color: #94a3b8 !important;
-            background: rgba(25, 25, 30, 0.5) !important;
-        }
-        .glass-input::placeholder {
-            color: rgba(160, 160, 170, 0.4) !important;
-        }
-        .glass-input[type="number"] {
-            -moz-appearance: textfield;
-            appearance: textfield;
-        }
-        .glass-input[type="number"]::-webkit-outer-spin-button,
-        .glass-input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        .glass-select {
-            background: rgba(25, 25, 30, 0.35) !important;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(80, 80, 90, 0.3) !important;
-            color: #d0d0d0 !important;
-        }
-        .glass-select:focus {
-            border-color: #94a3b8 !important;
-            background: rgba(25, 25, 30, 0.5) !important;
-        }
-        .glass-select option {
-            background: #1a1a1e;
-            color: #d0d0d0;
-        }
-        .glass-badge {
-            background: rgba(30, 30, 35, 0.35) !important;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(80, 80, 90, 0.2) !important;
-        }
-        .glass-footer {
-            background: rgba(30, 30, 35, 0.15) !important;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border-top: 1px solid rgba(80, 80, 90, 0.1) !important;
-        }
-        .border-amber-subtle {
-            border-color: rgba(120, 120, 130, 0.15) !important;
-        }
+        .glass-card { background: rgba(40,40,45,0.35) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(120,120,130,0.15) !important; }
+        .glass-card-dark { background: rgba(30,30,35,0.4) !important; backdrop-filter: blur(6px); border: 1px solid rgba(80,80,90,0.12) !important; }
+        .glass-header { background: rgba(35,35,40,0.4) !important; backdrop-filter: blur(12px); border: 2px solid rgba(120,120,130,0.2) !important; }
+        .glass-input { background: rgba(25,25,30,0.35) !important; backdrop-filter: blur(4px); border: 1px solid rgba(80,80,90,0.3) !important; color: #d0d0d0 !important; }
+        .glass-input:focus { border-color: #94a3b8 !important; background: rgba(25,25,30,0.5) !important; }
+        .glass-input::placeholder { color: rgba(160,160,170,0.4) !important; }
+        .glass-select { background: rgba(25,25,30,0.35) !important; backdrop-filter: blur(4px); border: 1px solid rgba(80,80,90,0.3) !important; color: #d0d0d0 !important; }
+        .glass-select:focus { border-color: #94a3b8 !important; background: rgba(25,25,30,0.5) !important; }
+        .glass-select option { background: #1a1a1e; color: #d0d0d0; }
+        .glass-badge { background: rgba(30,30,35,0.35) !important; backdrop-filter: blur(4px); border: 1px solid rgba(80,80,90,0.2) !important; }
+        .glass-footer { background: rgba(30,30,35,0.15) !important; backdrop-filter: blur(6px); border-top: 1px solid rgba(80,80,90,0.1) !important; }
+        .glass-submit { background: rgba(20,20,25,0.25) !important; backdrop-filter: blur(12px); border: 2px solid rgba(148,163,184,0.25) !important; transition: all 0.3s ease; }
+        .glass-submit:hover { background: rgba(30,30,35,0.35) !important; border-color: rgba(255,215,100,0.6) !important; box-shadow: 0 0 30px rgba(255,200,50,0.15); }
+        .border-amber-subtle { border-color: rgba(120,120,130,0.15) !important; }
         .text-amber-100, .text-amber-200, .text-amber-300, .text-amber-400,
-        .text-amber-500, .text-amber-600, .text-amber-700 {
-            color: #d0d0d0 !important;
-        }
+        .text-amber-500, .text-amber-600, .text-amber-700 { color: #d0d0d0 !important; }
         .text-emerald-400 { color: #6ee7b7 !important; }
         .text-red-400 { color: #fca5a5 !important; }
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #0d0b09 radial-gradient(circle at 50% 10%, #291c13 0%, #0d0b09 60%);
-            color: #e8e8e8;
-            min-height: 100vh;
-        }
+        .text-red-500 { color: #f87171 !important; }
+        .text-cyan-500 { color: #67e8f9 !important; }
+        .text-amber-500\/80 { color: rgba(180,180,190,0.8) !important; }
+        .text-amber-500\/90 { color: rgba(180,180,190,0.9) !important; }
+        .text-amber-700\/60 { color: rgba(120,120,130,0.6) !important; }
+        .border-amber-600 { border-color: #94a3b8 !important; }
+        .hover\:border-amber-600:hover { border-color: #94a3b8 !important; }
+        .focus\:border-amber-600:focus { border-color: #94a3b8 !important; }
+        .bg-amber-600 { background: #64748b !important; }
+        .bg-amber-600\/10 { background: rgba(148,163,184,0.1) !important; }
+        .bg-amber-500\/10 { background: rgba(148,163,184,0.1) !important; }
+        .border-amber-500\/30 { border-color: rgba(148,163,184,0.2) !important; }
+        .bg-emerald-950\/80 { background: rgba(16,185,129,0.15) !important; }
+        .border-amber-800\/50 { border-color: rgba(80,80,90,0.3) !important; }
+        .bg-amber-950\/85 { background: rgba(30,30,35,0.85) !important; }
+        .text-amber-500 { color: #b0b0b8 !important; }
+        .text-amber-600 { color: #94a3b8 !important; }
+        .text-amber-400 { color: #cbd5e1 !important; }
+        .text-amber-300 { color: #d0d0d0 !important; }
+        .text-amber-200 { color: #d0d0d0 !important; }
+        .text-amber-100 { color: #e8e8e8 !important; }
+        .text-white\/90 { color: rgba(255,255,255,0.9) !important; }
+        .from-amber-300\/70 { --tw-gradient-from: rgba(148,163,184,0.7) !important; }
+        .via-amber-500\/70 { --tw-gradient-via: rgba(100,116,139,0.7) !important; }
+        .to-amber-800\/70 { --tw-gradient-to: rgba(30,41,59,0.7) !important; }
+        .border-cyan-200\/30 { border-color: rgba(148,163,184,0.2) !important; }
+        .hover\:border-cyan-200\/60:hover { border-color: rgba(148,163,184,0.4) !important; }
+        .text-cyan-100 { color: #cbd5e1 !important; }
+
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0d0b09 radial-gradient(circle at 50% 10%, #291c13 0%, #0d0b09 60%); color: #e8e8e8; min-height: 100vh; }
         h1, h2, h3, .font-rpg { font-family: 'Cinzel', serif; }
 
-        .membro-card {
-            background: rgba(30,30,35,0.4);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(120,120,130,0.15);
-            border-radius: 16px;
-            padding: 16px;
-            transition: all 0.3s ease;
-        }
-        .membro-card:hover {
-            border-color: rgba(148,163,184,0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-        .badge-classe {
-            font-size: 9px;
-            text-transform: uppercase;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        .badge-classe.cla {
-            background: rgba(148,163,184,0.15);
-            border: 1px solid rgba(148,163,184,0.25);
-            color: #cbd5e1;
-        }
-        .badge-classe.proscrito {
-            background: rgba(139,92,246,0.15);
-            border: 1px solid rgba(139,92,246,0.2);
-            color: #a78bfa;
-        }
+        .items-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        @media (min-width: 768px) { .items-grid { grid-template-columns: 1fr 1fr; gap: 16px; } }
 
-        .btn-glass {
-            background: rgba(60,60,70,0.2);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(148,163,184,0.15);
-            color: #d0d0d0;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            font-size: 11px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .btn-glass:hover { border-color: rgba(148,163,184,0.4); background: rgba(60,60,70,0.4); }
-        .btn-glass-primary { background: rgba(148,163,184,0.15); border-color: rgba(148,163,184,0.3); color: #e8e8e8; }
-        .btn-glass-primary:hover { background: rgba(148,163,184,0.25); }
-        .btn-glass-danger { border-color: rgba(239,68,68,0.3); color: #fca5a5; }
-        .btn-glass-danger:hover { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.5); }
-        .btn-glass-success { border-color: rgba(16,185,129,0.3); color: #6ee7b7; }
-        .btn-glass-success:hover { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.5); }
-        .btn-glass-gold { background: rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.3); color: #fbbf24; }
-        .btn-glass-gold:hover { background: rgba(212,175,55,0.2); border-color: rgba(212,175,55,0.5); }
-        .btn-glass-whatsapp {
-            background: rgba(37, 211, 102, 0.15);
-            border-color: rgba(37, 211, 102, 0.3);
-            color: #25d366;
-        }
-        .btn-glass-whatsapp:hover {
-            background: rgba(37, 211, 102, 0.25);
-            border-color: rgba(37, 211, 102, 0.5);
-        }
+        .item-card { background: rgba(30,30,35,0.4); backdrop-filter: blur(8px); border: 1px solid rgba(120,120,130,0.15); border-radius: 16px; padding: 16px; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .item-card:hover { border-color: rgba(148,163,184,0.4); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+        .item-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(60,60,70,0.3); border: 1px solid rgba(120,120,130,0.2); display: flex; align-items: center; justify-content: center; font-size: 18px; color: #94a3b8; flex-shrink: 0; }
+        .item-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .item-name { font-family: 'Cinzel', serif; font-weight: 700; font-size: 14px; color: #e8e8e8; }
+        .item-badge { font-size: 9px; text-transform: uppercase; padding: 2px 10px; border-radius: 20px; font-weight: 700; letter-spacing: 0.5px; background: rgba(100,116,139,0.2); border: 1px solid rgba(100,116,139,0.2); color: #94a3b8; }
+        .item-badge.primary { background: rgba(148,163,184,0.15); border-color: rgba(148,163,184,0.25); color: #cbd5e1; }
+        .item-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+        .item-fields .field-group { display: flex; flex-direction: column; gap: 4px; }
+        .item-fields label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(180,180,190,0.6); font-weight: 600; }
+        .item-fields select, .item-fields input { background: rgba(25,25,30,0.35) !important; backdrop-filter: blur(4px); border: 1px solid rgba(80,80,90,0.3) !important; border-radius: 8px; padding: 6px 10px; color: #d0d0d0; font-size: 11px; width: 100%; }
+        .item-fields select:focus, .item-fields input:focus { border-color: #94a3b8 !important; outline: none; }
+        .item-actions { display: flex; align-items: center; gap: 16px; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(80,80,90,0.15); }
+        .item-actions label { display: flex; align-items: center; gap: 6px; font-size: 10px; color: rgba(180,180,190,0.7); cursor: pointer; }
+        .item-stars { display: flex; justify-content: center; gap: 4px; margin-top: 8px; font-size: 16px; letter-spacing: 2px; }
+        .item-stars .star-active { color: #94a3b8; }
+        .item-stars .star-inactive { color: rgba(80,80,90,0.4); }
+        .item-amp-select { width: 100%; background: rgba(25,25,30,0.35) !important; backdrop-filter: blur(4px); border: 1px solid rgba(80,80,90,0.3) !important; border-radius: 8px; padding: 6px 10px; color: #d0d0d0; font-size: 11px; margin-top: 6px; }
+        .item-amp-select:focus { border-color: #94a3b8 !important; outline: none; }
+        .item-amp-select:disabled { opacity: 0.5; cursor: not-allowed; }
+        .item-fields select:disabled, .item-fields input:disabled { opacity: 0.5; cursor: not-allowed; }
+        @media (max-width: 640px) { .item-fields { grid-template-columns: 1fr; } .item-card { padding: 12px; } .item-header { flex-wrap: wrap; } }
 
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(30,30,35,0.3); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.3); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.5); }
+        .custom-radio { accent-color: #94a3b8; width: 16px; height: 16px; }
+        .custom-checkbox { accent-color: #94a3b8; width: 16px; height: 16px; }
 
-        .pt-card {
-            background: rgba(30,30,35,0.3);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(120,120,130,0.12);
-            border-radius: 16px;
-            padding: 16px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .pt-card:hover { border-color: rgba(148,163,184,0.3); }
-        .pt-card.modo-especial { border-color: rgba(212,175,55,0.3); box-shadow: 0 0 20px rgba(212,175,55,0.05); }
+        .branch-card { background: rgba(30,30,35,0.3); border: 1px solid rgba(120,120,130,0.12); border-radius: 12px; padding: 12px; transition: all 0.3s ease; }
+        .branch-card:hover { border-color: rgba(148,163,184,0.3); }
+        .performance-bar { height: 6px; border-radius: 3px; background: rgba(80,80,90,0.3); overflow: hidden; margin-top: 6px; }
+        .performance-bar .fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; background: linear-gradient(90deg, #64748b, #94a3b8, #cbd5e1); }
+        .performance-label { display: flex; justify-content: space-between; font-size: 9px; color: rgba(180,180,190,0.6); margin-top: 2px; }
 
-        .tab-btn {
-            background: rgba(30,30,35,0.25);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(80,80,90,0.15);
-            color: #d0d0d0;
-            padding: 10px 20px;
-            border-radius: 12px;
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            font-size: 12px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .tab-btn:hover { border-color: rgba(148,163,184,0.3); background: rgba(40,40,45,0.3); }
-        .tab-btn.active { background: rgba(148,163,184,0.15); border-color: #94a3b8; color: #e8e8e8; }
+        .livro-card { background: rgba(30,30,35,0.25); border: 1px solid rgba(120,120,130,0.1); border-radius: 12px; padding: 12px 16px; transition: all 0.3s ease; }
+        .livro-card:hover { border-color: rgba(148,163,184,0.25); }
 
-        .stat-card {
-            background: rgba(30,30,35,0.3);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(120,120,130,0.12);
-            border-radius: 16px;
-            padding: 16px;
-            transition: all 0.3s ease;
-        }
-        .stat-card:hover { border-color: rgba(148,163,184,0.25); transform: translateY(-2px); }
+        .talentos-35k-ramo { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+        .talentos-35k-ramo label { font-size: 10px; padding: 4px 12px; border-radius: 20px; background: rgba(30,30,35,0.25); border: 1px solid rgba(80,80,90,0.15); cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 4px; }
+        .talentos-35k-ramo label:hover { border-color: rgba(148,163,184,0.3); background: rgba(40,40,45,0.3); }
+        .talentos-35k-ramo input[type="radio"] { accent-color: #94a3b8; width: 12px; height: 12px; }
+        .talentos-35k-ramo label:has(input:checked) { border-color: #94a3b8; background: rgba(148,163,184,0.15); }
 
-        .class-resumo-item {
-            background: rgba(30,30,35,0.25);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(80,80,90,0.12);
-            border-radius: 12px;
-            padding: 10px 14px;
-            transition: all 0.25s ease;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-        }
-        .class-resumo-item:hover { border-color: rgba(148,163,184,0.3); background: rgba(40,40,45,0.3); transform: translateY(-2px); }
-        .class-resumo-item.active { border-color: #94a3b8; background: rgba(148,163,184,0.12); }
-        .class-resumo-item .class-name { font-size: 11px; font-weight: 600; color: #d0d0d0; }
-        .class-resumo-item .class-count { background: rgba(148,163,184,0.1); border: 1px solid rgba(148,163,184,0.15); border-radius: 30px; padding: 1px 10px; font-size: 10px; font-weight: 700; color: #94a3b8; }
-        .class-resumo-item .class-bar { flex: 1; height: 4px; border-radius: 4px; background: rgba(80,80,90,0.2); overflow: hidden; margin: 0 6px; }
-        .class-resumo-item .class-bar .fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #64748b, #94a3b8); transition: width 0.6s ease; }
+        .livro-radio-group { display: flex; gap: 12px; margin-top: 4px; }
+        .livro-radio-group label { font-size: 11px; padding: 4px 16px; border-radius: 20px; background: rgba(30,30,35,0.25); border: 1px solid rgba(80,80,90,0.15); cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 6px; }
+        .livro-radio-group label:hover { border-color: rgba(148,163,184,0.3); background: rgba(40,40,45,0.3); }
+        .livro-radio-group input[type="radio"] { accent-color: #94a3b8; width: 14px; height: 14px; }
+        .livro-radio-group label:has(input:checked) { border-color: #94a3b8; background: rgba(148,163,184,0.15); }
+        .livro-radio-group label:has(input:checked[value="Sim"]) { border-color: #6ee7b7; background: rgba(110,231,183,0.1); }
+        .livro-radio-group label:has(input:checked[value="Não"]) { border-color: #fca5a5; background: rgba(252,165,165,0.1); }
 
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-box {
-            background: rgba(30,30,35,0.95);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(148,163,184,0.2);
-            border-radius: 24px;
-            padding: 32px 28px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-            animation: modalFadeIn 0.3s ease;
-            position: relative;
-        }
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: scale(0.95) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .modal-box .modal-title { font-family: 'Cinzel', serif; font-weight: 700; color: #e8e8e8; font-size: 1.3rem; text-align: center; margin-bottom: 20px; }
-        .modal-box .modal-subtitle { text-align: center; color: rgba(180,180,190,0.6); font-size: 0.85rem; margin-bottom: 20px; }
-        .modal-box input {
-            width: 100%;
-            background: rgba(25,25,30,0.5);
-            border: 1px solid rgba(80,80,90,0.3);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: #d0d0d0;
-            font-size: 0.95rem;
-            margin-bottom: 14px;
-            transition: border 0.2s;
-        }
-        .modal-box input:focus { outline: none; border-color: #94a3b8; }
-        .modal-box input::placeholder { color: rgba(160,160,170,0.4); }
-        .modal-box .btn-login {
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            background: rgba(148,163,184,0.15);
-            border: 1px solid rgba(148,163,184,0.3);
-            color: #e8e8e8;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 1rem;
-        }
-        .modal-box .btn-login:hover { background: rgba(148,163,184,0.25); border-color: #94a3b8; }
-        .modal-box .btn-close {
-            background: transparent;
-            border: none;
-            color: rgba(180,180,190,0.4);
-            font-size: 1.2rem;
-            cursor: pointer;
-            position: absolute;
-            top: 16px;
-            right: 20px;
-            transition: color 0.2s;
-        }
-        .modal-box .btn-close:hover { color: #fca5a5; }
-        .modal-box .error-msg { color: #fca5a5; font-size: 0.8rem; text-align: center; margin-top: 10px; display: none; }
-        .modal-box .error-msg.show { display: block; }
+        .char-counter { font-size: 10px; color: rgba(180,180,190,0.5); text-align: right; margin-top: 2px; }
+        .char-counter.limit { color: #fca5a5; }
 
-        .reserva-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(30,30,35,0.3);
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin-bottom: 4px;
-            border: 1px solid rgba(80,80,90,0.1);
-        }
-        .reserva-item .info { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-        .reserva-item .nome { font-weight: 600; color: #d0d0d0; }
-        .reserva-item .classe { font-size: 11px; color: #94a3b8; }
-        .reserva-item .whatsapp { font-size: 11px; color: #6ee7b7; }
-        .reserva-item .actions { display: flex; gap: 8px; }
-        .reserva-item .actions .whatsapp-link { color: #34d399; transition: 0.2s; }
-        .reserva-item .actions .whatsapp-link:hover { color: #6ee7b7; }
-        .reserva-item .actions .remove { color: #fca5a5; cursor: pointer; transition: 0.2s; }
-        .reserva-item .actions .remove:hover { color: #ef4444; }
-
-        /* ===== BLOCO DE CORES DO MEMBRO ===== */
-        .info-block-ramos {
-            background: linear-gradient(135deg, rgba(20, 15, 10, 0.8), rgba(30, 20, 15, 0.9));
-            border: 1px solid rgba(180, 150, 100, 0.2);
-            border-radius: 12px;
-            padding: 12px;
-            box-shadow: inset 0 0 30px rgba(180, 150, 100, 0.03);
-        }
-        .info-block-ramos .ramo-item {
-            background: rgba(40, 30, 20, 0.5);
-            border-radius: 8px;
-            padding: 8px 10px;
-            border-left: 3px solid rgba(180, 150, 100, 0.3);
-            transition: all 0.2s;
-        }
-        .info-block-ramos .ramo-item:hover {
-            background: rgba(60, 45, 30, 0.5);
-            border-left-color: rgba(212, 175, 55, 0.6);
-        }
-        .info-block-ramos .ramo-item .ramo-label {
-            color: #b8a088;
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-        }
-        .info-block-ramos .ramo-item .ramo-value {
-            color: #e8d5b8;
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .info-block-ramos .ramo-item .ramo-detail {
-            color: #8a9b8a;
-            font-size: 10px;
-        }
-        .info-block-ramos .ramo-item .ramo-talentos {
-            color: #b8a088;
-            font-size: 9px;
-            background: rgba(40, 30, 20, 0.3);
-            padding: 1px 8px;
-            border-radius: 10px;
-        }
-
-        .info-block-t5-full {
-            background: linear-gradient(135deg, rgba(30, 20, 15, 0.7), rgba(40, 25, 15, 0.8));
-            border: 1px solid rgba(180, 150, 100, 0.15);
-            border-radius: 10px;
-            padding: 10px 14px;
-        }
-        .info-block-t5-full .t5-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 8px;
-            border-radius: 6px;
-            background: rgba(40, 30, 20, 0.3);
-        }
-        .info-block-t5-full .t5-item .t5-label {
-            color: #b8a088;
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-        .info-block-t5-full .t5-item .t5-value {
-            color: #e8d5b8;
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .info-block-t5-full .livro-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        .info-block-t5-full .livro-item.sim {
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #6ee7b7;
-        }
-        .info-block-t5-full .livro-item.nao {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            color: #fca5a5;
-        }
-
-        .info-block-set {
-            border-radius: 12px;
-            padding: 12px;
-        }
-        .info-block-set.pvp-set {
-            background: linear-gradient(135deg, rgba(30, 10, 40, 0.6), rgba(20, 5, 30, 0.7));
-            border: 1px solid rgba(139, 92, 246, 0.15);
-        }
-        .info-block-set.pvp-set .set-title {
-            color: #a78bfa;
-            border-bottom-color: rgba(139, 92, 246, 0.2);
-        }
-        .info-block-set.pve-set {
-            background: linear-gradient(135deg, rgba(10, 30, 20, 0.6), rgba(5, 25, 15, 0.7));
-            border: 1px solid rgba(16, 185, 129, 0.15);
-        }
-        .info-block-set.pve-set .set-title {
-            color: #6ee7b7;
-            border-bottom-color: rgba(16, 185, 129, 0.2);
-        }
-        .info-block-set .set-title {
-            font-size: 11px;
-            font-weight: 700;
-            font-family: 'Cinzel', serif;
-            padding-bottom: 6px;
-            margin-bottom: 8px;
-            border-bottom: 1px solid rgba(80, 80, 90, 0.15);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .item-badge-item-colorido {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 10px;
-            transition: all 0.15s;
-        }
-        .item-badge-item-colorido .label {
-            color: rgba(180,180,190,0.5);
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-        }
-        .item-badge-item-colorido .value { font-weight: 600; font-size: 10px; }
-        .item-badge-item-colorido .value.nao-tenho { color: #fca5a5; }
-        .item-badge-item-colorido .value.equipado { color: #6ee7b7; }
-        .item-badge-item-colorido .value.amp { color: #a78bfa; }
-        .item-badge-item-colorido.pvp-item {
-            background: rgba(139, 92, 246, 0.05);
-            border: 1px solid rgba(139, 92, 246, 0.08);
-        }
-        .item-badge-item-colorido.pvp-item:hover {
-            background: rgba(139, 92, 246, 0.1);
-            border-color: rgba(139, 92, 246, 0.2);
-        }
-        .item-badge-item-colorido.pve-item {
-            background: rgba(16, 185, 129, 0.05);
-            border: 1px solid rgba(16, 185, 129, 0.08);
-        }
-        .item-badge-item-colorido.pve-item:hover {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: rgba(16, 185, 129, 0.2);
-        }
-        .item-badge-item-colorido .nao-tenho-item {
-            color: #fca5a5;
-            font-size: 9px;
-        }
-        .item-badge-item-colorido .equipado-item {
-            color: #6ee7b7;
-            font-size: 9px;
-        }
-
-        .info-footer {
-            background: linear-gradient(135deg, rgba(20, 15, 10, 0.5), rgba(30, 20, 15, 0.3));
-            border-radius: 8px;
-            padding: 8px 12px;
-            border: 1px solid rgba(180, 150, 100, 0.08);
-        }
-        .info-footer .catacumba-item.sim {
-            color: #6ee7b7;
-        }
-        .info-footer .catacumba-item.nao {
-            color: #fca5a5;
-        }
-        .info-footer .mermem-item.sim {
-            color: #6ee7b7;
-        }
-        .info-footer .mermem-item.nao {
-            color: #fca5a5;
-        }
-
-        /* ===== ESTILOS DO TOOLTIP/HOVER DOS MEMBROS NA PT ===== */
-        .membro-pt-item {
-            position: relative;
-            cursor: pointer;
-        }
-        .membro-pt-item .tooltip-preview {
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            bottom: calc(100% + 10px);
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: rgba(20, 15, 10, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(180, 150, 100, 0.2);
-            border-radius: 12px;
-            padding: 12px 14px;
-            width: 380px;
-            max-height: 460px;
-            overflow-y: auto;
-            z-index: 100;
-            transition: all 0.3s ease;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-            pointer-events: none;
-        }
-        .membro-pt-item:hover .tooltip-preview {
-            visibility: visible;
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-        .membro-pt-item .tooltip-preview::-webkit-scrollbar { width: 4px; }
-        .membro-pt-item .tooltip-preview::-webkit-scrollbar-track { background: rgba(30,30,35,0.3); border-radius: 10px; }
-        .membro-pt-item .tooltip-preview::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.3); border-radius: 10px; }
-
-        .tooltip-preview .preview-nome {
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            color: #e8d5b8;
-            font-size: 14px;
-            border-bottom: 1px solid rgba(180, 150, 100, 0.15);
-            padding-bottom: 6px;
-            margin-bottom: 8px;
-        }
-        .tooltip-preview .preview-classe {
-            font-size: 11px;
-            color: #94a3b8;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .tooltip-preview .preview-ramos {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 4px;
-            margin: 6px 0;
-            font-size: 9px;
-        }
-        .tooltip-preview .preview-ramos .pr {
-            background: rgba(40, 30, 20, 0.4);
-            border-radius: 6px;
-            padding: 6px 6px;
-            text-align: center;
-            border-left: 3px solid #94a3b8;
-        }
-        .tooltip-preview .preview-ramos .pr .pr-label {
-            color: #e8d5b8;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        .tooltip-preview .preview-ramos .pr .pr-value {
-            color: #b8a088;
-            font-size: 7px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-        .tooltip-preview .preview-ramos .pr .pr-detail {
-            color: #8a9b8a;
-            font-size: 8px;
-        }
-        .tooltip-preview .preview-ramos .pr .pr-talentos {
-            color: #b8a088;
-            font-size: 7px;
-            background: rgba(40,30,20,0.3);
-            padding: 1px 6px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-top: 1px;
-        }
-
-        .tooltip-preview .preview-info-extra {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin: 4px 0;
-            font-size: 9px;
-        }
-        .tooltip-preview .preview-info-extra .extra-item {
-            background: rgba(40, 30, 20, 0.3);
-            padding: 2px 8px;
-            border-radius: 10px;
-            color: #b8a088;
-            font-size: 8px;
-        }
-        .tooltip-preview .preview-info-extra .extra-item .extra-value {
-            color: #e8d5b8;
-            font-weight: 600;
-        }
-        .tooltip-preview .preview-info-extra .extra-item.sim {
-            background: rgba(16, 185, 129, 0.15);
-            color: #6ee7b7;
-        }
-        .tooltip-preview .preview-info-extra .extra-item.nao {
-            background: rgba(239, 68, 68, 0.1);
-            color: #fca5a5;
-        }
-
-        .tooltip-preview .preview-status {
-            display: flex;
-            gap: 12px;
-            font-size: 10px;
-            margin-top: 4px;
-            padding-top: 4px;
-            border-top: 1px solid rgba(80,80,90,0.15);
-        }
-        .tooltip-preview .preview-status .st { display: flex; align-items: center; gap: 4px; }
-        .tooltip-preview .preview-status .st.sim { color: #6ee7b7; }
-        .tooltip-preview .preview-status .st.nao { color: #fca5a5; }
-        .tooltip-preview .preview-sets {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2px;
-            margin-top: 4px;
-            font-size: 8px;
-        }
-        .tooltip-preview .preview-sets .ps-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 4px;
-            border-radius: 3px;
-            background: rgba(30,30,35,0.2);
-        }
-        .tooltip-preview .preview-sets .ps-item .ps-label {
-            color: rgba(180,180,190,0.4);
-            font-size: 7px;
-            text-transform: uppercase;
-        }
-        .tooltip-preview .preview-sets .ps-item .ps-value {
-            font-weight: 600;
-            font-size: 8px;
-        }
-        .tooltip-preview .preview-sets .ps-item .ps-value.verde { color: #6ee7b7; }
-        .tooltip-preview .preview-sets .ps-item .ps-value.roxo { color: #a78bfa; }
-        .tooltip-preview .preview-sets .ps-item .ps-value.vermelho { color: #fca5a5; }
-        .tooltip-preview .preview-sets .ps-item .ps-value.ouro { color: #fbbf24; }
-
-        /* Seta do tooltip */
-        .membro-pt-item .tooltip-preview::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 8px solid transparent;
-            border-top-color: rgba(180, 150, 100, 0.2);
-        }
-
-        /* Cores dos ramos no tooltip */
-        .ramo-cor-assassinos { border-left-color: #ef4444 !important; }
-        .ramo-cor-aventureiros { border-left-color: #fbbf24 !important; }
-        .ramo-cor-magos { border-left-color: #60a5fa !important; }
-        .ramo-cor-padrao { border-left-color: #94a3b8 !important; }
-
-        /* ===== ESTILOS DO BLOCO DE HORÁRIO ===== */
-        .config-block {
-            background: rgba(30, 30, 35, 0.3);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(120, 120, 130, 0.12);
-            border-radius: 14px;
-            padding: 14px 16px;
-            transition: all 0.3s ease;
-        }
-        .config-block:hover {
-            border-color: rgba(148, 163, 184, 0.25);
-        }
-        .config-block select {
-            background: rgba(25, 25, 30, 0.35) !important;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(80, 80, 90, 0.3) !important;
-            color: #d0d0d0 !important;
-            border-radius: 10px;
-            padding: 6px 12px;
-            font-size: 12px;
-            width: 100%;
-            transition: all 0.2s;
-        }
-        .config-block select:focus {
-            border-color: #94a3b8 !important;
-            outline: none;
-        }
-        .config-block select option {
-            background: #1a1a1e;
-            color: #d0d0d0;
-        }
-        .config-block .label-config {
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: rgba(180, 180, 190, 0.6);
-            font-weight: 600;
-            margin-bottom: 4px;
-            display: block;
-        }
-        .preview-badge {
-            background: rgba(30, 30, 35, 0.3);
-            padding: 6px 16px;
-            border-radius: 20px;
-            border: 1px solid rgba(80, 80, 90, 0.15);
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-block;
-            text-align: center;
-            min-width: 200px;
-        }
-        .preview-badge .evento-texto {
-            color: #fbbf24;
-        }
-        .preview-badge .horario-texto {
-            color: #6ee7b7;
-        }
-        .preview-badge .separador {
-            color: rgba(180, 180, 190, 0.4);
-        }
-        .preview-badge .chegada-texto {
-            color: #fca5a5;
-            font-size: 10px;
-        }
-
-        .input-horario {
-            width: 50px !important;
-            text-align: center;
-            padding: 6px 4px !important;
-            font-size: 14px !important;
-            font-weight: 600 !important;
-        }
-        .input-horario:focus {
-            border-color: #94a3b8 !important;
-        }
-        .input-horario.chegada {
-            border-color: rgba(239, 68, 68, 0.3) !important;
-        }
-        .input-horario.chegada:focus {
-            border-color: #ef4444 !important;
-        }
-        .label-horario {
-            font-size: 11px;
-            color: rgba(180, 180, 190, 0.5);
-            display: block;
-            text-align: center;
-            margin-top: 2px;
-        }
-        .label-horario.chegada {
-            color: rgba(252, 165, 165, 0.6);
-        }
-        .horario-separador {
-            color: rgba(180, 180, 190, 0.3);
-            font-size: 14px;
-            font-weight: 700;
-            padding: 0 2px;
-        }
-        .chegada-label {
-            color: #fca5a5 !important;
-        }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        .animate-float { animation: float 2.5s ease-in-out infinite; }
+        #submitBtn:hover .glass-submit { background: rgba(30,30,35,0.35) !important; border-color: rgba(255,215,100,0.6) !important; box-shadow: 0 0 30px rgba(255,200,50,0.15); }
+        #submitBtn:active .glass-submit { transform: scale(0.97); }
+        .btn-glow { transition: box-shadow 0.4s ease; }
+        #submitBtn:hover .btn-glow { box-shadow: 0 0 40px rgba(255,200,50,0.2), inset 0 0 30px rgba(255,200,50,0.05); }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-slate-400 selection:text-white p-2 sm:p-4 relative">
+<body class="min-h-screen flex flex-col justify-between selection:bg-slate-400 selection:text-white text-[#e8e8e8] relative">
 
     <img src="warspear.png" alt="Fundo Guilda Anomalia" class="fixed inset-0 w-full h-full object-cover z-0" />
     <div class="fixed inset-0 bg-black/70 z-[1]"></div>
 
-    <main class="w-full max-w-7xl mx-auto my-auto relative z-10 space-y-4 p-2 sm:p-4">
-        <!-- HEADER -->
-        <header class="glass-header rounded-2xl p-5 shadow-2xl relative overflow-hidden">
+    <main class="w-full max-w-4xl mx-auto my-auto relative z-10 space-y-6 p-4">
+        <header class="glass-header rounded-2xl p-6 shadow-2xl relative overflow-hidden">
             <div class="absolute top-0 right-0 w-48 h-48 bg-slate-500/5 rounded-full blur-3xl pointer-events-none"></div>
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="space-y-1">
+                <div class="space-y-1 text-center sm:text-left">
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold glass-badge text-emerald-400">
-                        <i class="fa-solid fa-lock-open text-emerald-400 text-[10px]"></i> Painel Administrativo
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Servidor Oficial: BR-Tourmaline
                     </div>
-                    <h1 class="text-2xl sm:text-3xl font-black text-white/90 font-rpg tracking-wide drop-shadow-lg">Gerenciamento - Guilda Anomalia</h1>
+                    <h1 class="text-3xl sm:text-4xl font-black text-white/90 font-rpg tracking-wide drop-shadow-lg">Guilda Anomalia</h1>
                 </div>
-                <div class="flex flex-wrap items-center justify-center gap-2">
-                    <div id="adminStatus" class="flex items-center gap-2 px-3 py-1.5 rounded-full glass-badge text-xs font-rpg">
-                        <span class="w-2 h-2 rounded-full bg-red-400 animate-pulse" id="statusDot"></span>
-                        <span id="statusText" class="text-amber-400">Deslogado</span>
-                    </div>
-                    <button onclick="toggleLogin()" id="btnLogin" class="btn-glass btn-glass-gold">
-                        <i class="fa-solid fa-key"></i> <span id="btnLoginText">Login</span>
-                    </button>
-                    <button onclick="carregarMembros()" class="btn-glass">
-                        <i class="fa-solid fa-rotate text-amber-400"></i> Atualizar
-                    </button>
-                    <a href="index.html" class="btn-glass btn-glass-danger">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <a href="painel.html" class="flex items-center gap-2 glass-card-dark hover:bg-[#201813]/80 border border-[#63452c]/50 px-4 py-2.5 rounded-xl shadow-lg transition text-amber-300 hover:text-amber-100 text-xs font-bold font-rpg tracking-wider">
+                        <i class="fa-solid fa-lock text-amber-500"></i> Painel Adm
                     </a>
+                    <div class="flex items-center gap-3 glass-card-dark px-4 py-2.5 rounded-xl shadow-inner">
+                        <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                            <i class="fa-solid fa-shield-halved text-sm"></i>
+                        </div>
+                        <div>
+                            <div class="text-[10px] uppercase tracking-wider text-amber-500/80 font-bold">Banco de Dados</div>
+                            <div class="text-xs font-semibold text-emerald-400">Supabase Conectado</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
 
-        <!-- MODAL LOGIN -->
-        <div id="loginModal" class="modal-overlay">
-            <div class="modal-box">
-                <button class="btn-close" onclick="fecharLogin()"><i class="fa-solid fa-xmark"></i></button>
-                <div class="modal-title"><i class="fa-solid fa-shield-halved text-amber-500 mr-2"></i>Acesso Admin</div>
-                <div class="modal-subtitle">Insira suas credenciais para acessar funções restritas.</div>
-                <input type="text" id="loginUser" placeholder="Usuário" value="">
-                <input type="password" id="loginPass" placeholder="Senha" value="">
-                <button class="btn-login" onclick="efetuarLogin()"><i class="fa-solid fa-right-to-bracket mr-2"></i>Entrar</button>
-                <div id="loginError" class="error-msg"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Usuário ou senha incorretos.</div>
-            </div>
-        </div>
-
-        <!-- NAVEGAÇÃO DE ABAS -->
-        <div class="flex flex-wrap items-center gap-2 border-b border-amber-subtle pb-3">
-            <button onclick="mudarAba('membros')" id="btnTabMembros" class="tab-btn active">
-                <i class="fa-solid fa-users"></i> Membros & Relatório
-            </button>
-            <button onclick="mudarAba('pts')" id="btnTabPts" class="tab-btn">
-                <i class="fa-solid fa-people-group"></i> Formação de PTs
-            </button>
-            <button onclick="mudarAba('stats')" id="btnTabStats" class="tab-btn">
-                <i class="fa-solid fa-chart-pie"></i> Estatísticas
-            </button>
-            <button onclick="mudarAba('reservas')" id="btnTabReservas" class="tab-btn">
-                <i class="fa-solid fa-users-slash"></i> Reservas (Fila)
-            </button>
-        </div>
-
-        <!-- ABA 1: MEMBROS -->
-        <div id="tabMembros" class="space-y-4">
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div class="stat-card flex items-center justify-between">
-                    <div><div class="text-[10px] uppercase tracking-wider text-amber-500/80 font-bold">Total de Membros</div>
-                        <div id="totalMembros" class="text-2xl font-black text-amber-100 font-rpg mt-0.5">0</div></div>
-                    <i class="fa-solid fa-users text-2xl text-amber-600/30"></i>
+        <form id="itemForm" class="space-y-6">
+            <!-- SEÇÃO I: IDENTIDADE -->
+            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
+                    <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">I</span>
+                    <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">IDENTIDADE DO HERÓI</h2>
                 </div>
-                <div class="stat-card flex items-center justify-between">
-                    <div><div class="text-[10px] uppercase tracking-wider text-amber-500/80 font-bold">Segunda Facção / Clãs</div>
-                        <div id="totalClas" class="text-2xl font-black text-amber-100 font-rpg mt-0.5">0</div></div>
-                    <i class="fa-solid fa-shield text-2xl text-amber-600/30"></i>
-                </div>
-                <div class="stat-card flex items-center justify-between">
-                    <div><div class="text-[10px] uppercase tracking-wider text-amber-500/80 font-bold">Proscritos</div>
-                        <div id="totalProscritos" class="text-2xl font-black text-amber-100 font-rpg mt-0.5">0</div></div>
-                    <i class="fa-solid fa-skull text-2xl text-amber-600/30"></i>
-                </div>
-            </div>
-
-            <section class="glass-card rounded-2xl p-5 shadow-xl">
-                <div class="flex items-center justify-between border-b border-amber-subtle pb-3 mb-4">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">📊</span>
-                        <h2 class="text-sm font-bold text-white/90 font-rpg">Resumo de Classes</h2>
-                        <span class="text-[10px] text-amber-500/60 font-sans ml-1">(clique para filtrar)</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="charName" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1.5">Nome do Personagem</label>
+                        <input type="text" id="charName" placeholder="Ex: Anomalla" maxlength="10" required class="w-full glass-input rounded-xl px-4 py-2.5 text-amber-100 placeholder:text-amber-700/50 focus:outline-none focus:border-amber-600 text-sm" oninput="updateCharCounter(this)" />
+                        <div id="charCounter" class="char-counter">0/10</div>
                     </div>
-                    <button onclick="filtrarPorClasse('todos')" class="text-[10px] text-amber-500 hover:text-amber-300 font-rpg transition cursor-pointer underline">Limpar Filtro</button>
-                </div>
-                <div id="adminClassSummary" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5"></div>
-            </section>
-
-            <section class="glass-card rounded-2xl p-5 shadow-xl">
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-amber-subtle pb-3 mb-4">
-                    <h2 class="text-base font-bold text-white/90 font-rpg">Heróis Cadastrados</h2>
-                    <div class="flex flex-wrap items-center gap-2">
-                        <div class="relative">
-                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-amber-600/50 text-[10px]"></i>
-                            <input type="text" id="buscaNome" placeholder="Buscar herói..." oninput="carregarMembros()" class="glass-input rounded-xl pl-8 pr-3 py-2 text-sm w-36 sm:w-44 focus:outline-none focus:border-amber-600">
-                        </div>
-                        <select id="filtroClasse" onchange="carregarMembros()" class="glass-select rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-amber-600">
-                            <option value="todos">Todas as Classes</option>
-                            <optgroup label="Segunda Facção / Clãs da Montanha">
+                    <div>
+                        <label for="charClass" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1.5">Classe</label>
+                        <select id="charClass" required class="w-full glass-select rounded-xl px-4 py-2.5 text-amber-100 focus:outline-none focus:border-amber-600 text-sm">
+                            <option value="" disabled selected>Selecione sua classe</option>
+                            <optgroup label="Segunda Facção / Tribos e Legião">
                                 <option value="Bárbaro">Bárbaro</option>
                                 <option value="Ladino">Ladino</option>
                                 <option value="Xamã">Xamã</option>
@@ -905,1314 +186,1040 @@
                                 <option value="Ceifador">Ceifador</option>
                             </optgroup>
                         </select>
-                        <button onclick="resetarHerois()" id="btnResetHerois" class="btn-glass btn-glass-danger">
-                            <i class="fa-solid fa-trash-can"></i> Resetar Heróis
-                        </button>
                     </div>
-                </div>
-                <div id="gridMembros" class="grid grid-cols-1 xl:grid-cols-2 gap-4 max-h-[70vh] overflow-y-auto pr-1">
-                    <div class="text-center py-10 text-amber-600 italic col-span-full">Carregando heróis...</div>
                 </div>
             </section>
-        </div>
 
-        <!-- ABA 2: FORMAÇÃO DE PTs -->
-        <div id="tabPts" class="space-y-4 hidden">
-            <section class="glass-card rounded-2xl p-5 shadow-xl">
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-amber-subtle pb-3 mb-4">
-                    <div>
-                        <h2 class="text-base font-bold text-white/90 font-rpg">Escalação de PTs (Grupos de até 5 Membros)</h2>
-                        <p class="text-xs text-amber-500/60">Passe o mouse sobre o nome do membro para ver seus equipamentos. ⭐ = Líder da PT</p>
+            <!-- SEÇÃO II: TALENTOS DE ALMAHAD -->
+            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
+                    <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">II</span>
+                    <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">TALENTOS DE ALMAHAD</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="branch-card">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
+                                <i class="fa-solid fa-chess-rook text-amber-600"></i> Ramo 1
+                            </label>
+                            <select id="almahadBranch1" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600 mb-2">
+                                <option value="" disabled selected>Selecione o ramo</option>
+                                <option value="Assassinos">Assassinos</option>
+                                <option value="Aventureiros">Aventureiros</option>
+                                <option value="Magos">Magos</option>
+                            </select>
+                            <select id="almahadLevel1" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600" onchange="updatePerformance('1', this.value)">
+                                <option value="" disabled selected>Nível (1-39)</option>
+                                <script>
+                                    for (let i = 1; i <= 39; i++) document.write(`<option value="${i}">${i}</option>`);
+                                </script>
+                            </select>
+                            <div class="performance-bar">
+                                <div id="performanceFill1" class="fill" style="width: 0%;"></div>
+                            </div>
+                            <div class="performance-label">
+                                <span>Desempenho</span>
+                                <span id="performanceText1">0%</span>
+                            </div>
+                            <div class="mt-2 pt-2 border-t border-amber-subtle">
+                                <span class="text-[9px] uppercase tracking-wider text-amber-500/70 font-bold">Talentos 35k</span>
+                                <div class="talentos-35k-ramo">
+                                    <label><input type="radio" name="talentos35k_1" value="Possuo os 2" /> Os 2</label>
+                                    <label><input type="radio" name="talentos35k_1" value="Possuo 1" /> 1</label>
+                                    <label><input type="radio" name="talentos35k_1" value="Não" checked /> Não</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="branch-card">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
+                                <i class="fa-solid fa-chess-rook text-amber-600"></i> Ramo 2
+                            </label>
+                            <select id="almahadBranch2" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600 mb-2">
+                                <option value="" disabled selected>Selecione o ramo</option>
+                                <option value="Assassinos">Assassinos</option>
+                                <option value="Aventureiros">Aventureiros</option>
+                                <option value="Magos">Magos</option>
+                            </select>
+                            <select id="almahadLevel2" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600" onchange="updatePerformance('2', this.value)">
+                                <option value="" disabled selected>Nível (1-39)</option>
+                                <script>
+                                    for (let i = 1; i <= 39; i++) document.write(`<option value="${i}">${i}</option>`);
+                                </script>
+                            </select>
+                            <div class="performance-bar">
+                                <div id="performanceFill2" class="fill" style="width: 0%;"></div>
+                            </div>
+                            <div class="performance-label">
+                                <span>Desempenho</span>
+                                <span id="performanceText2">0%</span>
+                            </div>
+                            <div class="mt-2 pt-2 border-t border-amber-subtle">
+                                <span class="text-[9px] uppercase tracking-wider text-amber-500/70 font-bold">Talentos 35k</span>
+                                <div class="talentos-35k-ramo">
+                                    <label><input type="radio" name="talentos35k_2" value="Possuo os 2" /> Os 2</label>
+                                    <label><input type="radio" name="talentos35k_2" value="Possuo 1" /> 1</label>
+                                    <label><input type="radio" name="talentos35k_2" value="Não" checked /> Não</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="branch-card">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
+                                <i class="fa-solid fa-chess-rook text-amber-600"></i> Ramo 3
+                            </label>
+                            <select id="almahadBranch3" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600 mb-2">
+                                <option value="" disabled selected>Selecione o ramo</option>
+                                <option value="Assassinos">Assassinos</option>
+                                <option value="Aventureiros">Aventureiros</option>
+                                <option value="Magos">Magos</option>
+                            </select>
+                            <select id="almahadLevel3" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600" onchange="updatePerformance('3', this.value)">
+                                <option value="" disabled selected>Nível (1-39)</option>
+                                <script>
+                                    for (let i = 1; i <= 39; i++) document.write(`<option value="${i}">${i}</option>`);
+                                </script>
+                            </select>
+                            <div class="performance-bar">
+                                <div id="performanceFill3" class="fill" style="width: 0%;"></div>
+                            </div>
+                            <div class="performance-label">
+                                <span>Desempenho</span>
+                                <span id="performanceText3">0%</span>
+                            </div>
+                            <div class="mt-2 pt-2 border-t border-amber-subtle">
+                                <span class="text-[9px] uppercase tracking-wider text-amber-500/70 font-bold">Talentos 35k</span>
+                                <div class="talentos-35k-ramo">
+                                    <label><input type="radio" name="talentos35k_3" value="Possuo os 2" /> Os 2</label>
+                                    <label><input type="radio" name="talentos35k_3" value="Possuo 1" /> 1</label>
+                                    <label><input type="radio" name="talentos35k_3" value="Não" checked /> Não</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap items-center gap-2">
-                        <button onclick="adicionarPt()" id="btnNovaPt" class="btn-glass btn-glass-primary">
-                            <i class="fa-solid fa-plus"></i> Nova PT
-                        </button>
-                        <button onclick="reconstruirPts()" id="btnReconstruirPts" class="btn-glass btn-glass-gold">
-                            <i class="fa-solid fa-arrows-rotate"></i> Reconstruir PTs
-                        </button>
-                        <button onclick="copiarDiscord()" id="btnCopiarDiscord" class="btn-glass">
-                            <i class="fa-brands fa-discord text-indigo-400"></i> Discord
-                        </button>
-                        <button onclick="copiarWhatsApp()" id="btnCopiarWhatsApp" class="btn-glass btn-glass-whatsapp">
-                            <i class="fa-brands fa-whatsapp"></i> WhatsApp
-                        </button>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="almahadT5" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1.5 flex items-center gap-1.5">
+                                <i class="fa-solid fa-fire text-amber-600"></i> Talento da T5
+                            </label>
+                            <select id="almahadT5" class="w-full glass-select rounded-xl px-4 py-2.5 text-amber-100 focus:outline-none focus:border-amber-600 text-sm transition">
+                                <option value="" disabled selected>Escolha o número (1 a 36)</option>
+                                <script>
+                                    for (let i = 1; i <= 36; i++) document.write(`<option value="T5 Nível ${i}">${i}</option>`);
+                                </script>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="fullBranches" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1.5 flex items-center gap-1.5">
+                                <i class="fa-solid fa-layer-group text-amber-600"></i> Ramos Full (1 a 3)
+                            </label>
+                            <select id="fullBranches" class="w-full glass-select rounded-xl px-4 py-2.5 text-amber-100 focus:outline-none focus:border-amber-600 text-sm transition">
+                                <option value="" disabled selected>Quantos ramos full?</option>
+                                <option value="Não">Não</option>
+                                <option value="1 Ramo Full">1 Ramo Full</option>
+                                <option value="2 Ramos Full">2 Ramos Full</option>
+                                <option value="3 Ramos Full">3 Ramos Full</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
+            </section>
 
-                <!-- ===== BLOCO DE CONFIGURAÇÃO: EVENTO + HORÁRIO + CHEGADA MÁXIMA ===== -->
-                <div class="config-block grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
-                    <!-- Seletor de Evento (apenas 3 opções) -->
-                    <div>
-                        <span class="label-config"><i class="fa-solid fa-flag mr-1"></i> Evento</span>
-                        <select id="eventoSelecionado">
-                            <option value="⚔️ GvG (PvP)">⚔️ GvG (PvP)</option>
-                            <option value="🗺️ Raid Mapa 5">🗺️ Raid Mapa 5</option>
-                            <option value="🔥 Raid T5">🔥 Raid T5</option>
+            <!-- SEÇÃO II.5: LIVRO DE ARENA -->
+            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
+                    <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">II</span>
+                    <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">LIVRO DE ARENA</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="livro-card">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-fire-flame-curved text-red-400"></i> Ferocidade
+                        </label>
+                        <div class="livro-radio-group">
+                            <label><input type="radio" name="ferocidade" value="Sim" /> Sim</label>
+                            <label><input type="radio" name="ferocidade" value="Não" checked /> Não</label>
+                        </div>
+                    </div>
+                    <div class="livro-card">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-shield text-emerald-400"></i> Resiliência
+                        </label>
+                        <div class="livro-radio-group">
+                            <label><input type="radio" name="resiliencia" value="Sim" /> Sim</label>
+                            <label><input type="radio" name="resiliencia" value="Não" checked /> Não</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO III: ARMAS & ESCUDOS -->
+            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
+                    <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">III</span>
+                    <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">AMPLIFICAÇÃO DE ARMAS & ESCUDOS (1 A 10 ESTRELAS)</h2>
+                </div>
+                <div class="items-grid" id="weaponsContainer">
+                    <!-- Gerado pelo JavaScript -->
+                </div>
+            </section>
+
+            <!-- SEÇÃO IV: ACESSÓRIOS PvP -->
+            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                <div class="flex items-center justify-between mb-5 pb-3 border-b border-amber-subtle">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">IV</span>
+                        <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">ACESSÓRIOS PvP & AMPLIFICAÇÃO</h2>
+                    </div>
+                </div>
+                <div class="items-grid" id="pvpAccessoriesContainer">
+                    <!-- Gerado pelo JavaScript -->
+                </div>
+            </section>
+
+            <!-- SEÇÃO V: SET PvP -->
+            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
+                    <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">V</span>
+                    <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">SET PvP & AMPLIFICAÇÃO</h2>
+                </div>
+                <div class="items-grid" id="pvpSetContainer">
+                    <!-- Gerado pelo JavaScript -->
+                </div>
+                <div class="mt-6 glass-card-dark rounded-xl p-4 space-y-3">
+                    <div class="flex items-center justify-between flex-wrap gap-3">
+                        <span class="text-sm font-bold text-white/90 font-rpg flex items-center gap-2">
+                            <i class="fa-solid fa-skull text-red-500"></i> Possui Set Catacumba?
+                        </span>
+                        <div class="flex items-center gap-4">
+                            <label class="flex items-center gap-1.5 text-xs text-amber-300 cursor-pointer">
+                                <input type="radio" name="hasCatacumba" value="nao" checked onchange="toggleCatacumbaType(false)" class="custom-radio" /> Não
+                            </label>
+                            <label class="flex items-center gap-1.5 text-xs text-amber-300 cursor-pointer">
+                                <input type="radio" name="hasCatacumba" value="sim" onchange="toggleCatacumbaType(true)" class="custom-radio" /> Sim
+                            </label>
+                        </div>
+                    </div>
+                    <div id="catacumbaTypeContainer" class="hidden space-y-1.5 pt-3 border-t border-amber-subtle">
+                        <label for="catacumbaType" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1">Tipo do Catacumba</label>
+                        <select id="catacumbaType" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600">
+                            <option value="" disabled selected>Selecione o tipo</option>
+                            <option value="Leve">Leve</option>
+                            <option value="Tecido">Tecido</option>
+                            <option value="Pesado">Pesado</option>
                         </select>
                     </div>
-
-                    <!-- Horário Início -->
-                    <div>
-                        <span class="label-config"><i class="fa-regular fa-clock mr-1"></i> Início</span>
-                        <div class="flex items-center gap-1">
-                            <div class="flex-1">
-                                <input type="number" id="horaInicio" value="12" min="0" max="23" 
-                                       class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario" 
-                                       onblur="validarHora(this)" oninput="atualizarPreview()" />
-                                <span class="label-horario">Hora</span>
-                            </div>
-                            <span class="horario-separador">:</span>
-                            <div class="flex-1">
-                                <input type="number" id="minutoInicio" value="00" min="0" max="59" 
-                                       class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario" 
-                                       onblur="validarMinuto(this)" oninput="atualizarPreview()" />
-                                <span class="label-horario">Min</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Horário Fim -->
-                    <div>
-                        <span class="label-config"><i class="fa-regular fa-clock mr-1"></i> Fim</span>
-                        <div class="flex items-center gap-1">
-                            <div class="flex-1">
-                                <input type="number" id="horaFim" value="18" min="0" max="23" 
-                                       class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario" 
-                                       onblur="validarHora(this)" oninput="atualizarPreview()" />
-                                <span class="label-horario">Hora</span>
-                            </div>
-                            <span class="horario-separador">:</span>
-                            <div class="flex-1">
-                                <input type="number" id="minutoFim" value="00" min="0" max="59" 
-                                       class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario" 
-                                       onblur="validarMinuto(this)" oninput="atualizarPreview()" />
-                                <span class="label-horario">Min</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Chegada Máxima (Ultrapassou) -->
-                    <div>
-                        <span class="label-config chegada-label"><i class="fa-regular fa-clock mr-1"></i> Chegada Máxima</span>
-                        <div class="flex items-center gap-1">
-                            <div class="flex-1">
-                                <input type="number" id="horaChegada" value="13" min="0" max="23" 
-                                       class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario chegada" 
-                                       onblur="validarHora(this)" oninput="atualizarPreview()" />
-                                <span class="label-horario chegada">Hora</span>
-                            </div>
-                            <span class="horario-separador">:</span>
-                            <div class="flex-1">
-                                <input type="number" id="minutoChegada" value="30" min="0" max="59" 
-                                       class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario chegada" 
-                                       onblur="validarMinuto(this)" oninput="atualizarPreview()" />
-                                <span class="label-horario chegada">Min</span>
-                            </div>
-                        </div>
-                        <span class="text-[8px] text-red-400/70 block text-center mt-1">⏰ Ultrapassou, perdeu a vaga</span>
-                    </div>
-
-                    <!-- Preview -->
-                    <div class="flex items-center justify-center">
-                        <div class="text-center w-full">
-                            <span class="label-config"><i class="fa-regular fa-eye mr-1"></i> Preview</span>
-                            <div id="previewTexto" class="preview-badge w-full" style="min-width:auto;">
-                                <span class="evento-texto" id="previewEvento">⚔️ GvG (PvP)</span>
-                                <span class="separador"> • </span>
-                                <span class="horario-texto" id="previewHorario">12:00 - 18:00</span>
-                                <br>
-                                <span class="chegada-texto" id="previewChegada">⏰ Chegada máx: 13:30</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
-                <div id="gridPts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </section>
-        </div>
 
-        <!-- ABA 3: ESTATÍSTICAS -->
-        <div id="tabStats" class="space-y-4 hidden">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div class="stat-card flex items-center justify-between">
-                    <div>
-                        <div class="text-[10px] uppercase tracking-wider text-amber-500/80 font-bold">Participantes de Catacumba</div>
-                        <div id="statCatacumba" class="text-2xl font-black text-emerald-400 font-rpg mt-0.5">0</div>
+            <!-- SEÇÃO VI: ACESSÓRIOS PvE -->
+            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                <div class="flex items-center justify-between mb-5 pb-3 border-b border-amber-subtle">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">VI</span>
+                        <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">ACESSÓRIOS PvE & AMPLIFICAÇÃO</h2>
                     </div>
-                    <i class="fa-solid fa-dungeon text-2xl text-emerald-600/30"></i>
                 </div>
-                <div class="stat-card flex items-center justify-between">
-                    <div>
-                        <div class="text-[10px] uppercase tracking-wider text-amber-500/80 font-bold">Participantes de Mermem</div>
-                        <div id="statMermem" class="text-2xl font-black text-emerald-400 font-rpg mt-0.5">0</div>
-                    </div>
-                    <i class="fa-solid fa-water text-2xl text-emerald-600/30"></i>
+                <div class="items-grid" id="pveAccessoriesContainer">
+                    <!-- Gerado pelo JavaScript -->
                 </div>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div class="glass-card rounded-2xl p-5 shadow-xl">
-                    <h2 class="text-sm font-bold text-white/90 font-rpg border-b border-amber-subtle pb-3 mb-4">Distribuição de Classes</h2>
-                    <div class="relative h-72 w-full"><canvas id="chartClasses"></canvas></div>
-                </div>
-                <div class="glass-card rounded-2xl p-5 shadow-xl">
-                    <h2 class="text-sm font-bold text-white/90 font-rpg border-b border-amber-subtle pb-3 mb-4">Status de Catacumba e Mermem</h2>
-                    <div class="relative h-72 w-full"><canvas id="chartParticipacao"></canvas></div>
-                </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- ABA 4: RESERVAS (FILA) -->
-        <div id="tabReservas" class="space-y-4 hidden">
-            <section class="glass-card rounded-2xl p-5 shadow-xl">
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-amber-subtle pb-3 mb-4">
-                    <div>
-                        <h2 class="text-base font-bold text-white/90 font-rpg">Fila de Reservas (Candidatos)</h2>
-                        <p class="text-xs text-amber-500/60">Adicione jogadores interessados em entrar na guilda.</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="exportarReservasCSV()" class="btn-glass btn-glass-primary">
-                            <i class="fa-solid fa-file-csv"></i> CSV
-                        </button>
-                    </div>
+            <!-- SEÇÃO VII: SET PvE -->
+            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
+                    <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">VII</span>
+                    <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">SET PvE & AMPLIFICAÇÃO</h2>
                 </div>
-
-                <div class="flex flex-wrap items-center gap-3 mb-4 p-3 bg-[#130f0d] rounded-xl border border-amber-subtle">
-                    <div class="flex-1 min-w-[120px]">
-                        <input type="text" id="reservaNome" placeholder="Nick do jogador" maxlength="10" class="glass-input rounded-xl px-3 py-2 text-sm w-full">
+                <div class="items-grid" id="pveSetContainer">
+                    <!-- Gerado pelo JavaScript -->
+                </div>
+                <div class="mt-6 glass-card-dark rounded-xl p-4 space-y-3">
+                    <div class="flex items-center justify-between flex-wrap gap-3">
+                        <span class="text-sm font-bold text-white/90 font-rpg flex items-center gap-2">
+                            <i class="fa-solid fa-water text-cyan-500"></i> Possui Set Mermem?
+                        </span>
+                        <div class="flex items-center gap-4">
+                            <label class="flex items-center gap-1.5 text-xs text-amber-300 cursor-pointer">
+                                <input type="radio" name="hasMermem" value="nao" checked onchange="toggleMermemType(false)" class="custom-radio" /> Não
+                            </label>
+                            <label class="flex items-center gap-1.5 text-xs text-amber-300 cursor-pointer">
+                                <input type="radio" name="hasMermem" value="sim" onchange="toggleMermemType(true)" class="custom-radio" /> Sim
+                            </label>
+                        </div>
                     </div>
-                    <div class="min-w-[120px]">
-                        <select id="reservaClasse" class="glass-select rounded-xl px-3 py-2 text-sm w-full">
-                            <option value="">Classe</option>
-                            <option value="Bárbaro">Bárbaro</option>
-                            <option value="Ladino">Ladino</option>
-                            <option value="Xamã">Xamã</option>
-                            <option value="Caçador">Caçador</option>
-                            <option value="Cacique">Cacique</option>
-                            <option value="Necromante">Necromante</option>
-                            <option value="Cavaleiro da Morte">Cavaleiro da Morte</option>
-                            <option value="Bruxo">Bruxo</option>
-                            <option value="Encantador">Encantador</option>
-                            <option value="Ceifador">Ceifador</option>
+                    <div id="mermemTypeContainer" class="hidden space-y-1.5 pt-3 border-t border-amber-subtle">
+                        <label for="mermemType" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1">Tipo do Mermem</label>
+                        <select id="mermemType" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600">
+                            <option value="" disabled selected>Selecione o tipo</option>
+                            <option value="Leve">Leve</option>
+                            <option value="Tecido">Tecido</option>
+                            <option value="Pesado">Pesado</option>
                         </select>
                     </div>
-                    <div class="min-w-[130px]">
-                        <input type="text" id="reservaWhatsapp" placeholder="WhatsApp (ex: 11999999999)" class="glass-input rounded-xl px-3 py-2 text-sm w-full">
-                    </div>
-                    <button onclick="adicionarReserva()" class="btn-glass btn-glass-success">
-                        <i class="fa-solid fa-plus"></i> Adicionar
-                    </button>
-                </div>
-
-                <div id="listaReservas" class="space-y-1 max-h-96 overflow-y-auto">
-                    <div class="text-center py-6 text-amber-500/50 text-sm">Nenhum reserva na fila.</div>
                 </div>
             </section>
-        </div>
 
-        <div id="statusMensagem" class="text-center text-xs text-amber-500/60 font-rpg"></div>
+            <!-- BOTÃO DE ENVIO -->
+            <button type="submit" id="submitBtn" class="w-full relative group cursor-pointer transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] py-3">
+                <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-400/80 via-amber-500/80 to-orange-600/80 shadow-2xl shadow-amber-500/30 border-2 border-amber-300/50 group-hover:shadow-amber-400/50 group-hover:border-amber-200/80 transition-all duration-300 btn-glow"></div>
+                <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
+                <div class="relative m-1.5 glass-submit rounded-xl py-4 px-8 shadow-inner border border-cyan-200/30 flex items-center justify-center gap-3 group-hover:border-cyan-200/60 transition-all duration-300 bg-black/10 backdrop-blur-sm">
+                    <i class="fa-solid fa-scroll text-cyan-100 drop-shadow-lg text-xl animate-float group-hover:rotate-[-5deg] transition-transform duration-300" id="submitIcon"></i>
+                    <span class="font-rpg font-black text-white text-lg sm:text-xl tracking-widest drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]" id="btnText">ENVIAR DADOS DA GUILDA</span>
+                    <i class="fa-solid fa-arrow-right text-cyan-100/70 text-sm group-hover:translate-x-1 transition-transform duration-300"></i>
+                </div>
+            </button>
+        </form>
     </main>
 
-    <footer class="w-full text-center py-4 text-xs text-amber-700/60 font-rpg tracking-wider relative z-10 glass-footer">
+    <footer class="w-full text-center py-6 text-xs text-amber-700/60 font-rpg tracking-wider relative z-10 glass-footer mt-12">
         GUILDA ANOMALIA &copy; 2026 &bull; Servidor BR-Tourmaline. Todos os direitos reservados.
     </footer>
 
-    <!-- ================================================================ -->
-    <!-- SCRIPT PRINCIPAL                                                -->
-    <!-- ================================================================ -->
     <script>
-        // ================================================================
-        //  SISTEMA DE LOGIN
-        // ================================================================
-        let isAdmin = false;
-        const VALID_CREDENTIALS = [
-            { user: 'selem', pass: '7639' },
-            { user: 'agnus', pass: '8491' }
-        ];
-
-        function toggleLogin() {
-            if (isAdmin) {
-                isAdmin = false;
-                atualizarInterfaceLogin();
-                document.getElementById('statusMensagem').textContent = '🔒 Você saiu do modo Administrador.';
-            } else {
-                document.getElementById('loginModal').classList.add('active');
-                document.getElementById('loginError').classList.remove('show');
-                document.getElementById('loginUser').value = '';
-                document.getElementById('loginPass').value = '';
-                document.getElementById('loginUser').focus();
-            }
+        // ============================================================
+        // CONTADOR DE CARACTERES
+        // ============================================================
+        function updateCharCounter(input) {
+            const counter = document.getElementById('charCounter');
+            const length = input.value.length;
+            counter.textContent = length + '/10';
+            if (length >= 10) counter.classList.add('limit');
+            else counter.classList.remove('limit');
         }
 
-        function fecharLogin() {
-            document.getElementById('loginModal').classList.remove('active');
+        // ============================================================
+        // DESEMPENHO DOS RAMOS
+        // ============================================================
+        function updatePerformance(ramo, nivel) {
+            const fill = document.getElementById('performanceFill' + ramo);
+            const text = document.getElementById('performanceText' + ramo);
+            if (!fill || !text) return;
+            const nivelNum = parseInt(nivel) || 0;
+            const percent = Math.min(100, Math.round((nivelNum / 39) * 100));
+            fill.style.width = percent + '%';
+            text.textContent = percent + '%';
+            if (percent >= 80) fill.style.background = 'linear-gradient(90deg, #6ee7b7, #34d399)';
+            else if (percent >= 50) fill.style.background = 'linear-gradient(90deg, #94a3b8, #cbd5e1)';
+            else if (percent >= 20) fill.style.background = 'linear-gradient(90deg, #64748b, #94a3b8)';
+            else fill.style.background = 'linear-gradient(90deg, #475569, #64748b)';
         }
 
-        function efetuarLogin() {
-            const user = document.getElementById('loginUser').value.trim();
-            const pass = document.getElementById('loginPass').value.trim();
-            const found = VALID_CREDENTIALS.some(cred => cred.user === user && cred.pass === pass);
-            if (found) {
-                isAdmin = true;
-                fecharLogin();
-                atualizarInterfaceLogin();
-                document.getElementById('statusMensagem').textContent = `🔓 Logado como ${user}.`;
-            } else {
-                document.getElementById('loginError').classList.add('show');
-            }
-        }
-
-        function atualizarInterfaceLogin() {
-            const dot = document.getElementById('statusDot');
-            const text = document.getElementById('statusText');
-            const btnText = document.getElementById('btnLoginText');
-            const btn = document.getElementById('btnLogin');
-            if (isAdmin) {
-                dot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
-                text.textContent = 'Admin';
-                btnText.textContent = 'Logout';
-                btn.className = 'btn-glass btn-glass-danger';
-                document.querySelectorAll('[id^="btn"]').forEach(el => {
-                    if (el.id !== 'btnLogin' && el.id !== 'btnTabMembros' &&
-                        el.id !== 'btnTabPts' && el.id !== 'btnTabStats' && el.id !== 'btnTabReservas') {
-                        el.disabled = false;
-                        el.style.opacity = '1';
-                        el.style.cursor = 'pointer';
-                    }
-                });
-            } else {
-                dot.className = 'w-2 h-2 rounded-full bg-red-400 animate-pulse';
-                text.textContent = 'Deslogado';
-                btnText.textContent = 'Login';
-                btn.className = 'btn-glass btn-glass-gold';
-                document.querySelectorAll('[id^="btn"]').forEach(el => {
-                    if (el.id !== 'btnLogin' && el.id !== 'btnTabMembros' &&
-                        el.id !== 'btnTabPts' && el.id !== 'btnTabStats' && el.id !== 'btnTabReservas' &&
-                        el.id !== 'btnNovaPt' && el.id !== 'btnCopiarDiscord' && el.id !== 'btnCopiarWhatsApp' &&
-                        el.id !== 'btnResetHerois' && el.id !== 'btnReconstruirPts') {
-                        el.disabled = true;
-                        el.style.opacity = '0.4';
-                        el.style.cursor = 'not-allowed';
-                    }
-                });
-            }
-        }
-
-        function requireAdmin() {
-            if (!isAdmin) {
-                alert('⛔ Acesso negado! Faça login como Administrador para usar esta função.');
-                document.getElementById('loginModal').classList.add('active');
-                return false;
-            }
-            return true;
-        }
-
-        // ================================================================
-        //  FUNÇÕES DE VALIDAÇÃO DE HORÁRIO (CORRIGIDAS)
-        // ================================================================
-        function validarHora(input) {
-            let val = parseInt(input.value);
-            if (isNaN(val)) {
-                input.value = '0';
-                return;
-            }
-            if (val < 0) input.value = '0';
-            if (val > 23) input.value = '23';
-            // Garantir que tenha dois dígitos no display
-            if (input.value.length === 1 && input.value !== '0') {
-                input.value = '0' + input.value;
-            }
-            atualizarPreview();
-        }
-
-        function validarMinuto(input) {
-            let val = parseInt(input.value);
-            if (isNaN(val)) {
-                input.value = '00';
-                return;
-            }
-            if (val < 0) input.value = '00';
-            if (val > 59) input.value = '59';
-            // Garantir que tenha dois dígitos no display
-            if (input.value.length === 1) {
-                input.value = '0' + input.value;
-            }
-            atualizarPreview();
-        }
-
-        // ================================================================
-        //  CONFIGURAÇÃO SUPABASE
-        // ================================================================
+        // ============================================================
+        // SUPABASE
+        // ============================================================
         const SUPABASE_URL = 'https://tfgjfscnuemunuwzvtjr.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_vCiz2wBxb7yRfrfhJxYOfg__u3kka3W';
-        const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        const proscritos = ['Necromante', 'Cavaleiro da Morte', 'Bruxo', 'Encantador', 'Ceifador'];
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // ================================================================
-        //  ESTADO GLOBAL
-        // ================================================================
-        let cache = [];
-        let chartClassesInstance = null;
-        let chartParticipacaoInstance = null;
-        var gruposPts = JSON.parse(localStorage.getItem('guilda_anomalia_pts')) || {};
-        var reservas = [];
+        // ============================================================
+        // FILTRAGEM ARMAS POR CLASSE
+        // ============================================================
+        const classWeapons = {
+            'Necromante': ['Cajado'],
+            'Bruxo': ['Cajado'],
+            'Xamã': ['Cajado'],
+            'Encantador': ['Cajado', 'Maça de uma mão', 'Escudo'],
+            'Cavaleiro da Morte': ['Espada de uma mão', 'Machado de duas mãos', 'Machado de uma mão', 'Maça de uma mão', 'Maça de duas mãos', 'Lança', 'Espada de duas mãos', 'Escudo'],
+            'Caçador': ['Arco', 'Besta'],
+            'Bárbaro': ['Maça de duas mãos', 'Machado de duas mãos', 'Maça de uma mão', 'Machado de uma mão', 'Lança', 'Espada de uma mão', 'Espada de duas mãos', 'Escudo'],
+            'Ladino': ['Machado de uma mão', 'Espada de uma mão', 'Adaga'],
+            'Ceifador': ['Espada de uma mão', 'Machado de uma mão', 'Adaga'],
+            'Cacique': ['Cajado', 'Maça de uma mão', 'Maça de duas mãos']
+        };
 
-        // ================================================================
-        //  INICIALIZAÇÃO
-        // ================================================================
-        document.addEventListener('DOMContentLoaded', async function() {
-            atualizarInterfaceLogin();
-            carregarReservasStorage();
-            await carregarMembros();
-            renderPts();
-            renderReservas();
+        const classSetTypes = {
+            'Xamã': ['Tecido'],
+            'Necromante': ['Tecido'],
+            'Bruxo': ['Tecido'],
+            'Ladino': ['Leve'],
+            'Caçador': ['Leve'],
+            'Cacique': ['Leve'],
+            'Encantador': ['Pesado', 'Tecido', 'Leve'],
+            'Bárbaro': ['Leve', 'Pesado'],
+            'Cavaleiro da Morte': ['Leve', 'Pesado'],
+            'Ceifador': ['Leve', 'Pesado']
+        };
 
-            document.getElementById('loginPass').addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') efetuarLogin();
-            });
-            document.getElementById('loginUser').addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') document.getElementById('loginPass').focus();
-            });
+        // ============================================================
+        // DADOS DOS ITENS
+        // ============================================================
+        const weaponItems = [
+            { id: 'T5', name: 'Arma T5', icon: 'fa-sword', badge: 'T5' },
+            { id: 'Pve', name: 'Arma PvE', icon: 'fa-shield-halved', badge: 'PvE' },
+            { id: 'Map5', name: 'Arma Map 5', icon: 'fa-map', badge: 'Map 5' },
+            { id: 'Pvp1', name: 'Arma PvP 1', icon: 'fa-crosshairs', badge: 'PvP 1' },
+            { id: 'Pvp2', name: 'Arma PvP 2', icon: 'fa-crosshairs', badge: 'PvP 2' },
+            { id: 'ShieldPve', name: 'Escudo PvE', icon: 'fa-shield', badge: 'PvE' },
+            { id: 'ShieldPvp', name: 'Escudo PvP', icon: 'fa-shield', badge: 'PvP' }
+        ];
 
-            // Atualiza o preview quando mudar evento ou horário
-            document.getElementById('eventoSelecionado').addEventListener('change', atualizarPreview);
-            // Os inputs já chamam atualizarPreview no oninput
-            atualizarPreview();
-        });
+        const pvpAccessories = [
+            { id: 'Anel1Pvp', name: 'Anel 1', icon: 'fa-ring' },
+            { id: 'Anel2Pvp', name: 'Anel 2', icon: 'fa-ring' },
+            { id: 'Bracelete1Pvp', name: 'Bracelete 1', icon: 'fa-hand' },
+            { id: 'Bracelete2Pvp', name: 'Bracelete 2', icon: 'fa-hand' },
+            { id: 'AmuletoPvp', name: 'Amuleto', icon: 'fa-gem' },
+            { id: 'CapaPvp', name: 'Capa', icon: 'fa-vest' }
+        ];
 
-        function atualizarPreview() {
-            const evento = document.getElementById('eventoSelecionado').value;
-            
-            const hInicio = String(parseInt(document.getElementById('horaInicio').value) || 0).padStart(2, '0');
-            const mInicio = String(parseInt(document.getElementById('minutoInicio').value) || 0).padStart(2, '0');
-            const hFim = String(parseInt(document.getElementById('horaFim').value) || 0).padStart(2, '0');
-            const mFim = String(parseInt(document.getElementById('minutoFim').value) || 0).padStart(2, '0');
-            const hChegada = String(parseInt(document.getElementById('horaChegada').value) || 0).padStart(2, '0');
-            const mChegada = String(parseInt(document.getElementById('minutoChegada').value) || 0).padStart(2, '0');
-            
-            const horarioFormatado = `${hInicio}:${mInicio} - ${hFim}:${mFim}`;
-            const chegadaFormatado = `${hChegada}:${mChegada}`;
-            
-            document.getElementById('previewEvento').textContent = evento;
-            document.getElementById('previewHorario').textContent = horarioFormatado;
-            document.getElementById('previewChegada').textContent = `⏰ Chegada máx: ${chegadaFormatado}`;
+        const pvpSetItems = [
+            { id: 'HelmetPvp', name: 'Elmo PvP', icon: 'fa-hat-wizard' },
+            { id: 'ChestPvp', name: 'Peito PvP', icon: 'fa-vest' },
+            { id: 'BootsPvp', name: 'Bota PvP', icon: 'fa-shoe-prints' },
+            { id: 'GlovesPvp', name: 'Luva PvP', icon: 'fa-hand-sparkles' }
+        ];
+
+        const pveAccessories = [
+            { id: 'Anel1Pve', name: 'Anel 1', icon: 'fa-ring' },
+            { id: 'Anel2Pve', name: 'Anel 2', icon: 'fa-ring' },
+            { id: 'Bracelete1Pve', name: 'Bracelete 1', icon: 'fa-hand' },
+            { id: 'Bracelete2Pve', name: 'Bracelete 2', icon: 'fa-hand' },
+            { id: 'AmuletoPve', name: 'Amuleto', icon: 'fa-gem' },
+            { id: 'CapaPve', name: 'Capa', icon: 'fa-vest' }
+        ];
+
+        const pveSetItems = [
+            { id: 'HelmetPve', name: 'Elmo PvE', icon: 'fa-hat-wizard' },
+            { id: 'ChestPve', name: 'Peito PvE', icon: 'fa-vest' },
+            { id: 'BootsPve', name: 'Bota PvE', icon: 'fa-shoe-prints' },
+            { id: 'GlovesPve', name: 'Luva PvE', icon: 'fa-hand-sparkles' }
+        ];
+
+        // ============================================================
+        // UTILITÁRIOS
+        // ============================================================
+        function updateStars(selectId, starsId) {
+            const select = document.getElementById(selectId);
+            const starsContainer = document.getElementById(starsId);
+            if (!select || !starsContainer) return;
+            const value = select.value;
+            let count = 0;
+            if (value.includes('+')) {
+                const match = value.match(/\+(\d+)/);
+                if (match) count = parseInt(match[1]);
+            }
+            let starsHTML = '';
+            for (let i = 1; i <= 10; i++) {
+                starsHTML += `<span class="${i <= count ? 'star-active' : 'star-inactive'}">★</span>`;
+            }
+            starsContainer.innerHTML = starsHTML;
         }
 
-        // ================================================================
-        //  FUNÇÃO PARA PEGAR HORÁRIO FORMATADO
-        // ================================================================
-        function getHorarioFormatado() {
-            const hInicio = String(parseInt(document.getElementById('horaInicio').value) || 0).padStart(2, '0');
-            const mInicio = String(parseInt(document.getElementById('minutoInicio').value) || 0).padStart(2, '0');
-            const hFim = String(parseInt(document.getElementById('horaFim').value) || 0).padStart(2, '0');
-            const mFim = String(parseInt(document.getElementById('minutoFim').value) || 0).padStart(2, '0');
-            const hChegada = String(parseInt(document.getElementById('horaChegada').value) || 0).padStart(2, '0');
-            const mChegada = String(parseInt(document.getElementById('minutoChegada').value) || 0).padStart(2, '0');
-            return {
-                evento: document.getElementById('eventoSelecionado').value,
-                horario: `${hInicio}:${mInicio} - ${hFim}:${mFim}`,
-                chegada: `${hChegada}:${mChegada}`
-            };
+        function generateAmpOptions() {
+            let options = '<option value="+0 (Sem amp)">+0 (Sem amp)</option>';
+            for (let i = 1; i <= 10; i++) {
+                options += `<option value="+${i} Estrela${i > 1 ? 's' : ''}">+${i} Estrela${i > 1 ? 's' : ''}</option>`;
+            }
+            return options;
         }
 
-        // ================================================================
-        //  FUNÇÕES DE RESERVAS
-        // ================================================================
-        function carregarReservasStorage() {
-            const saved = localStorage.getItem('guilda_anomalia_reservas_fila');
-            if (saved) {
-                try {
-                    reservas = JSON.parse(saved);
-                } catch (e) { reservas = []; }
+        // ============================================================
+        // GERADOR DE CARD DE ARMA (COM NÍVEIS CORRETOS)
+        // ============================================================
+        function generateWeaponCard(item, classValue) {
+            const isCaster = ['Necromante', 'Bruxo', 'Xamã'].includes(classValue);
+            let allowedWeapons = [];
+            if (isCaster) {
+                allowedWeapons = ['Cajado'];
             } else {
-                reservas = [];
+                allowedWeapons = classWeapons[classValue] || [];
             }
-        }
+            const isShield = item.id.includes('Shield');
+            const shieldClasses = ['Bárbaro', 'Cavaleiro da Morte', 'Encantador'];
+            const canUseShield = shieldClasses.includes(classValue);
+            const isPvp = item.id.includes('Pvp') && !item.id.includes('Shield');
+            const singlePvpClasses = ['Necromante', 'Bruxo', 'Xamã', 'Caçador', 'Encantador'];
+            if (isShield && !canUseShield) return '';
+            if (isPvp && singlePvpClasses.includes(classValue) && item.id === 'Pvp2') return '';
+            if (allowedWeapons.length === 0) return '';
 
-        function salvarReservasStorage() {
-            localStorage.setItem('guilda_anomalia_reservas_fila', JSON.stringify(reservas));
-        }
+            const weaponOptions = allowedWeapons.map(w => `<option value="${w}">${w}</option>`).join('');
+            const itemId = item.id;
 
-        function adicionarReserva() {
-            if (!requireAdmin()) return;
-            const nome = document.getElementById('reservaNome').value.trim().substring(0, 10);
-            const classe = document.getElementById('reservaClasse').value;
-            const whatsapp = document.getElementById('reservaWhatsapp').value.trim().replace(/\D/g, '');
-
-            if (!nome) { alert('Digite o nome do jogador.'); return; }
-            if (!classe) { alert('Selecione a classe.'); return; }
-            if (!whatsapp) { alert('Digite o número do WhatsApp.'); return; }
-
-            reservas.push({ nome, classe, whatsapp, data: new Date().toISOString() });
-            salvarReservasStorage();
-            document.getElementById('reservaNome').value = '';
-            document.getElementById('reservaClasse').value = '';
-            document.getElementById('reservaWhatsapp').value = '';
-            renderReservas();
-            document.getElementById('statusMensagem').textContent = `✅ ${nome} adicionado à fila de reservas.`;
-        }
-
-        function removerReserva(index) {
-            if (!requireAdmin()) return;
-            if (!confirm(`Remover ${reservas[index].nome} da fila?`)) return;
-            reservas.splice(index, 1);
-            salvarReservasStorage();
-            renderReservas();
-        }
-
-        function renderReservas() {
-            const container = document.getElementById('listaReservas');
-            if (!container) return;
-            if (!reservas.length) {
-                container.innerHTML = '<div class="text-center py-6 text-amber-500/50 text-sm">Nenhum candidato na fila de reservas.</div>';
-                return;
-            }
-            container.innerHTML = reservas.map((r, i) => {
-                const waLink = `https://wa.me/55${r.whatsapp}`;
-                return `
-                    <div class="reserva-item">
-                        <div class="info">
-                            <span class="nome">${r.nome}</span>
-                            <span class="classe">${r.classe}</span>
-                            <span class="whatsapp"><i class="fa-brands fa-whatsapp"></i> ${r.whatsapp}</span>
-                            <span class="text-amber-500/50 text-[10px]">${new Date(r.data).toLocaleDateString('pt-BR')}</span>
-                        </div>
-                        <div class="actions">
-                            <a href="${waLink}" target="_blank" class="whatsapp-link" title="Chamar no WhatsApp"><i class="fa-brands fa-whatsapp fa-lg"></i></a>
-                            <span onclick="removerReserva(${i})" class="remove" title="Remover da fila"><i class="fa-solid fa-trash"></i></span>
-                        </div>
-                    </div>
+            // ===== REGRAS DE NÍVEIS (DEFINITIVAS) =====
+            let levelOptions = '';
+            if (itemId === 'Pve') {
+                levelOptions = `
+                    <option value="Nível 32">Nível 32</option>
+                    <option value="Nível 34">Nível 34</option>
                 `;
-            }).join('');
-        }
-
-        function exportarReservasCSV() {
-            if (!requireAdmin()) return;
-            if (!reservas.length) { alert('Nenhum reserva para exportar.'); return; }
-            let csv = "Nome,Classe,WhatsApp,Data\n";
-            reservas.forEach(r => {
-                csv += `${r.nome},${r.classe},${r.whatsapp},${new Date(r.data).toLocaleDateString('pt-BR')}\n`;
-            });
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'reservas_guilda.csv';
-            link.click();
-        }
-
-        // ================================================================
-        //  CARREGAR MEMBROS
-        // ================================================================
-        async function carregarMembros() {
-            try {
-                document.getElementById('statusMensagem').textContent = '🔄 Buscando dados...';
-                let allData = [];
-                let page = 0;
-                const pageSize = 50;
-                while (true) {
-                    const { data, error } = await _supabase
-                        .from('guild_members')
-                        .select('*')
-                        .order('char_name', { ascending: true })
-                        .range(page * pageSize, (page + 1) * pageSize - 1);
-                    if (error) throw new Error(error.message);
-                    if (!data || data.length === 0) break;
-                    allData = allData.concat(data);
-                    if (data.length < pageSize) break;
-                    page++;
-                }
-                cache = allData;
-                document.getElementById('statusMensagem').textContent = `✅ ${cache.length} membros carregados.`;
-
-                aplicarFiltros();
-                renderPts();
-                renderStats();
-                renderReservas();
-            } catch (err) {
-                console.error('Erro:', err);
-                document.getElementById('statusMensagem').textContent = '❌ Erro: ' + err.message;
-            }
-        }
-
-        // ================================================================
-        //  FUNÇÃO PARA FORMATAR ITEM (CORES MELHORADAS)
-        // ================================================================
-        function formatItemColorido(itemObj) {
-            if (!itemObj || itemObj.nao_tem || (typeof itemObj === 'string' && ['não tenho', 'nao tenho', '-', '', 'não', 'nao', '+0 (Sem amp)'].includes(itemObj.toLowerCase()))) {
-                return '<span class="nao-tenho-item"><i class="fa-solid fa-circle-xmark mr-1"></i>Não tenho</span>';
-            }
-            if (typeof itemObj === 'string') {
-                if (itemObj.includes('+')) {
-                    return `<span class="amp"><i class="fa-solid fa-star mr-1"></i>${itemObj}</span>`;
-                }
-                return `<span class="equipado-item"><i class="fa-solid fa-check-circle mr-1"></i>${itemObj}</span>`;
-            }
-            let res = [];
-            if (itemObj.amplificacao && itemObj.amplificacao !== '+0 (Sem amp)') {
-                res.push(`<span class="amp"><i class="fa-solid fa-star mr-1"></i>${itemObj.amplificacao}</span>`);
-            }
-            if (itemObj.tipo && itemObj.tipo !== '-') {
-                res.push(`<span class="text-amber-200">(${itemObj.tipo})</span>`);
-            }
-            if (itemObj.nivel && itemObj.nivel !== '-') {
-                res.push(`<span class="text-emerald-400">Nvl ${itemObj.nivel}</span>`);
-            }
-            return res.length ? res.join(' ') : '<span class="equipado-item"><i class="fa-solid fa-check-circle mr-1"></i>Equipado</span>';
-        }
-
-        function badgeItemColorido(nome, obj, isPvp) {
-            const naoTem = !obj || obj.nao_tem || (typeof obj === 'string' && ['não tenho', 'nao tenho', '-', ''].includes(obj.toLowerCase()));
-            const pvpClass = isPvp ? 'pvp-item' : 'pve-item';
-            return `<div class="item-badge-item-colorido ${pvpClass}">
-                <span class="label">${nome}</span>
-                <span>${formatItemColorido(obj)}</span>
-            </div>`;
-        }
-
-        // ================================================================
-        //  FILTROS, RENDERIZAÇÃO DE MEMBROS, ESTATÍSTICAS, ETC
-        // ================================================================
-        function aplicarFiltros() {
-            const filtro = document.getElementById('filtroClasse')?.value || 'todos';
-            const busca = document.getElementById('buscaNome')?.value.toLowerCase().trim() || '';
-            renderResumoClasses(cache);
-            render(cache.filter(m =>
-                (filtro === 'todos' || m.char_class === filtro) &&
-                (!busca || (m.char_name || '').toLowerCase().includes(busca))
-            ));
-        }
-
-        function filtrarPorClasse(classe) {
-            const filtroEl = document.getElementById('filtroClasse');
-            if (!filtroEl) return;
-            filtroEl.value = (filtroEl.value === classe) ? 'todos' : classe;
-            carregarMembros();
-        }
-
-        function renderResumoClasses(dados) {
-            const container = document.getElementById('adminClassSummary');
-            if (!container) return;
-            if (!dados.length) {
-                container.innerHTML = `<div class="col-span-full text-center py-6 text-amber-500/50 text-sm"><i class="fa-solid fa-info-circle mr-2"></i>Nenhum herói cadastrado.</div>`;
-                return;
-            }
-            const counts = dados.reduce((acc, curr) => {
-                const cls = curr.char_class || 'Outros';
-                acc[cls] = (acc[cls] || 0) + 1;
-                return acc;
-            }, {});
-            const filtroAtual = document.getElementById('filtroClasse')?.value || 'todos';
-            const total = dados.length;
-            const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-            container.innerHTML = sorted.map(([cls, qtd]) => {
-                const isSelected = filtroAtual === cls;
-                const percent = Math.round((qtd / total) * 100);
-                const barWidth = Math.max(percent, 8);
-                return `<div onclick="filtrarPorClasse('${cls}')" class="class-resumo-item ${isSelected ? 'active' : ''}">
-                    <span class="class-name">${cls}</span>
-                    <div class="class-bar"><div class="fill" style="width: ${barWidth}%;"></div></div>
-                    <span class="class-count">${qtd}</span>
-                </div>`;
-            }).join('');
-        }
-
-        // ================================================================
-        //  FUNÇÃO RENDER (MEMBROS) - COM FILTRO DE RAMOS
-        // ================================================================
-        function render(membros) {
-            const grid = document.getElementById('gridMembros');
-            grid.innerHTML = '';
-            document.getElementById('totalMembros').textContent = cache.length;
-            let clas = 0, pros = 0;
-            cache.forEach(m => proscritos.includes(m.char_class) ? pros++ : clas++);
-            document.getElementById('totalClas').textContent = clas;
-            document.getElementById('totalProscritos').textContent = pros;
-            if (!membros.length) {
-                grid.innerHTML = `<div class="text-center py-10 text-amber-600 italic col-span-full">Nenhum herói encontrado.</div>`;
-                return;
-            }
-            membros.forEach(m => {
-                const card = document.createElement('div');
-                card.className = 'membro-card';
-                const getItem = (prefix) => ({
-                    nivel: m[`level_${prefix}`] || '-',
-                    tipo: m[`type_${prefix}`] || '-',
-                    amplificacao: m[`amp_${prefix}`] || '+0 (Sem amp)',
-                    nao_tem: m[`no_${prefix}`] || false,
-                });
-                const t5 = getItem('t5');
-                const pve = getItem('pve');
-                const map5 = getItem('map5');
-                const pvp1 = getItem('pvp1');
-                const pvp2 = getItem('pvp2');
-                const shieldPve = getItem('shieldpve');
-                const shieldPvp = getItem('shieldpvp');
-                const anel1Pvp = getItem('anel1pvp');
-                const anel2Pvp = getItem('anel2pvp');
-                const bracelete1Pvp = getItem('bracelete1pvp');
-                const bracelete2Pvp = getItem('bracelete2pvp');
-                const amuletoPvp = getItem('amuletopvp');
-                const capaPvp = getItem('capapvp');
-                const helmetPvp = getItem('helmetpvp');
-                const chestPvp = getItem('chestpvp');
-                const bootsPvp = getItem('bootspvp');
-                const glovesPvp = getItem('glovespvp');
-                const anel1Pve = getItem('anel1pve');
-                const anel2Pve = getItem('anel2pve');
-                const bracelete1Pve = getItem('bracelete1pve');
-                const bracelete2Pve = getItem('bracelete2pve');
-                const amuletoPve = getItem('amuletopve');
-                const capaPve = getItem('capapve');
-                const helmetPve = getItem('helmetpve');
-                const chestPve = getItem('chestpve');
-                const bootsPve = getItem('bootspve');
-                const glovesPve = getItem('glovespve');
-                const isTribo = !proscritos.includes(m.char_class);
-                const badgeClass = isTribo ? 'cla' : 'proscrito';
-                const badgeLabel = isTribo ? '⚔️ Clã da Montanha' : '💀 Proscrito';
-                
-                card.innerHTML = `
-                    <div class="flex items-center justify-between border-b border-amber-subtle pb-2.5">
-                        <div>
-                            <h3 class="text-base font-black text-amber-100 font-rpg">${m.char_name || '-'}</h3>
-                            <div class="flex items-center gap-2">
-                                <span class="text-xs text-amber-400 font-semibold">${m.char_class || '-'}</span>
-                                <span class="badge-classe ${badgeClass}">${badgeLabel}</span>
-                            </div>
-                        </div>
-                        <button onclick="del('${m.id}')" class="bg-[#130f0d] hover:bg-red-950/50 border border-red-800/50 text-red-400 px-2.5 py-1 rounded-lg text-xs transition flex items-center gap-1">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-
-                    <!-- ===== BLOCO DE RAMOS COM CORES ===== -->
-                    <div class="info-block-ramos grid grid-cols-1 md:grid-cols-3 gap-2 mt-3">
-                        <div class="ramo-item" style="border-left-color: ${m.almahad_branch1 === 'Assassinos' ? '#ef4444' : m.almahad_branch1 === 'Aventureiros' ? '#fbbf24' : m.almahad_branch1 === 'Magos' ? '#60a5fa' : '#94a3b8'};">
-                            <div class="flex items-center justify-between">
-                                <span class="ramo-label"><i class="fa-solid fa-chess-rook mr-1"></i>Ramo 1</span>
-                                <span class="ramo-talentos">35k: ${m.almahad_talentos35k_1 || 'Não'}</span>
-                            </div>
-                            <div class="ramo-value">${m.almahad_branch1 || '-'}</div>
-                            <div class="ramo-detail">Nvl ${m.almahad_level1 || '-'} • ${m.almahad_performance1 || '0%'}</div>
-                        </div>
-                        <div class="ramo-item" style="border-left-color: ${m.almahad_branch2 === 'Assassinos' ? '#ef4444' : m.almahad_branch2 === 'Aventureiros' ? '#fbbf24' : m.almahad_branch2 === 'Magos' ? '#60a5fa' : '#94a3b8'};">
-                            <div class="flex items-center justify-between">
-                                <span class="ramo-label"><i class="fa-solid fa-chess-rook mr-1"></i>Ramo 2</span>
-                                <span class="ramo-talentos">35k: ${m.almahad_talentos35k_2 || 'Não'}</span>
-                            </div>
-                            <div class="ramo-value">${m.almahad_branch2 || '-'}</div>
-                            <div class="ramo-detail">Nvl ${m.almahad_level2 || '-'} • ${m.almahad_performance2 || '0%'}</div>
-                        </div>
-                        <div class="ramo-item" style="border-left-color: ${m.almahad_branch3 === 'Assassinos' ? '#ef4444' : m.almahad_branch3 === 'Aventureiros' ? '#fbbf24' : m.almahad_branch3 === 'Magos' ? '#60a5fa' : '#94a3b8'};">
-                            <div class="flex items-center justify-between">
-                                <span class="ramo-label"><i class="fa-solid fa-chess-rook mr-1"></i>Ramo 3</span>
-                                <span class="ramo-talentos">35k: ${m.almahad_talentos35k_3 || 'Não'}</span>
-                            </div>
-                            <div class="ramo-value">${m.almahad_branch3 || '-'}</div>
-                            <div class="ramo-detail">Nvl ${m.almahad_level3 || '-'} • ${m.almahad_performance3 || '0%'}</div>
-                        </div>
-                    </div>
-
-                    <!-- ===== BLOCO T5 / FULL / LIVROS ===== -->
-                    <div class="info-block-t5-full grid grid-cols-2 md:grid-cols-4 gap-2 mt-2">
-                        <div class="t5-item">
-                            <span class="t5-label"><i class="fa-solid fa-fire mr-1"></i>T5</span>
-                            <span class="t5-value">${m.almahad_t5 || '-'}</span>
-                        </div>
-                        <div class="t5-item">
-                            <span class="t5-label"><i class="fa-solid fa-layer-group mr-1"></i>Full</span>
-                            <span class="t5-value">${m.full_branches || '-'}</span>
-                        </div>
-                        <div class="livro-item ${(m.ferocidade || 'Não') === 'Sim' ? 'sim' : 'nao'}">
-                            <i class="fa-solid fa-fire-flame-curved"></i> ${m.ferocidade || 'Não'}
-                        </div>
-                        <div class="livro-item ${(m.resiliencia || 'Não') === 'Sim' ? 'sim' : 'nao'}">
-                            <i class="fa-solid fa-shield"></i> ${m.resiliencia || 'Não'}
-                        </div>
-                    </div>
-
-                    <!-- ===== SETS PvP e PvE ===== -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-                        <div class="info-block-set pvp-set">
-                            <div class="set-title"><i class="fa-solid fa-shield-halved"></i> Set PvP</div>
-                            <div class="space-y-1 max-h-64 overflow-y-auto pr-1">
-                                ${badgeItemColorido('Elmo', helmetPvp, true)}
-                                ${badgeItemColorido('Peito', chestPvp, true)}
-                                ${badgeItemColorido('Luva', glovesPvp, true)}
-                                ${badgeItemColorido('Bota', bootsPvp, true)}
-                                ${badgeItemColorido('Brac 1', bracelete1Pvp, true)}
-                                ${badgeItemColorido('Brac 2', bracelete2Pvp, true)}
-                                ${badgeItemColorido('Anel 1', anel1Pvp, true)}
-                                ${badgeItemColorido('Anel 2', anel2Pvp, true)}
-                                ${badgeItemColorido('Amuleto', amuletoPvp, true)}
-                                ${badgeItemColorido('Capa', capaPvp, true)}
-                                ${badgeItemColorido('Arma 1', pvp1, true)}
-                                ${badgeItemColorido('Arma 2', pvp2, true)}
-                                ${badgeItemColorido('Escudo', shieldPvp, true)}
-                            </div>
-                        </div>
-                        <div class="info-block-set pve-set">
-                            <div class="set-title"><i class="fa-solid fa-staff-snake"></i> Set PvE</div>
-                            <div class="space-y-1 max-h-64 overflow-y-auto pr-1">
-                                ${badgeItemColorido('Elmo', helmetPve, false)}
-                                ${badgeItemColorido('Peito', chestPve, false)}
-                                ${badgeItemColorido('Luva', glovesPve, false)}
-                                ${badgeItemColorido('Bota', bootsPve, false)}
-                                ${badgeItemColorido('Brac 1', bracelete1Pve, false)}
-                                ${badgeItemColorido('Brac 2', bracelete2Pve, false)}
-                                ${badgeItemColorido('Anel 1', anel1Pve, false)}
-                                ${badgeItemColorido('Anel 2', anel2Pve, false)}
-                                ${badgeItemColorido('Amuleto', amuletoPve, false)}
-                                ${badgeItemColorido('Capa', capaPve, false)}
-                                ${badgeItemColorido('T5', t5, false)}
-                                ${badgeItemColorido('PvE', pve, false)}
-                                ${badgeItemColorido('Map5', map5, false)}
-                                ${badgeItemColorido('Escudo', shieldPve, false)}
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ===== FOOTER ===== -->
-                    <div class="info-footer flex items-center justify-between mt-2">
-                        <div class="flex items-center gap-4">
-                            <span class="text-xs text-amber-400/70"><i class="fa-solid fa-dungeon mr-1"></i>Catacumba: <span class="${m.has_catacumba ? 'sim' : 'nao'} font-bold">${m.has_catacumba ? (m.catacumba_type || 'Sim') : 'Não'}</span></span>
-                            <span class="text-xs text-amber-400/70"><i class="fa-solid fa-water mr-1"></i>Mermem: <span class="${m.has_mermem ? 'sim' : 'nao'} font-bold">${m.has_mermem ? (m.mermem_type || 'Sim') : 'Não'}</span></span>
-                        </div>
-                        <span class="text-xs text-amber-600/50">${m.created_at ? new Date(m.created_at).toLocaleDateString('pt-BR') : '-'}</span>
-                    </div>
+            } else if (itemId === 'Map5') {
+                levelOptions = `
+                    <option value="Nível 33">Nível 33</option>
                 `;
-                grid.appendChild(card);
-            });
-        }
-
-        function renderStats() {
-            if (!cache.length) return;
-            const isTrue = (val) => {
-                if (typeof val === 'boolean') return val === true;
-                if (typeof val === 'string') return ['sim', 'true', '1', 'ok', 'yes'].includes(val.toLowerCase());
-                if (typeof val === 'number') return val === 1;
-                return false;
-            };
-            const catacumbaCount = cache.filter(m => isTrue(m.has_catacumba)).length;
-            const catacumbaNao = cache.length - catacumbaCount;
-            const mermemCount = cache.filter(m => isTrue(m.has_mermem)).length;
-            const mermemNao = cache.length - mermemCount;
-            document.getElementById('statCatacumba').textContent = catacumbaCount;
-            document.getElementById('statMermem').textContent = mermemCount;
-            const counts = cache.reduce((acc, curr) => {
-                acc[curr.char_class || 'Outros'] = (acc[curr.char_class || 'Outros'] || 0) + 1;
-                return acc;
-            }, {});
-            const labelsClasses = Object.keys(counts);
-            const dataClasses = Object.values(counts);
-            const coresClasses = ['#d97706', '#eab308', '#22c55e', '#3b82f6', '#ef4444', '#f97316', '#a855f7', '#06b6d4', '#84cc16', '#ec4899', '#14b8a6', '#64748b'];
-            const ctxClasses = document.getElementById('chartClasses')?.getContext('2d');
-            if (ctxClasses) {
-                if (chartClassesInstance) chartClassesInstance.destroy();
-                chartClassesInstance = new Chart(ctxClasses, {
-                    type: 'doughnut',
-                    data: {
-                        labels: labelsClasses,
-                        datasets: [{ data: dataClasses, backgroundColor: coresClasses.slice(0, labelsClasses.length), borderWidth: 2, borderColor: '#1a1410', hoverOffset: 6 }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { position: 'bottom', labels: { color: '#fde68a', font: { family: 'serif', size: 11 }, boxWidth: 14, padding: 12 } } }
-                    }
-                });
-            }
-            const ctxPart = document.getElementById('chartParticipacao')?.getContext('2d');
-            if (ctxPart) {
-                if (chartParticipacaoInstance) chartParticipacaoInstance.destroy();
-                chartParticipacaoInstance = new Chart(ctxPart, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Catacumba', 'Mermem'],
-                        datasets: [
-                            { label: 'Sim', data: [catacumbaCount, mermemCount], backgroundColor: '#10b981', borderRadius: 6 },
-                            { label: 'Não', data: [catacumbaNao, mermemNao], backgroundColor: '#ef4444', borderRadius: 6 }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { position: 'top', labels: { color: '#fde68a', font: { family: 'serif', size: 11 } } } },
-                        scales: {
-                            x: { ticks: { color: '#fde68a', font: { family: 'serif', size: 12 } }, grid: { color: '#291c13' } },
-                            y: { ticks: { color: '#fde68a', precision: 0 }, grid: { color: '#291c13' } }
-                        }
-                    }
-                });
-            }
-        }
-
-        async function del(id) {
-            if (!requireAdmin()) return;
-            if (!confirm('Tem certeza que deseja excluir este herói do banco de dados?')) return;
-            const { error } = await _supabase.from('guild_members').delete().eq('id', id);
-            if (error) { alert('Erro ao excluir: ' + error.message); return; }
-            carregarMembros();
-        }
-
-        async function resetarHerois() {
-            if (!requireAdmin()) return;
-            if (!confirm('⚠️ ATENÇÃO: Isso irá marcar TODOS os heróis como deletados (lixeira). Deseja continuar?')) return;
-            if (!confirm('Última chance! Tem certeza que quer resetar todos os heróis cadastrados?')) return;
-            try {
-                const { error } = await _supabase
-                    .from('guild_members')
-                    .update({ deleted_at: new Date().toISOString() })
-                    .is('deleted_at', null);
-                if (error) throw new Error(error.message);
-                alert('✅ Todos os heróis foram movidos para a lixeira.');
-                carregarMembros();
-            } catch (err) {
-                alert('❌ Erro ao resetar heróis: ' + err.message);
-            }
-        }
-
-        // ================================================================
-        //  NAVEGAÇÃO ENTRE ABAS
-        // ================================================================
-        function mudarAba(aba) {
-            document.querySelectorAll('[id^="tab"]').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-
-            const tabMap = { 'membros': 'tabMembros', 'pts': 'tabPts', 'stats': 'tabStats', 'reservas': 'tabReservas' };
-            document.getElementById(tabMap[aba]).classList.remove('hidden');
-            document.getElementById('btnTab' + aba.charAt(0).toUpperCase() + aba.slice(1)).classList.add('active');
-
-            if (aba === 'stats') renderStats();
-            if (aba === 'reservas') renderReservas();
-            if (aba === 'pts') renderPts();
-        }
-
-        // ================================================================
-        //  FUNÇÕES DE PTs
-        // ================================================================
-        function salvarPtsStorage() {
-            localStorage.setItem('guilda_anomalia_pts', JSON.stringify(gruposPts));
-        }
-
-        function adicionarPt() {
-            if (!requireAdmin()) return;
-            const num = Math.max(0, ...Object.keys(gruposPts).map(Number)) + 1;
-            gruposPts[num] = { slots: [null, null, null, null, null], modo: 'normal', lider: null };
-            salvarPtsStorage();
-            renderPts();
-        }
-
-        function removerPt(ptId) {
-            if (!requireAdmin()) return;
-            delete gruposPts[ptId];
-            salvarPtsStorage();
-            renderPts();
-        }
-
-        function mudarModoPt(ptId, modo) {
-            if (!requireAdmin()) return;
-            if (gruposPts[ptId]) {
-                gruposPts[ptId].modo = modo;
-                salvarPtsStorage();
-                renderPts();
-            }
-        }
-
-        function definirLider(ptId, membroId) {
-            if (!requireAdmin()) return;
-            if (!gruposPts[ptId]) return;
-            if (gruposPts[ptId].lider === membroId) {
-                gruposPts[ptId].lider = null;
             } else {
-                gruposPts[ptId].lider = membroId;
+                // T5, Pvp1, Pvp2, ShieldPve, ShieldPvp
+                levelOptions = `
+                    <option value="Nível 30">Nível 30</option>
+                    <option value="Nível 33">Nível 33</option>
+                `;
             }
-            salvarPtsStorage();
-            renderPts();
-        }
-
-        function escalarMembro(ptId, slotIndex, membroId) {
-            if (!requireAdmin()) return;
-            if (!gruposPts[ptId]) gruposPts[ptId] = { slots: [null, null, null, null, null], modo: 'normal', lider: null };
-            gruposPts[ptId].slots[slotIndex] = membroId ? (cache.find(m => String(m.id) === String(membroId)) || null) : null;
-            salvarPtsStorage();
-            renderPts();
-        }
-
-        // ================================================================
-        //  TOOLTIP
-        // ================================================================
-        function gerarTooltipMembro(membro) {
-            if (!membro) return '';
-
-            const getItem = (prefix) => ({
-                nivel: membro[`level_${prefix}`] || '-',
-                tipo: membro[`type_${prefix}`] || '-',
-                amplificacao: membro[`amp_${prefix}`] || '+0 (Sem amp)',
-                nao_tem: membro[`no_${prefix}`] || false,
-            });
-
-            const t5 = getItem('t5');
-            const pve = getItem('pve');
-            const map5 = getItem('map5');
-            const pvp1 = getItem('pvp1');
-            const pvp2 = getItem('pvp2');
-            const shieldPve = getItem('shieldpve');
-            const shieldPvp = getItem('shieldpvp');
-            const helmetPvp = getItem('helmetpvp');
-            const chestPvp = getItem('chestpvp');
-            const bootsPvp = getItem('bootspvp');
-            const glovesPvp = getItem('glovespvp');
-            const helmetPve = getItem('helmetpve');
-            const chestPve = getItem('chestpve');
-            const bootsPve = getItem('bootspve');
-            const glovesPve = getItem('glovespve');
-            const anel1Pvp = getItem('anel1pvp');
-            const anel2Pvp = getItem('anel2pvp');
-            const anel1Pve = getItem('anel1pve');
-            const anel2Pve = getItem('anel2pve');
-            const amuletoPvp = getItem('amuletopvp');
-            const amuletoPve = getItem('amuletopve');
-            const capaPvp = getItem('capapvp');
-            const capaPve = getItem('capapve');
-            const bracelete1Pvp = getItem('bracelete1pvp');
-            const bracelete2Pvp = getItem('bracelete2pvp');
-            const bracelete1Pve = getItem('bracelete1pve');
-            const bracelete2Pve = getItem('bracelete2pve');
-
-            function fmtItem(obj) {
-                if (!obj || obj.nao_tem || (typeof obj === 'string' && ['não tenho', 'nao tenho', '-', ''].includes(obj.toLowerCase()))) {
-                    return '<span style="color:#fca5a5;">❌ Não</span>';
-                }
-                if (typeof obj === 'string') {
-                    if (obj.includes('+')) return `<span style="color:#a78bfa;">⭐ ${obj}</span>`;
-                    return `<span style="color:#6ee7b7;">✅ ${obj}</span>`;
-                }
-                let res = [];
-                if (obj.amplificacao && obj.amplificacao !== '+0 (Sem amp)') {
-                    res.push(`<span style="color:#a78bfa;">⭐ ${obj.amplificacao}</span>`);
-                }
-                if (obj.tipo && obj.tipo !== '-') {
-                    res.push(`<span style="color:#fbbf24;">(${obj.tipo})</span>`);
-                }
-                if (obj.nivel && obj.nivel !== '-') {
-                    res.push(`<span style="color:#6ee7b7;">Nvl ${obj.nivel}</span>`);
-                }
-                return res.length ? res.join(' ') : '<span style="color:#6ee7b7;">✅ Equipado</span>';
-            }
-
-            const isTribo = !proscritos.includes(membro.char_class);
-            const badgeIcon = isTribo ? '⚔️' : '💀';
-
-            const ramo1 = membro.almahad_branch1 || '❌ Vazio';
-            const ramo2 = membro.almahad_branch2 || '❌ Vazio';
-            const ramo3 = membro.almahad_branch3 || '❌ Vazio';
-            const nivel1 = membro.almahad_level1 || '-';
-            const nivel2 = membro.almahad_level2 || '-';
-            const nivel3 = membro.almahad_level3 || '-';
-            const perf1 = membro.almahad_performance1 || '0%';
-            const perf2 = membro.almahad_performance2 || '0%';
-            const perf3 = membro.almahad_performance3 || '0%';
-            const tal35k1 = membro.almahad_talentos35k_1 || 'Não';
-            const tal35k2 = membro.almahad_talentos35k_2 || 'Não';
-            const tal35k3 = membro.almahad_talentos35k_3 || 'Não';
-
-            const corRamo = (ramo) => {
-                if (ramo === 'Assassinos' || ramo.includes('Assassino')) return '#ef4444';
-                if (ramo === 'Aventureiros' || ramo.includes('Aventureiro')) return '#fbbf24';
-                if (ramo === 'Magos' || ramo.includes('Mago')) return '#60a5fa';
-                return '#94a3b8';
-            };
-
-            const classeCorRamo = (ramo) => {
-                if (ramo === 'Assassinos' || ramo.includes('Assassino')) return 'ramo-cor-assassinos';
-                if (ramo === 'Aventureiros' || ramo.includes('Aventureiro')) return 'ramo-cor-aventureiros';
-                if (ramo === 'Magos' || ramo.includes('Mago')) return 'ramo-cor-magos';
-                return 'ramo-cor-padrao';
-            };
 
             return `
-                <div class="preview-nome">${badgeIcon} ${membro.char_name || '-'}</div>
-                <div class="preview-classe">${membro.char_class || '-'} <span style="font-size:9px;color:#94a3b8;">${isTribo ? 'Clã da Montanha' : 'Proscrito'}</span></div>
-                <div class="preview-ramos">
-                    <div class="pr ${classeCorRamo(ramo1)}" style="border-left-color: ${corRamo(ramo1)};">
-                        <div class="pr-label" style="color: ${corRamo(ramo1)}; font-weight: 700;">${ramo1}</div>
-                        <div class="pr-value">Ramo 1</div>
-                        <div class="pr-detail">Nvl ${nivel1} • ${perf1}</div>
-                        <div class="pr-talentos">35k: ${tal35k1}</div>
+                <div class="item-card" id="card${item.id}">
+                    <div class="item-header">
+                        <div class="item-icon"><i class="fa-solid ${item.icon}"></i></div>
+                        <span class="item-name">${item.name}</span>
+                        <span class="item-badge primary">${item.badge}</span>
                     </div>
-                    <div class="pr ${classeCorRamo(ramo2)}" style="border-left-color: ${corRamo(ramo2)};">
-                        <div class="pr-label" style="color: ${corRamo(ramo2)}; font-weight: 700;">${ramo2}</div>
-                        <div class="pr-value">Ramo 2</div>
-                        <div class="pr-detail">Nvl ${nivel2} • ${perf2}</div>
-                        <div class="pr-talentos">35k: ${tal35k2}</div>
+                    <div class="item-fields">
+                        <div class="field-group">
+                            <label>Nível</label>
+                            <select id="level_${itemId}">
+                                ${levelOptions}
+                            </select>
+                        </div>
+                        <div class="field-group">
+                            <label>Tipo</label>
+                            <select id="type_${itemId}" class="weapon-type-select">
+                                <option value="" disabled selected>Selecione</option>
+                                ${weaponOptions}
+                            </select>
+                        </div>
                     </div>
-                    <div class="pr ${classeCorRamo(ramo3)}" style="border-left-color: ${corRamo(ramo3)};">
-                        <div class="pr-label" style="color: ${corRamo(ramo3)}; font-weight: 700;">${ramo3}</div>
-                        <div class="pr-value">Ramo 3</div>
-                        <div class="pr-detail">Nvl ${nivel3} • ${perf3}</div>
-                        <div class="pr-talentos">35k: ${tal35k3}</div>
+                    <select id="amp_${itemId}" onchange="updateStars('amp_${itemId}', 'stars_${itemId}')" class="item-amp-select">
+                        ${generateAmpOptions()}
+                    </select>
+                    <div id="stars_${itemId}" class="item-stars">
+                        ${'<span class="star-inactive">★</span>'.repeat(10)}
                     </div>
-                </div>
-                <div class="preview-info-extra">
-                    <span class="extra-item">🔥 T5: <span class="extra-value">${membro.almahad_t5 || '-'}</span></span>
-                    <span class="extra-item">🗺️ Map5: <span class="extra-value">${fmtItem(map5)}</span></span>
-                    <span class="extra-item">📚 Full: <span class="extra-value">${membro.full_branches || '-'}</span></span>
-                    <span class="extra-item ${(membro.ferocidade || 'Não') === 'Sim' ? 'sim' : 'nao'}">🔥 Ferocidade: ${membro.ferocidade || 'Não'}</span>
-                    <span class="extra-item ${(membro.resiliencia || 'Não') === 'Sim' ? 'sim' : 'nao'}">🛡️ Resiliência: ${membro.resiliencia || 'Não'}</span>
-                </div>
-                <div class="preview-status">
-                    <span class="st ${membro.has_catacumba ? 'sim' : 'nao'}"><i class="fa-solid fa-dungeon"></i> Catacumba: ${membro.has_catacumba ? (membro.catacumba_type || 'Sim') : 'Não'}</span>
-                    <span class="st ${membro.has_mermem ? 'sim' : 'nao'}"><i class="fa-solid fa-water"></i> Mermem: ${membro.has_mermem ? (membro.mermem_type || 'Sim') : 'Não'}</span>
-                </div>
-                <div class="preview-sets">
-                    <div style="grid-column:1/-1;font-size:8px;color:#a78bfa;text-transform:uppercase;letter-spacing:0.3px;margin-top:2px;">PvP</div>
-                    <div class="ps-item"><span class="ps-label">Elmo</span><span class="ps-value">${fmtItem(helmetPvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Peito</span><span class="ps-value">${fmtItem(chestPvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Luva</span><span class="ps-value">${fmtItem(glovesPvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Bota</span><span class="ps-value">${fmtItem(bootsPvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Brac 1</span><span class="ps-value">${fmtItem(bracelete1Pvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Brac 2</span><span class="ps-value">${fmtItem(bracelete2Pvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Anel 1</span><span class="ps-value">${fmtItem(anel1Pvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Anel 2</span><span class="ps-value">${fmtItem(anel2Pvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Amuleto</span><span class="ps-value">${fmtItem(amuletoPvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Capa</span><span class="ps-value">${fmtItem(capaPvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Arma 1</span><span class="ps-value">${fmtItem(pvp1)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Arma 2</span><span class="ps-value">${fmtItem(pvp2)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Escudo</span><span class="ps-value">${fmtItem(shieldPvp)}</span></div>
-                    <div style="grid-column:1/-1;font-size:8px;color:#6ee7b7;text-transform:uppercase;letter-spacing:0.3px;margin-top:4px;">PvE</div>
-                    <div class="ps-item"><span class="ps-label">Elmo</span><span class="ps-value">${fmtItem(helmetPve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Peito</span><span class="ps-value">${fmtItem(chestPve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Luva</span><span class="ps-value">${fmtItem(glovesPve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Bota</span><span class="ps-value">${fmtItem(bootsPve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Brac 1</span><span class="ps-value">${fmtItem(bracelete1Pve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Brac 2</span><span class="ps-value">${fmtItem(bracelete2Pve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Anel 1</span><span class="ps-value">${fmtItem(anel1Pve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Anel 2</span><span class="ps-value">${fmtItem(anel2Pve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Amuleto</span><span class="ps-value">${fmtItem(amuletoPve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Capa</span><span class="ps-value">${fmtItem(capaPve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">T5</span><span class="ps-value">${fmtItem(t5)}</span></div>
-                    <div class="ps-item"><span class="ps-label">PvE</span><span class="ps-value">${fmtItem(pve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Map5</span><span class="ps-value">${fmtItem(map5)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Escudo</span><span class="ps-value">${fmtItem(shieldPve)}</span></div>
+                    <div class="item-actions">
+                        <label><input type="checkbox" id="no_${itemId}" class="custom-checkbox" /> Não tenho</label>
+                        <label><input type="checkbox" id="check_${itemId}" class="custom-checkbox" /> Equipado</label>
+                    </div>
                 </div>
             `;
         }
 
-        // ================================================================
-        //  RENDERIZAR PTs
-        // ================================================================
-        function renderPts() {
-            const container = document.getElementById('gridPts');
-            container.innerHTML = '';
-            const idsPt = Object.keys(gruposPts);
-            if (!idsPt.length) {
-                container.innerHTML =
-                    '<div class="text-center py-10 text-amber-600 italic col-span-full">Nenhuma PT criada. Clique em "Nova PT" ou "Reconstruir PTs".</div>';
-                return;
+        // ============================================================
+        // GERADOR DE CARD DE SET (PvP/PvE)
+        // ============================================================
+        function generateSetCard(item, typeOptions, classValue, isPvp) {
+            let filteredOptions = [...typeOptions];
+            if (classValue && classSetTypes[classValue]) {
+                const allowedTypes = classSetTypes[classValue];
+                if (allowedTypes && allowedTypes.length > 0) {
+                    filteredOptions = typeOptions.filter(t => allowedTypes.includes(t));
+                }
             }
-            const nomesModos = { normal: 'Padrão', gvg: 'GvG (PvP)', pve: 'PvE Geral', map5: 'Raide Mapa 5', t5: 'Raide T5' };
-            idsPt.forEach((ptId, index) => {
-                const ptData = gruposPts[ptId] || { slots: [null, null, null, null, null], modo: 'normal', lider: null };
-                const slots = ptData.slots || [null, null, null, null, null];
-                const modo = ptData.modo || 'normal';
-                const liderId = ptData.lider || null;
+            if (filteredOptions.length === 0) filteredOptions = typeOptions;
+            const typeOpts = filteredOptions.map(t => `<option value="${t}">${t}</option>`).join('');
+            const itemId = item.id;
 
-                const ptCard = document.createElement('div');
-                ptCard.className = `pt-card ${modo !== 'normal' ? 'modo-especial' : ''}`;
+            let levelOptions = '';
+            if (isPvp) {
+                levelOptions = `
+                    <div class="field-group" style="grid-column: 1 / -1;">
+                        <label>Nível</label>
+                        <select id="level_${itemId}">
+                            <option value="GZ 32">GZ 32</option>
+                            <option value="GZ 34">GZ 34</option>
+                            <option value="AP 30">AP 30</option>
+                            <option value="AP 33">AP 33</option>
+                        </select>
+                    </div>
+                `;
+            } else {
+                levelOptions = `
+                    <div class="field-group" style="grid-column: 1 / -1;">
+                        <label>Nível</label>
+                        <select id="level_${itemId}">
+                            <option value="Nível 30">Nível 30</option>
+                            <option value="Nível 32">Nível 32</option>
+                            <option value="Nível 34">Nível 34</option>
+                        </select>
+                    </div>
+                `;
+            }
 
-                let slotsHtml = slots.map((membroAtual, slotIdx) => {
-                    const membro = membroAtual || null;
-                    const isVazio = !membro;
-                    const isLider = membro && liderId && String(membro.id) === String(liderId);
-                    const tooltipHTML = membro ? gerarTooltipMembro(membro) : '';
-
-                    return `<div class="flex items-center justify-between bg-[#130f0d] px-2.5 py-1.5 rounded-lg text-xs border border-[#352214] ${isLider ? 'border-l-4 border-l-yellow-400' : ''}">
-                        <span class="text-amber-500 font-bold w-6">#${slotIdx + 1}</span>
-                        <div class="flex-1 mx-2">
-                            <div class="${membro ? 'membro-pt-item' : ''}">
-                                <select onchange="escalarMembro('${ptId}', ${slotIdx}, this.value)" class="bg-[#0d0b09] border border-[#422b17] rounded px-2 py-1 text-amber-200 w-full focus:outline-none ${isVazio ? 'text-amber-500/50' : 'text-amber-200'}">
-                                    <option value="">(Vazio - Selecionar Membro)</option>
-                                    ${cache.map(m => {
-                                        const isSelected = membro && String(membro.id) === String(m.id);
-                                        return `<option value="${m.id}" ${isSelected ? 'selected' : ''}>${m.char_name} (${m.char_class})</option>`;
-                                    }).join('')}
-                                </select>
-                                ${membro ? `<div class="tooltip-preview">${tooltipHTML}</div>` : ''}
-                            </div>
-                        </div>
-                        ${membro ? `
-                            <div class="flex items-center gap-2">
-                                ${isLider ? '<span class="text-yellow-400 text-xs font-bold">⭐ Líder</span>' : ''}
-                                <button onclick="definirLider('${ptId}', '${membro.id}')" class="text-xs ${isLider ? 'text-yellow-400' : 'text-amber-600'} hover:text-yellow-400 transition" title="${isLider ? 'Remover líder' : 'Definir como líder'}">
-                                    <i class="fa-solid ${isLider ? 'fa-star' : 'fa-star'}"></i>
-                                </button>
-                                <span class="text-[10px] text-amber-400/50">${membro.char_name}</span>
-                            </div>
-                        ` : ''}
-                    </div>`;
-                }).join('');
-
-                const liderAtual = liderId ? cache.find(m => String(m.id) === String(liderId)) : null;
-
-                ptCard.innerHTML = `
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-[#352214] pb-2 gap-2">
-                        <h3 class="text-sm font-black text-amber-100 font-rpg">
-                            <i class="fa-solid fa-people-group text-amber-600"></i> PT ${index + 1}
-                            ${liderAtual ? `<span class="text-[10px] text-yellow-400 font-rpg ml-2">⭐ Líder: ${liderAtual.char_name}</span>` : ''}
-                        </h3>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between">
-                            <select onchange="mudarModoPt('${ptId}', this.value)" class="bg-[#0d0b09] border border-[#422b17] rounded px-2 py-1 text-[11px] font-rpg font-bold focus:outline-none text-amber-200">
-                                ${Object.entries(nomesModos).map(([k, v]) => `<option value="${k}" ${modo === k ? 'selected' : ''}>Modo: ${v}</option>`).join('')}
+            return `
+                <div class="item-card">
+                    <div class="item-header">
+                        <div class="item-icon"><i class="fa-solid ${item.icon}"></i></div>
+                        <span class="item-name">${item.name}</span>
+                    </div>
+                    <div class="item-fields">
+                        <div class="field-group" style="grid-column: 1 / -1;">
+                            <label>Tipo</label>
+                            <select id="type_${itemId}">
+                                ${typeOpts}
                             </select>
-                            <button onclick="removerPt('${ptId}')" class="text-red-400 hover:text-red-300 text-xs transition cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                        ${levelOptions}
+                    </div>
+                    <select id="amp_${itemId}" onchange="updateStars('amp_${itemId}', 'stars_${itemId}')" class="item-amp-select">
+                        ${generateAmpOptions()}
+                    </select>
+                    <div id="stars_${itemId}" class="item-stars">
+                        ${'<span class="star-inactive">★</span>'.repeat(10)}
+                    </div>
+                    <div class="item-actions">
+                        <label><input type="checkbox" id="no_${itemId}" class="custom-checkbox" /> Não tenho</label>
+                        <label><input type="checkbox" id="check_${itemId}" class="custom-checkbox" /> Equipado</label>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============================================================
+        // GERADOR DE CARD DE ACESSÓRIO
+        // ============================================================
+        function generateAccessoryCard(item, typeOptions) {
+            const typeOpts = typeOptions.map(t => `<option value="${t}">${t}</option>`).join('');
+            const itemId = item.id;
+            return `
+                <div class="item-card">
+                    <div class="item-header">
+                        <div class="item-icon"><i class="fa-solid ${item.icon}"></i></div>
+                        <span class="item-name">${item.name}</span>
+                    </div>
+                    <div class="item-fields">
+                        <div class="field-group" style="grid-column: 1 / -1;">
+                            <label>Tipo</label>
+                            <select id="type_${itemId}">
+                                ${typeOpts}
+                            </select>
                         </div>
                     </div>
-                    <div class="space-y-2">${slotsHtml}</div>
-                    <div class="mt-2 text-[10px] text-amber-500/60 text-center">${slots.filter(Boolean).length}/5 membros escalados</div>
-                `;
-                container.appendChild(ptCard);
-            });
+                    <select id="amp_${itemId}" onchange="updateStars('amp_${itemId}', 'stars_${itemId}')" class="item-amp-select">
+                        ${generateAmpOptions()}
+                    </select>
+                    <div id="stars_${itemId}" class="item-stars">
+                        ${'<span class="star-inactive">★</span>'.repeat(10)}
+                    </div>
+                    <div class="item-actions">
+                        <label><input type="checkbox" id="no_${itemId}" class="custom-checkbox" /> Não tenho</label>
+                        <label><input type="checkbox" id="check_${itemId}" class="custom-checkbox" /> Equipado</label>
+                    </div>
+                </div>
+            `;
         }
 
-        // ================================================================
-        //  RECONSTRUIR PTs
-        // ================================================================
-        function reconstruirPts() {
-            if (!requireAdmin()) return;
-            if (!cache.length) { alert('Não há membros ativos para distribuir.'); return; }
-            const shuffled = [...cache].sort(() => Math.random() - 0.5);
-            const grupos = [];
-            const TAMANHO_PT = 5;
-            for (let i = 0; i < shuffled.length; i += TAMANHO_PT) {
-                grupos.push(shuffled.slice(i, i + TAMANHO_PT));
-            }
-            gruposPts = {};
-            grupos.forEach((grupo, idx) => {
-                const ptId = idx + 1;
-                const slots = [null, null, null, null, null];
-                grupo.forEach((membro, slotIdx) => {
-                    if (slotIdx < 5) slots[slotIdx] = membro;
-                });
-                const lider = grupo.length > 0 ? grupo[0].id : null;
-                gruposPts[ptId] = { slots, modo: 'normal', lider };
-            });
-            salvarPtsStorage();
-            renderPts();
-            document.getElementById('statusMensagem').textContent = `✅ PTs reconstruídas com ${shuffled.length} membros em ${grupos.length} grupos.`;
-        }
-
-        // ================================================================
-        //  COPIAR PARA DISCORD (COM EVENTO, HORÁRIO E CHEGADA MÁXIMA)
-        // ================================================================
-        function copiarDiscord() {
-            if (!requireAdmin()) return;
-            
-            const dados = getHorarioFormatado();
-            
-            // Data e hora de Brasília (UTC-3)
-            const agora = new Date();
-            const offsetBrasilia = -3;
-            const utc = agora.getTime() + (agora.getTimezoneOffset() * 60000);
-            const horaBrasilia = new Date(utc + (3600000 * offsetBrasilia));
-            
-            const diaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
-            const mes = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-            
-            const dataFormatada = `${diaSemana[horaBrasilia.getDay()]}, ${String(horaBrasilia.getDate()).padStart(2,'0')} de ${mes[horaBrasilia.getMonth()]} de ${horaBrasilia.getFullYear()}`;
-            const horaFormatada = `${String(horaBrasilia.getHours()).padStart(2,'0')}:${String(horaBrasilia.getMinutes()).padStart(2,'0')}`;
-            
-            let texto = `⚔️ **ESCALAÇÃO DE PTs - GUILDA ANOMALIA** ⚔️\n\n`;
-            texto += `📅 **Data:** ${dataFormatada}\n`;
-            texto += `⏰ **Horário:** ${dados.horario}\n`;
-            texto += `⏳ **Chegada Máxima:** ${dados.chegada} (ultrapassou, perdeu a vaga)\n`;
-            texto += `🏷️ **Evento:** ${dados.evento}\n`;
-            texto += `🕐 **Gerado em:** ${horaFormatada} (Horário de Brasília)\n\n`;
-            texto += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
-            
-            const nomesModos = { normal: 'Padrão', gvg: 'GvG (PvP)', pve: 'PvE Geral', map5: 'Raide Mapa 5', t5: 'Raide T5' };
-            const idsPt = Object.keys(gruposPts);
-            if (!idsPt.length) { alert('Nenhuma PT para copiar.'); return; }
-            
-            idsPt.forEach((ptId, index) => {
-                const ptData = gruposPts[ptId] || {};
-                const liderId = ptData.lider || null;
-                const liderNome = liderId ? cache.find(m => String(m.id) === String(liderId))?.char_name || 'Sem líder' : 'Sem líder';
-                texto += `🔹 **PT ${index + 1}** [Modo: ${nomesModos[ptData.modo || 'normal']}] ⭐ Líder: ${liderNome}\n`;
-                (ptData.slots || []).forEach((m, sIdx) => {
-                    const isLider = m && liderId && String(m.id) === String(liderId);
-                    texto += m && m.char_name ?
-                        `> ${sIdx + 1}. ${isLider ? '⭐ ' : ''}${m.char_name} (${m.char_class}) | Catac: ${m.has_catacumba ? '✅' : '❌'} | Merm: ${m.has_mermem ? '✅' : '❌'}\n` :
-                        `> ${sIdx + 1}. [Vazio]\n`;
-                });
-                texto += `\n`;
-            });
-            
-            navigator.clipboard.writeText(texto).then(() => {
-                alert('✅ Escalação copiada para a área de transferência (formato Discord)!');
-                document.getElementById('statusMensagem').textContent = '📋 Copiado para Discord.';
-            });
-        }
-
-        // ================================================================
-        //  COPIAR PARA WHATSAPP (COM EVENTO, HORÁRIO E CHEGADA MÁXIMA)
-        // ================================================================
-        function copiarWhatsApp() {
-            if (!requireAdmin()) return;
-            
-            const dados = getHorarioFormatado();
-            
-            // Data e hora de Brasília (UTC-3)
-            const agora = new Date();
-            const offsetBrasilia = -3;
-            const utc = agora.getTime() + (agora.getTimezoneOffset() * 60000);
-            const horaBrasilia = new Date(utc + (3600000 * offsetBrasilia));
-            
-            const diaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
-            const mes = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-            
-            const dataFormatada = `${diaSemana[horaBrasilia.getDay()]}, ${String(horaBrasilia.getDate()).padStart(2,'0')} de ${mes[horaBrasilia.getMonth()]} de ${horaBrasilia.getFullYear()}`;
-            const horaFormatada = `${String(horaBrasilia.getHours()).padStart(2,'0')}:${String(horaBrasilia.getMinutes()).padStart(2,'0')}`;
-            
-            let texto = `⚔️ ESCALAÇÃO DE PTs - GUILDA ANOMALIA ⚔️\n\n`;
-            texto += `📅 Data: ${dataFormatada}\n`;
-            texto += `⏰ Horário: ${dados.horario}\n`;
-            texto += `⏳ Chegada Máxima: ${dados.chegada} (ultrapassou, perdeu a vaga)\n`;
-            texto += `🏷️ Evento: ${dados.evento}\n`;
-            texto += `🕐 Gerado: ${horaFormatada} (Brasília)\n\n`;
-            
-            const idsPt = Object.keys(gruposPts);
-            if (!idsPt.length) { alert('Nenhuma PT para copiar.'); return; }
-            
-            const nomesModos = { normal: 'Padrão', gvg: 'GvG (PvP)', pve: 'PvE Geral', map5: 'Raide Mapa 5', t5: 'Raide T5' };
-            
-            idsPt.forEach((ptId, index) => {
-                const ptData = gruposPts[ptId] || {};
-                const slots = ptData.slots || [null, null, null, null, null];
-                const modo = ptData.modo || 'normal';
-                const liderId = ptData.lider || null;
-                const liderNome = liderId ? cache.find(m => String(m.id) === String(liderId))?.char_name || 'Sem líder' : 'Sem líder';
-
-                texto += `🔹 PT ${index + 1} [${nomesModos[modo]}] ⭐ Líder: ${liderNome}\n`;
-                slots.forEach((m, sIdx) => {
-                    if (m) {
-                        const isLider = liderId && String(m.id) === String(liderId);
-                        texto += `   ${sIdx + 1}. ${isLider ? '⭐ ' : ''}${m.char_name} (${m.char_class})\n`;
-                    } else {
-                        texto += `   ${sIdx + 1}. [Vazio]\n`;
+        // ============================================================
+        // CONFIGURAR CHECKBOXES (MÚTUA EXCLUSÃO)
+        // ============================================================
+        function setupCheckboxes() {
+            setTimeout(function() {
+                const cards = document.querySelectorAll('.item-card');
+                cards.forEach(card => {
+                    const noCheck = card.querySelector('input[type="checkbox"][id^="no_"]');
+                    const checkEl = card.querySelector('input[type="checkbox"][id^="check_"]');
+                    const ampEl = card.querySelector('select[id^="amp_"]');
+                    const levelEl = card.querySelector('select[id^="level_"]');
+                    const typeEl = card.querySelector('select[id^="type_"]');
+                    if (noCheck && checkEl) {
+                        const newNoCheck = noCheck.cloneNode(true);
+                        const newCheckEl = checkEl.cloneNode(true);
+                        noCheck.parentNode.replaceChild(newNoCheck, noCheck);
+                        checkEl.parentNode.replaceChild(newCheckEl, checkEl);
+                        const finalNoCheck = newNoCheck;
+                        const finalCheckEl = newCheckEl;
+                        finalNoCheck.addEventListener('change', function() {
+                            if (this.checked) {
+                                finalCheckEl.checked = false;
+                                finalCheckEl.disabled = true;
+                                if (ampEl) { ampEl.value = '+0 (Sem amp)'; ampEl.disabled = true; ampEl.style.opacity = '0.5'; }
+                                if (levelEl) { levelEl.disabled = true; levelEl.style.opacity = '0.5'; }
+                                if (typeEl) { typeEl.disabled = true; typeEl.style.opacity = '0.5'; }
+                            } else {
+                                finalCheckEl.disabled = false;
+                                if (ampEl) { ampEl.disabled = false; ampEl.style.opacity = '1'; }
+                                if (levelEl) { levelEl.disabled = false; levelEl.style.opacity = '1'; }
+                                if (typeEl) { typeEl.disabled = false; typeEl.style.opacity = '1'; }
+                            }
+                            const starsId = ampEl ? ampEl.id.replace('amp_', 'stars_') : null;
+                            if (starsId) updateStars(ampEl.id, starsId);
+                        });
+                        finalCheckEl.addEventListener('change', function() {
+                            if (this.checked) {
+                                finalNoCheck.checked = false;
+                                finalNoCheck.disabled = true;
+                                if (ampEl) { ampEl.disabled = false; ampEl.style.opacity = '1'; }
+                                if (levelEl) { levelEl.disabled = false; levelEl.style.opacity = '1'; }
+                                if (typeEl) { typeEl.disabled = false; typeEl.style.opacity = '1'; }
+                            } else {
+                                finalNoCheck.disabled = false;
+                            }
+                        });
                     }
                 });
-                texto += `\n`;
-            });
+            }, 100);
+        }
 
-            navigator.clipboard.writeText(texto).then(() => {
-                alert('✅ Escalação copiada para a área de transferência (formato WhatsApp)!');
-                document.getElementById('statusMensagem').textContent = '📋 Copiado para WhatsApp.';
+        // ============================================================
+        // RENDERIZAR TODOS OS ITENS
+        // ============================================================
+        function renderItems(classValue) {
+            const weaponsContainer = document.getElementById('weaponsContainer');
+            let weaponsHTML = '';
+            weaponItems.forEach(item => {
+                const cardHTML = generateWeaponCard(item, classValue);
+                if (cardHTML) weaponsHTML += cardHTML;
+            });
+            weaponsContainer.innerHTML = weaponsHTML;
+
+            const pvpAccContainer = document.getElementById('pvpAccessoriesContainer');
+            const pvpTypeOptions = ['Competidor', 'GZ', 'Resistir'];
+            pvpAccContainer.innerHTML = pvpAccessories.map(item => generateAccessoryCard(item, pvpTypeOptions)).join('');
+
+            const pvpSetContainer = document.getElementById('pvpSetContainer');
+            const setPvpTypeOptions = ['Tecido', 'Leve', 'Pesado'];
+            pvpSetContainer.innerHTML = pvpSetItems.map(item => generateSetCard(item, setPvpTypeOptions, classValue, true)).join('');
+
+            const pveAccContainer = document.getElementById('pveAccessoriesContainer');
+            const pveTypeOptions = ['CD', 'F.A.', 'F.A.C.', 'PH', 'Fúria'];
+            pveAccContainer.innerHTML = pveAccessories.map(item => generateAccessoryCard(item, pveTypeOptions)).join('');
+
+            const pveSetContainer = document.getElementById('pveSetContainer');
+            const setPveTypeOptions = ['Tecido', 'Leve', 'Pesado'];
+            pveSetContainer.innerHTML = pveSetItems.map(item => generateSetCard(item, setPveTypeOptions, classValue, false)).join('');
+
+            setupCheckboxes();
+            document.querySelectorAll('[id^="amp_"]').forEach(select => {
+                const starsId = select.id.replace('amp_', 'stars_');
+                updateStars(select.id, starsId);
             });
         }
 
-        // Inicializa o estado dos botões conforme login
-        atualizarInterfaceLogin();
+        // ============================================================
+        // EVENTOS
+        // ============================================================
+        document.getElementById('charClass').addEventListener('change', function() {
+            renderItems(this.value);
+        });
+
+        function toggleCatacumbaType(show) {
+            const container = document.getElementById('catacumbaTypeContainer');
+            const select = document.getElementById('catacumbaType');
+            if (container && select) {
+                if (show) {
+                    container.classList.remove('hidden');
+                    select.setAttribute('required', 'true');
+                } else {
+                    container.classList.add('hidden');
+                    select.removeAttribute('required');
+                    select.value = '';
+                }
+            }
+        }
+
+        function toggleMermemType(show) {
+            const container = document.getElementById('mermemTypeContainer');
+            const select = document.getElementById('mermemType');
+            if (container && select) {
+                if (show) {
+                    container.classList.remove('hidden');
+                    select.setAttribute('required', 'true');
+                } else {
+                    container.classList.add('hidden');
+                    select.removeAttribute('required');
+                    select.value = '';
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const classSelect = document.getElementById('charClass');
+            renderItems(classSelect.value || '');
+            toggleCatacumbaType(false);
+            toggleMermemType(false);
+            updatePerformance('1', '');
+            updatePerformance('2', '');
+            updatePerformance('3', '');
+        });
+
+        // ============================================================
+        // PEGAR DADOS DO ITEM
+        // ============================================================
+        function getItemData(id) {
+            const levelEl = document.getElementById('level_' + id);
+            const typeEl = document.getElementById('type_' + id);
+            const ampEl = document.getElementById('amp_' + id);
+            const checkEl = document.getElementById('check_' + id);
+            const noEl = document.getElementById('no_' + id);
+            return {
+                level: levelEl ? levelEl.value : '-',
+                type: typeEl ? typeEl.value : '-',
+                amp: ampEl ? ampEl.value : '+0 (Sem amp)',
+                check: checkEl ? checkEl.checked : false,
+                no: noEl ? noEl.checked : false
+            };
+        }
+
+        // ============================================================
+        // SUBMIT
+        // ============================================================
+        document.getElementById('itemForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const icon = document.getElementById('submitIcon');
+            const btnText = document.getElementById('btnText');
+            if (btn.disabled) return;
+            btn.disabled = true;
+            icon.className = 'fa-solid fa-spinner fa-spin text-cyan-100 drop-shadow-lg text-xl';
+            btnText.textContent = 'ENVIANDO...';
+
+            try {
+                const charName = document.getElementById('charName').value.trim();
+                if (!charName) {
+                    alert('❌ Digite o nome do personagem!');
+                    btn.disabled = false;
+                    icon.className = 'fa-solid fa-scroll text-cyan-100 drop-shadow-lg text-xl animate-float';
+                    btnText.textContent = 'ENVIAR DADOS DA GUILDA';
+                    return;
+                }
+                if (charName.length > 10) {
+                    alert('❌ O nome do personagem deve ter no máximo 10 caracteres!');
+                    btn.disabled = false;
+                    icon.className = 'fa-solid fa-scroll text-cyan-100 drop-shadow-lg text-xl animate-float';
+                    btnText.textContent = 'ENVIAR DADOS DA GUILDA';
+                    return;
+                }
+
+                const hasCatacumba = document.querySelector('input[name="hasCatacumba"]:checked');
+                const hasMermem = document.querySelector('input[name="hasMermem"]:checked');
+                const ferocidade = document.querySelector('input[name="ferocidade"]:checked');
+                const resiliencia = document.querySelector('input[name="resiliencia"]:checked');
+
+                const getTalentos35k = (ramo) => {
+                    const el = document.querySelector(`input[name="talentos35k_${ramo}"]:checked`);
+                    return el ? el.value : 'Não';
+                };
+
+                const payload = {
+                    char_name: charName,
+                    char_class: document.getElementById('charClass').value,
+                    almahad_branch1: document.getElementById('almahadBranch1')?.value || '-',
+                    almahad_level1: document.getElementById('almahadLevel1')?.value || '-',
+                    almahad_performance1: document.getElementById('performanceText1')?.textContent || '0%',
+                    almahad_talentos35k_1: getTalentos35k(1),
+                    almahad_branch2: document.getElementById('almahadBranch2')?.value || '-',
+                    almahad_level2: document.getElementById('almahadLevel2')?.value || '-',
+                    almahad_performance2: document.getElementById('performanceText2')?.textContent || '0%',
+                    almahad_talentos35k_2: getTalentos35k(2),
+                    almahad_branch3: document.getElementById('almahadBranch3')?.value || '-',
+                    almahad_level3: document.getElementById('almahadLevel3')?.value || '-',
+                    almahad_performance3: document.getElementById('performanceText3')?.textContent || '0%',
+                    almahad_talentos35k_3: getTalentos35k(3),
+                    almahad_t5: document.getElementById('almahadT5')?.value || '-',
+                    full_branches: document.getElementById('fullBranches')?.value || '-',
+                    ferocidade: ferocidade ? ferocidade.value : 'Não',
+                    resiliencia: resiliencia ? resiliencia.value : 'Não',
+
+                    level_t5: getItemData('T5').level,
+                    type_t5: getItemData('T5').type,
+                    amp_t5: getItemData('T5').amp,
+                    check_t5: getItemData('T5').check,
+                    no_t5: getItemData('T5').no,
+
+                    level_pve: getItemData('Pve').level,
+                    type_pve: getItemData('Pve').type,
+                    amp_pve: getItemData('Pve').amp,
+                    check_pve: getItemData('Pve').check,
+                    no_pve: getItemData('Pve').no,
+
+                    level_map5: getItemData('Map5').level,
+                    type_map5: getItemData('Map5').type,
+                    amp_map5: getItemData('Map5').amp,
+                    check_map5: getItemData('Map5').check,
+                    no_map5: getItemData('Map5').no,
+
+                    level_pvp1: getItemData('Pvp1').level,
+                    type_pvp1: getItemData('Pvp1').type,
+                    amp_pvp1: getItemData('Pvp1').amp,
+                    check_pvp1: getItemData('Pvp1').check,
+                    no_pvp1: getItemData('Pvp1').no,
+
+                    level_pvp2: getItemData('Pvp2').level,
+                    type_pvp2: getItemData('Pvp2').type,
+                    amp_pvp2: getItemData('Pvp2').amp,
+                    check_pvp2: getItemData('Pvp2').check,
+                    no_pvp2: getItemData('Pvp2').no,
+
+                    level_shieldpve: getItemData('ShieldPve').level,
+                    type_shieldpve: getItemData('ShieldPve').type,
+                    amp_shieldpve: getItemData('ShieldPve').amp,
+                    check_shieldpve: getItemData('ShieldPve').check,
+                    no_shieldpve: getItemData('ShieldPve').no,
+
+                    level_shieldpvp: getItemData('ShieldPvp').level,
+                    type_shieldpvp: getItemData('ShieldPvp').type,
+                    amp_shieldpvp: getItemData('ShieldPvp').amp,
+                    check_shieldpvp: getItemData('ShieldPvp').check,
+                    no_shieldpvp: getItemData('ShieldPvp').no,
+
+                    level_anel1pvp: getItemData('Anel1Pvp').level,
+                    type_anel1pvp: getItemData('Anel1Pvp').type,
+                    amp_anel1pvp: getItemData('Anel1Pvp').amp,
+                    check_anel1pvp: getItemData('Anel1Pvp').check,
+                    no_anel1pvp: getItemData('Anel1Pvp').no,
+
+                    level_anel2pvp: getItemData('Anel2Pvp').level,
+                    type_anel2pvp: getItemData('Anel2Pvp').type,
+                    amp_anel2pvp: getItemData('Anel2Pvp').amp,
+                    check_anel2pvp: getItemData('Anel2Pvp').check,
+                    no_anel2pvp: getItemData('Anel2Pvp').no,
+
+                    level_bracelete1pvp: getItemData('Bracelete1Pvp').level,
+                    type_bracelete1pvp: getItemData('Bracelete1Pvp').type,
+                    amp_bracelete1pvp: getItemData('Bracelete1Pvp').amp,
+                    check_bracelete1pvp: getItemData('Bracelete1Pvp').check,
+                    no_bracelete1pvp: getItemData('Bracelete1Pvp').no,
+
+                    level_bracelete2pvp: getItemData('Bracelete2Pvp').level,
+                    type_bracelete2pvp: getItemData('Bracelete2Pvp').type,
+                    amp_bracelete2pvp: getItemData('Bracelete2Pvp').amp,
+                    check_bracelete2pvp: getItemData('Bracelete2Pvp').check,
+                    no_bracelete2pvp: getItemData('Bracelete2Pvp').no,
+
+                    level_amuletopvp: getItemData('AmuletoPvp').level,
+                    type_amuletopvp: getItemData('AmuletoPvp').type,
+                    amp_amuletopvp: getItemData('AmuletoPvp').amp,
+                    check_amuletopvp: getItemData('AmuletoPvp').check,
+                    no_amuletopvp: getItemData('AmuletoPvp').no,
+
+                    level_capapvp: getItemData('CapaPvp').level,
+                    type_capapvp: getItemData('CapaPvp').type,
+                    amp_capapvp: getItemData('CapaPvp').amp,
+                    check_capapvp: getItemData('CapaPvp').check,
+                    no_capapvp: getItemData('CapaPvp').no,
+
+                    level_helmetpvp: getItemData('HelmetPvp').level,
+                    type_helmetpvp: getItemData('HelmetPvp').type,
+                    amp_helmetpvp: getItemData('HelmetPvp').amp,
+                    check_helmetpvp: getItemData('HelmetPvp').check,
+                    no_helmetpvp: getItemData('HelmetPvp').no,
+
+                    level_chestpvp: getItemData('ChestPvp').level,
+                    type_chestpvp: getItemData('ChestPvp').type,
+                    amp_chestpvp: getItemData('ChestPvp').amp,
+                    check_chestpvp: getItemData('ChestPvp').check,
+                    no_chestpvp: getItemData('ChestPvp').no,
+
+                    level_bootspvp: getItemData('BootsPvp').level,
+                    type_bootspvp: getItemData('BootsPvp').type,
+                    amp_bootspvp: getItemData('BootsPvp').amp,
+                    check_bootspvp: getItemData('BootsPvp').check,
+                    no_bootspvp: getItemData('BootsPvp').no,
+
+                    level_glovespvp: getItemData('GlovesPvp').level,
+                    type_glovespvp: getItemData('GlovesPvp').type,
+                    amp_glovespvp: getItemData('GlovesPvp').amp,
+                    check_glovespvp: getItemData('GlovesPvp').check,
+                    no_glovespvp: getItemData('GlovesPvp').no,
+
+                    has_catacumba: hasCatacumba ? hasCatacumba.value === 'sim' : false,
+                    catacumba_type: document.getElementById('catacumbaType')?.value || '-',
+
+                    level_anel1pve: getItemData('Anel1Pve').level,
+                    type_anel1pve: getItemData('Anel1Pve').type,
+                    amp_anel1pve: getItemData('Anel1Pve').amp,
+                    check_anel1pve: getItemData('Anel1Pve').check,
+                    no_anel1pve: getItemData('Anel1Pve').no,
+
+                    level_anel2pve: getItemData('Anel2Pve').level,
+                    type_anel2pve: getItemData('Anel2Pve').type,
+                    amp_anel2pve: getItemData('Anel2Pve').amp,
+                    check_anel2pve: getItemData('Anel2Pve').check,
+                    no_anel2pve: getItemData('Anel2Pve').no,
+
+                    level_bracelete1pve: getItemData('Bracelete1Pve').level,
+                    type_bracelete1pve: getItemData('Bracelete1Pve').type,
+                    amp_bracelete1pve: getItemData('Bracelete1Pve').amp,
+                    check_bracelete1pve: getItemData('Bracelete1Pve').check,
+                    no_bracelete1pve: getItemData('Bracelete1Pve').no,
+
+                    level_bracelete2pve: getItemData('Bracelete2Pve').level,
+                    type_bracelete2pve: getItemData('Bracelete2Pve').type,
+                    amp_bracelete2pve: getItemData('Bracelete2Pve').amp,
+                    check_bracelete2pve: getItemData('Bracelete2Pve').check,
+                    no_bracelete2pve: getItemData('Bracelete2Pve').no,
+
+                    level_amuletopve: getItemData('AmuletoPve').level,
+                    type_amuletopve: getItemData('AmuletoPve').type,
+                    amp_amuletopve: getItemData('AmuletoPve').amp,
+                    check_amuletopve: getItemData('AmuletoPve').check,
+                    no_amuletopve: getItemData('AmuletoPve').no,
+
+                    level_capapve: getItemData('CapaPve').level,
+                    type_capapve: getItemData('CapaPve').type,
+                    amp_capapve: getItemData('CapaPve').amp,
+                    check_capapve: getItemData('CapaPve').check,
+                    no_capapve: getItemData('CapaPve').no,
+
+                    level_helmetpve: getItemData('HelmetPve').level,
+                    type_helmetpve: getItemData('HelmetPve').type,
+                    amp_helmetpve: getItemData('HelmetPve').amp,
+                    check_helmetpve: getItemData('HelmetPve').check,
+                    no_helmetpve: getItemData('HelmetPve').no,
+
+                    level_chestpve: getItemData('ChestPve').level,
+                    type_chestpve: getItemData('ChestPve').type,
+                    amp_chestpve: getItemData('ChestPve').amp,
+                    check_chestpve: getItemData('ChestPve').check,
+                    no_chestpve: getItemData('ChestPve').no,
+
+                    level_bootspve: getItemData('BootsPve').level,
+                    type_bootspve: getItemData('BootsPve').type,
+                    amp_bootspve: getItemData('BootsPve').amp,
+                    check_bootspve: getItemData('BootsPve').check,
+                    no_bootspve: getItemData('BootsPve').no,
+
+                    level_glovespve: getItemData('GlovesPve').level,
+                    type_glovespve: getItemData('GlovesPve').type,
+                    amp_glovespve: getItemData('GlovesPve').amp,
+                    check_glovespve: getItemData('GlovesPve').check,
+                    no_glovespve: getItemData('GlovesPve').no,
+
+                    has_mermem: hasMermem ? hasMermem.value === 'sim' : false,
+                    mermem_type: document.getElementById('mermemType')?.value || '-',
+
+                    created_at: new Date().toISOString()
+                };
+
+                const { data: existing } = await supabaseClient
+                    .from('guild_members')
+                    .select('id')
+                    .eq('char_name', charName)
+                    .maybeSingle();
+
+                let result;
+                if (existing) {
+                    result = await supabaseClient
+                        .from('guild_members')
+                        .update(payload)
+                        .eq('id', existing.id);
+                } else {
+                    result = await supabaseClient
+                        .from('guild_members')
+                        .insert([payload]);
+                }
+                if (result.error) throw result.error;
+
+                alert('✅ Dados do herói enviados com sucesso!');
+                this.reset();
+                toggleCatacumbaType(false);
+                toggleMermemType(false);
+                document.querySelectorAll('[id^="amp_"]').forEach(select => {
+                    const starsId = select.id.replace('amp_', 'stars_');
+                    updateStars(select.id, starsId);
+                });
+                updatePerformance('1', '');
+                updatePerformance('2', '');
+                updatePerformance('3', '');
+                const counter = document.getElementById('charCounter');
+                if (counter) counter.textContent = '0/10';
+
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('❌ Erro ao enviar: ' + error.message);
+            } finally {
+                btn.disabled = false;
+                icon.className = 'fa-solid fa-scroll text-cyan-100 drop-shadow-lg text-xl animate-float';
+                btnText.textContent = 'ENVIAR DADOS DA GUILDA';
+            }
+        });
     </script>
 </body>
 </html>
