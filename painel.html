@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ===== TODOS OS ESTILOS EXISTENTES ===== */
         .glass-card { background: rgba(40,40,45,0.35) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(120,120,130,0.15) !important; }
         .glass-card-dark { background: rgba(30,30,35,0.4) !important; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgba(80,80,90,0.12) !important; }
         .glass-header { background: rgba(35,35,40,0.4) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 2px solid rgba(120,120,130,0.2) !important; }
@@ -158,45 +159,451 @@
         .pvp-rank-badge.pessimo { background: rgba(100,100,100,0.2); border: 1px solid rgba(100,100,100,0.4); color: #94a3b8; }
 
         .membro-pt-item { position: relative; cursor: pointer; }
-        .membro-pt-item .tooltip-preview { visibility: hidden; opacity: 0; position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(10px); background: rgba(20,15,10,0.95); backdrop-filter: blur(12px); border: 1px solid rgba(180,150,100,0.2); border-radius: 12px; padding: 12px 14px; width: 380px; max-height: 460px; overflow-y: auto; z-index: 100; transition: all 0.3s ease; box-shadow: 0 20px 60px rgba(0,0,0,0.8); pointer-events: none; }
-        .membro-pt-item:hover .tooltip-preview { visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        .membro-pt-item .tooltip-preview {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: rgba(20,15,10,0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(180,150,100,0.2);
+            border-radius: 12px;
+            padding: 12px 14px;
+            width: 380px;
+            max-height: 460px;
+            overflow-y: auto;
+            z-index: 100;
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            pointer-events: none;
+        }
+        .membro-pt-item:hover .tooltip-preview {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
         .membro-pt-item .tooltip-preview::-webkit-scrollbar { width: 4px; }
         .membro-pt-item .tooltip-preview::-webkit-scrollbar-track { background: rgba(30,30,35,0.3); border-radius: 10px; }
         .membro-pt-item .tooltip-preview::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.3); border-radius: 10px; }
 
-        .tooltip-preview .preview-nome { font-family: 'Cinzel', serif; font-weight: 700; color: #e8d5b8; font-size: 14px; border-bottom: 1px solid rgba(180,150,100,0.15); padding-bottom: 6px; margin-bottom: 8px; }
-        .tooltip-preview .preview-classe { font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 8px; }
-        .tooltip-preview .preview-ramos { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; margin: 6px 0; font-size: 9px; }
-        .tooltip-preview .preview-ramos .pr { background: rgba(40,30,20,0.4); border-radius: 6px; padding: 6px 6px; text-align: center; border-left: 3px solid #94a3b8; }
-        .tooltip-preview .preview-ramos .pr .pr-label { color: #e8d5b8; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
-        .tooltip-preview .preview-ramos .pr .pr-value { color: #b8a088; font-size: 7px; text-transform: uppercase; letter-spacing: 0.3px; }
-        .tooltip-preview .preview-ramos .pr .pr-detail { color: #8a9b8a; font-size: 8px; }
-        .tooltip-preview .preview-ramos .pr .pr-talentos { color: #b8a088; font-size: 7px; background: rgba(40,30,20,0.3); padding: 1px 6px; border-radius: 8px; display: inline-block; margin-top: 1px; }
+        .membro-pt-item .tooltip-preview::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: rgba(180,150,100,0.2);
+        }
 
-        .tooltip-preview .preview-info-extra { display: flex; gap: 6px; flex-wrap: wrap; margin: 4px 0; font-size: 9px; }
-        .tooltip-preview .preview-info-extra .extra-item { background: rgba(40,30,20,0.3); padding: 2px 8px; border-radius: 10px; color: #b8a088; font-size: 8px; }
-        .tooltip-preview .preview-info-extra .extra-item .extra-value { color: #e8d5b8; font-weight: 600; }
-        .tooltip-preview .preview-info-extra .extra-item.sim { background: rgba(16,185,129,0.15); color: #6ee7b7; }
-        .tooltip-preview .preview-info-extra .extra-item.nao { background: rgba(239,68,68,0.1); color: #fca5a5; }
+        .membro-pt-item .tooltip-preview .preview-nome {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #e8d5b8;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(180,150,100,0.15);
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+        }
+        .membro-pt-item .tooltip-preview .preview-classe {
+            font-size: 11px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .membro-pt-item .tooltip-preview .preview-ramos {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 4px;
+            margin: 6px 0;
+            font-size: 9px;
+        }
+        .membro-pt-item .tooltip-preview .preview-ramos .pr {
+            background: rgba(40,30,20,0.4);
+            border-radius: 6px;
+            padding: 6px 6px;
+            text-align: center;
+            border-left: 3px solid #94a3b8;
+        }
+        .membro-pt-item .tooltip-preview .preview-ramos .pr .pr-label {
+            color: #e8d5b8;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .membro-pt-item .tooltip-preview .preview-ramos .pr .pr-value {
+            color: #b8a088;
+            font-size: 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .membro-pt-item .tooltip-preview .preview-ramos .pr .pr-detail {
+            color: #8a9b8a;
+            font-size: 8px;
+        }
+        .membro-pt-item .tooltip-preview .preview-ramos .pr .pr-talentos {
+            color: #b8a088;
+            font-size: 7px;
+            background: rgba(40,30,20,0.3);
+            padding: 1px 6px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 1px;
+        }
 
-        .tooltip-preview .preview-status { display: flex; gap: 12px; font-size: 10px; margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(80,80,90,0.15); }
-        .tooltip-preview .preview-status .st { display: flex; align-items: center; gap: 4px; }
-        .tooltip-preview .preview-status .st.sim { color: #6ee7b7; }
-        .tooltip-preview .preview-status .st.nao { color: #fca5a5; }
-        .tooltip-preview .preview-sets { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 4px; font-size: 8px; }
-        .tooltip-preview .preview-sets .ps-item { display: flex; justify-content: space-between; padding: 2px 4px; border-radius: 3px; background: rgba(30,30,35,0.2); }
-        .tooltip-preview .preview-sets .ps-item .ps-label { color: rgba(180,180,190,0.4); font-size: 7px; text-transform: uppercase; }
-        .tooltip-preview .preview-sets .ps-item .ps-value { font-weight: 600; font-size: 8px; }
-        .tooltip-preview .preview-sets .ps-item .ps-value.verde { color: #6ee7b7; }
-        .tooltip-preview .preview-sets .ps-item .ps-value.roxo { color: #a78bfa; }
-        .tooltip-preview .preview-sets .ps-item .ps-value.vermelho { color: #fca5a5; }
-        .tooltip-preview .preview-sets .ps-item .ps-value.ouro { color: #fbbf24; }
+        .membro-pt-item .tooltip-preview .preview-info-extra {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin: 4px 0;
+            font-size: 9px;
+        }
+        .membro-pt-item .tooltip-preview .preview-info-extra .extra-item {
+            background: rgba(40,30,20,0.3);
+            padding: 2px 8px;
+            border-radius: 10px;
+            color: #b8a088;
+            font-size: 8px;
+        }
+        .membro-pt-item .tooltip-preview .preview-info-extra .extra-item .extra-value {
+            color: #e8d5b8;
+            font-weight: 600;
+        }
+        .membro-pt-item .tooltip-preview .preview-info-extra .extra-item.sim {
+            background: rgba(16,185,129,0.15);
+            color: #6ee7b7;
+        }
+        .membro-pt-item .tooltip-preview .preview-info-extra .extra-item.nao {
+            background: rgba(239,68,68,0.1);
+            color: #fca5a5;
+        }
 
-        .membro-pt-item .tooltip-preview::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 8px solid transparent; border-top-color: rgba(180,150,100,0.2); }
-        .ramo-cor-assassinos { border-left-color: #ef4444 !important; }
-        .ramo-cor-aventureiros { border-left-color: #fbbf24 !important; }
-        .ramo-cor-magos { border-left-color: #60a5fa !important; }
-        .ramo-cor-padrao { border-left-color: #94a3b8 !important; }
+        .membro-pt-item .tooltip-preview .preview-status {
+            display: flex;
+            gap: 12px;
+            font-size: 10px;
+            margin-top: 4px;
+            padding-top: 4px;
+            border-top: 1px solid rgba(80,80,90,0.15);
+        }
+        .membro-pt-item .tooltip-preview .preview-status .st { display: flex; align-items: center; gap: 4px; }
+        .membro-pt-item .tooltip-preview .preview-status .st.sim { color: #6ee7b7; }
+        .membro-pt-item .tooltip-preview .preview-status .st.nao { color: #fca5a5; }
+        .membro-pt-item .tooltip-preview .preview-sets {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            margin-top: 4px;
+            font-size: 8px;
+        }
+        .membro-pt-item .tooltip-preview .preview-sets .ps-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 4px;
+            border-radius: 3px;
+            background: rgba(30,30,35,0.2);
+        }
+        .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-label {
+            color: rgba(180,180,190,0.4);
+            font-size: 7px;
+            text-transform: uppercase;
+        }
+        .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-value {
+            font-weight: 600;
+            font-size: 8px;
+        }
+        .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-value.verde { color: #6ee7b7; }
+        .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-value.roxo { color: #a78bfa; }
+        .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-value.vermelho { color: #fca5a5; }
+        .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-value.ouro { color: #fbbf24; }
+
+        .membro-pt-item .tooltip-preview .preview-score {
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(80,80,90,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+        }
+        .membro-pt-item .tooltip-preview .preview-score .score-label {
+            color: #b8a088;
+            font-weight: 600;
+        }
+        .membro-pt-item .tooltip-preview .preview-score .score-value {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .membro-pt-item .tooltip-preview .preview-score .score-value.elite { color: #a78bfa; }
+        .membro-pt-item .tooltip-preview .preview-score .score-value.bom { color: #6ee7b7; }
+        .membro-pt-item .tooltip-preview .preview-score .score-value.medio { color: #fbbf24; }
+        .membro-pt-item .tooltip-preview .preview-score .score-value.ruim { color: #fca5a5; }
+        .membro-pt-item .tooltip-preview .preview-score .score-value.pessimo { color: #94a3b8; }
+
+        .membro-pt-item .tooltip-preview .preview-rank {
+            font-size: 10px;
+            font-weight: 700;
+            font-family: 'Cinzel', serif;
+            padding: 1px 10px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        .membro-pt-item .tooltip-preview .preview-rank.elite { color: #a78bfa; background: rgba(139,92,246,0.15); }
+        .membro-pt-item .tooltip-preview .preview-rank.bom { color: #6ee7b7; background: rgba(16,185,129,0.15); }
+        .membro-pt-item .tooltip-preview .preview-rank.medio { color: #fbbf24; background: rgba(251,191,36,0.15); }
+        .membro-pt-item .tooltip-preview .preview-rank.ruim { color: #fca5a5; background: rgba(239,68,68,0.15); }
+        .membro-pt-item .tooltip-preview .preview-rank.pessimo { color: #94a3b8; background: rgba(100,100,100,0.15); }
+
+        /* ===== ESTILOS DO PREVIEW MODAL (CLIQUE) ===== */
+        .preview-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .preview-modal.active { display: flex; }
+        .preview-modal .preview-box {
+            background: rgba(20,15,10,0.95);
+            border: 1px solid rgba(180,150,100,0.2);
+            border-radius: 20px;
+            padding: 24px 28px;
+            max-width: 460px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+            animation: modalFadeIn 0.3s ease;
+            position: relative;
+        }
+        .preview-modal .preview-box::-webkit-scrollbar { width: 6px; }
+        .preview-modal .preview-box::-webkit-scrollbar-track { background: rgba(30,30,35,0.3); border-radius: 10px; }
+        .preview-modal .preview-box::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.3); border-radius: 10px; }
+        .preview-modal .preview-box::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.5); }
+        
+        .preview-modal .preview-box .close-preview {
+            position: sticky;
+            top: 0;
+            float: right;
+            background: transparent;
+            border: none;
+            color: rgba(180,180,190,0.4);
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            z-index: 10;
+        }
+        .preview-modal .preview-box .close-preview:hover { color: #fca5a5; }
+        .preview-modal .preview-box .preview-nome {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #e8d5b8;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(180,150,100,0.15);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            margin-top: 0;
+        }
+        .preview-modal .preview-box .preview-classe {
+            font-size: 13px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .preview-modal .preview-box .preview-ramos {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin: 10px 0;
+            font-size: 11px;
+        }
+        .preview-modal .preview-box .preview-ramos .pr {
+            background: rgba(40,30,20,0.4);
+            border-radius: 8px;
+            padding: 10px 8px;
+            text-align: center;
+            border-left: 3px solid #94a3b8;
+        }
+        .preview-modal .preview-box .preview-ramos .pr .pr-label {
+            color: #e8d5b8;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .preview-modal .preview-box .preview-ramos .pr .pr-value {
+            color: #b8a088;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .preview-modal .preview-box .preview-ramos .pr .pr-detail {
+            color: #8a9b8a;
+            font-size: 10px;
+        }
+        .preview-modal .preview-box .preview-ramos .pr .pr-talentos {
+            color: #b8a088;
+            font-size: 9px;
+            background: rgba(40,30,20,0.3);
+            padding: 1px 10px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 3px;
+        }
+        .preview-modal .preview-box .preview-info-extra {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 6px 0;
+            font-size: 11px;
+        }
+        .preview-modal .preview-box .preview-info-extra .extra-item {
+            background: rgba(40,30,20,0.3);
+            padding: 3px 12px;
+            border-radius: 10px;
+            color: #b8a088;
+            font-size: 10px;
+        }
+        .preview-modal .preview-box .preview-info-extra .extra-item .extra-value {
+            color: #e8d5b8;
+            font-weight: 600;
+        }
+        .preview-modal .preview-box .preview-info-extra .extra-item.sim {
+            background: rgba(16,185,129,0.15);
+            color: #6ee7b7;
+        }
+        .preview-modal .preview-box .preview-info-extra .extra-item.nao {
+            background: rgba(239,68,68,0.1);
+            color: #fca5a5;
+        }
+        .preview-modal .preview-box .preview-status {
+            display: flex;
+            gap: 20px;
+            font-size: 12px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(80,80,90,0.15);
+        }
+        .preview-modal .preview-box .preview-status .st { display: flex; align-items: center; gap: 6px; }
+        .preview-modal .preview-box .preview-status .st.sim { color: #6ee7b7; }
+        .preview-modal .preview-box .preview-status .st.nao { color: #fca5a5; }
+        
+        .preview-modal .preview-box .preview-sets {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            margin-top: 8px;
+            font-size: 10px;
+        }
+        .preview-modal .preview-box .preview-sets .ps-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(30,30,35,0.2);
+        }
+        .preview-modal .preview-box .preview-sets .ps-item .ps-label {
+            color: rgba(180,180,190,0.4);
+            font-size: 9px;
+            text-transform: uppercase;
+        }
+        .preview-modal .preview-box .preview-sets .ps-item .ps-value {
+            font-weight: 600;
+            font-size: 10px;
+        }
+        .preview-modal .preview-box .preview-sets .ps-item .ps-value.verde { color: #6ee7b7; }
+        .preview-modal .preview-box .preview-sets .ps-item .ps-value.roxo { color: #a78bfa; }
+        .preview-modal .preview-box .preview-sets .ps-item .ps-value.vermelho { color: #fca5a5; }
+        .preview-modal .preview-box .preview-sets .ps-item .ps-value.ouro { color: #fbbf24; }
+        
+        .preview-modal .preview-box .preview-sets .ps-item .ps-value .nao-tenho-item { color: #fca5a5; font-size: 9px; }
+        .preview-modal .preview-box .preview-sets .ps-item .ps-value .equipado-item { color: #6ee7b7; font-size: 9px; }
+        .preview-modal .preview-box .preview-sets .ps-item .ps-value .amp { color: #a78bfa; font-size: 9px; }
+
+        .preview-modal .preview-box .preview-score {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(80,80,90,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+        .preview-modal .preview-box .preview-score .score-label {
+            color: #b8a088;
+            font-weight: 600;
+        }
+        .preview-modal .preview-box .preview-score .score-value {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .preview-modal .preview-box .preview-score .score-value.elite { color: #a78bfa; }
+        .preview-modal .preview-box .preview-score .score-value.bom { color: #6ee7b7; }
+        .preview-modal .preview-box .preview-score .score-value.medio { color: #fbbf24; }
+        .preview-modal .preview-box .preview-score .score-value.ruim { color: #fca5a5; }
+        .preview-modal .preview-box .preview-score .score-value.pessimo { color: #94a3b8; }
+
+        .preview-modal .preview-box .preview-score-detail {
+            display: flex;
+            gap: 16px;
+            font-size: 11px;
+            color: #b8a088;
+            margin-top: 4px;
+        }
+        .preview-modal .preview-box .preview-score-detail span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .preview-modal .preview-box .preview-score-detail .num {
+            font-weight: 700;
+            color: #e8d5b8;
+        }
+
+        .preview-modal .preview-box .preview-rank {
+            font-size: 12px;
+            font-weight: 700;
+            font-family: 'Cinzel', serif;
+            padding: 2px 16px;
+            border-radius: 16px;
+            display: inline-block;
+        }
+        .preview-modal .preview-box .preview-rank.elite { color: #a78bfa; background: rgba(139,92,246,0.15); }
+        .preview-modal .preview-box .preview-rank.bom { color: #6ee7b7; background: rgba(16,185,129,0.15); }
+        .preview-modal .preview-box .preview-rank.medio { color: #fbbf24; background: rgba(251,191,36,0.15); }
+        .preview-modal .preview-box .preview-rank.ruim { color: #fca5a5; background: rgba(239,68,68,0.15); }
+        .preview-modal .preview-box .preview-rank.pessimo { color: #94a3b8; background: rgba(100,100,100,0.15); }
+
+        .btn-preview {
+            background: rgba(148,163,184,0.1);
+            border: 1px solid rgba(148,163,184,0.15);
+            border-radius: 6px;
+            padding: 2px 10px;
+            font-size: 10px;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: 'Cinzel', serif;
+        }
+        .btn-preview:hover {
+            background: rgba(148,163,184,0.2);
+            border-color: rgba(148,163,184,0.3);
+            color: #cbd5e1;
+        }
 
         .config-block { background: rgba(30,30,35,0.3); backdrop-filter: blur(6px); border: 1px solid rgba(120,120,130,0.12); border-radius: 14px; padding: 14px 16px; transition: all 0.3s ease; }
         .config-block:hover { border-color: rgba(148,163,184,0.25); }
@@ -244,6 +651,14 @@
 
     <img src="warspear.png" alt="Fundo Guilda Anomalia" class="fixed inset-0 w-full h-full object-cover z-0" />
     <div class="fixed inset-0 bg-black/70 z-[1]"></div>
+
+    <!-- ===== PREVIEW MODAL (CLIQUE) ===== -->
+    <div id="previewModal" class="preview-modal">
+        <div class="preview-box">
+            <button class="close-preview" onclick="fecharPreview()"><i class="fa-solid fa-xmark"></i></button>
+            <div id="previewContent"></div>
+        </div>
+    </div>
 
     <main class="w-full max-w-7xl mx-auto my-auto relative z-10 space-y-4 p-2 sm:p-4">
         <header class="glass-header rounded-2xl p-5 shadow-2xl relative overflow-hidden">
@@ -419,7 +834,7 @@
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-amber-subtle pb-3 mb-4">
                     <div>
                         <h2 class="text-base font-bold text-white/90 font-rpg">Escalação de PTs (Grupos de até 5 Membros)</h2>
-                        <p class="text-xs text-amber-500/60">Passe o mouse sobre o nome do membro para ver seus equipamentos. ⭐ = Líder da PT</p>
+                        <p class="text-xs text-amber-500/60">Clique no botão <strong>👁️ Preview</strong> ao lado do nome para ver todos os detalhes do membro.</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
                         <button onclick="adicionarPt()" id="btnNovaPt" class="btn-glass btn-glass-primary">
@@ -608,6 +1023,7 @@
         // ================================================================
         let isAdmin = false;
         let filtroPvpAtual = 'todos';
+        let membroPreviewAtual = null;
         const VALID_CREDENTIALS = [
             { user: 'selem', pass: '7639' },
             { user: 'agnus', pass: '8491' }
@@ -754,6 +1170,11 @@
 
             document.getElementById('eventoSelecionado').addEventListener('change', atualizarPreview);
             atualizarPreview();
+
+            // Fechar preview com ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') fecharPreview();
+            });
         });
 
         function atualizarPreview() {
@@ -806,36 +1227,28 @@
             const ampKey = `amp_${itemKey}`;
             const noKey = `no_${itemKey}`;
             
-            // Se tiver "Não tenho" marcado, ignora
             if (membro[noKey] === true) return null;
             
             const level = membro[levelKey] || '';
             const amp = membro[ampKey] || '+0 (Sem amp)';
             const estrelas = extrairEstrelas(amp);
             
-            // Se não tem nível preenchido, item não está equipado
             if (!level || level === '-' || level === '') return null;
             
             let baseScore = 0;
             
-            // ===== DIFERENCIAÇÃO AP vs GZ =====
             if (level.includes('GZ 34')) {
                 baseScore = 3.0;
             } else if (level.includes('GZ 32')) {
                 baseScore = 2.0;
             } else if (level.includes('GZ 30')) {
                 baseScore = 0.5;
-            } else if (level.includes('AP 34')) {
-                baseScore = 0.8;
-            } else if (level.includes('AP 32')) {
-                baseScore = 0.6;
-            } else if (level.includes('AP 30') || level.includes('AP 33')) {
+            } else if (level.includes('AP')) {
                 baseScore = 0.4;
             } else if (level.includes('Resistir')) {
                 baseScore = 0.2;
             }
             
-            // Amplificação: +0.3 por estrela (máx +3.0)
             const ampScore = Math.min(estrelas * 0.3, 3.0);
             
             return baseScore + ampScore;
@@ -849,11 +1262,9 @@
             
             const classe = membro.char_class || '';
             
-            // ===== DEFINIÇÃO DOS ITENS POR CLASSE =====
             const acessorios = ['anel1pvp', 'anel2pvp', 'bracelete1pvp', 'bracelete2pvp', 'amuletopvp', 'capapvp'];
             const setPvp = ['helmetpvp', 'chestpvp', 'bootspvp', 'glovespvp'];
             
-            // Armas por classe
             let armas = [];
             let escudo = null;
             
@@ -874,7 +1285,6 @@
                 }
             } else if (ehEncantador) {
                 armas = ['pvp1'];
-                // Verifica se tem escudo
                 const noShield = membro['no_shieldpvp'] || false;
                 const shieldLevel = membro['level_shieldpvp'] || '';
                 if (!noShield && shieldLevel && shieldLevel !== '-' && shieldLevel !== '') {
@@ -884,34 +1294,29 @@
                 armas = ['pvp1'];
             }
             
-            // ===== AVALIAÇÃO DO SET (4 peças) =====
             let setScores = [];
             setPvp.forEach(itemKey => {
                 const score = avaliarItem(membro, itemKey);
                 if (score !== null) setScores.push(score);
             });
             
-            // ===== AVALIAÇÃO DOS ACESSÓRIOS (6 itens) =====
             let acessorioScores = [];
             acessorios.forEach(itemKey => {
                 const score = avaliarItem(membro, itemKey);
                 if (score !== null) acessorioScores.push(score);
             });
             
-            // ===== AVALIAÇÃO DAS ARMAS =====
             let armaScores = [];
             armas.forEach(itemKey => {
                 const score = avaliarItem(membro, itemKey);
                 if (score !== null) armaScores.push(score);
             });
             
-            // ===== AVALIAÇÃO DO ESCUDO =====
             let escudoScore = null;
             if (escudo) {
                 escudoScore = avaliarItem(membro, escudo);
             }
             
-            // ===== CÁLCULO DAS MÉDIAS (cada item pode valer até 6.0) =====
             let setMedia = 0;
             if (setScores.length > 0) {
                 setMedia = setScores.reduce((a, b) => a + b, 0) / setScores.length;
@@ -927,24 +1332,19 @@
                 armaMedia = armaScores.reduce((a, b) => a + b, 0) / armaScores.length;
             }
             
-            // Se tiver escudo, faz média com a arma (se for Maça/Machado de 1 mão)
             if (escudoScore !== null) {
                 armaMedia = (armaMedia + escudoScore) / 2;
             }
             
-            // ===== CONVERSÃO PARA ESCALA 0-10 =====
-            // Normaliza cada média para 0-1 (dividindo por 6)
             const setNormalizado = Math.min(setMedia / 6, 1);
             const acessorioNormalizado = Math.min(acessorioMedia / 6, 1);
             const armaNormalizado = Math.min(armaMedia / 6, 1);
             
-            // Aplica os pesos: Set 35%, Acessórios 35%, Armas 30%
             const notaSet = setNormalizado * 3.5;
             const notaAcessorios = acessorioNormalizado * 3.5;
             const notaArmas = armaNormalizado * 3.0;
             const notaFinal = notaSet + notaAcessorios + notaArmas;
             
-            // ===== DEFINE O RANK =====
             let rank = '';
             if (notaFinal >= 8.0) rank = 'elite';
             else if (notaFinal >= 6.0) rank = 'bom';
@@ -1011,6 +1411,199 @@
             
             carregarMembros();
         }
+
+        // ================================================================
+        // FUNÇÃO PARA GERAR PREVIEW COMPLETO (MODAL)
+        // ================================================================
+        function gerarPreviewHTML(membro) {
+            if (!membro) return '<div class="text-center text-amber-500">Membro não encontrado.</div>';
+            
+            const getItem = (prefix) => ({
+                nivel: membro[`level_${prefix}`] || '-',
+                tipo: membro[`type_${prefix}`] || '-',
+                amplificacao: membro[`amp_${prefix}`] || '+0 (Sem amp)',
+                nao_tem: membro[`no_${prefix}`] || false,
+            });
+
+            const t5 = getItem('t5');
+            const pve = getItem('pve');
+            const map5 = getItem('map5');
+            const pvp1 = getItem('pvp1');
+            const pvp2 = getItem('pvp2');
+            const shieldPve = getItem('shieldpve');
+            const shieldPvp = getItem('shieldpvp');
+            const helmetPvp = getItem('helmetpvp');
+            const chestPvp = getItem('chestpvp');
+            const bootsPvp = getItem('bootspvp');
+            const glovesPvp = getItem('glovespvp');
+            const helmetPve = getItem('helmetpve');
+            const chestPve = getItem('chestpve');
+            const bootsPve = getItem('bootspve');
+            const glovesPve = getItem('glovespve');
+            const anel1Pvp = getItem('anel1pvp');
+            const anel2Pvp = getItem('anel2pvp');
+            const anel1Pve = getItem('anel1pve');
+            const anel2Pve = getItem('anel2pve');
+            const amuletoPvp = getItem('amuletopvp');
+            const amuletoPve = getItem('amuletopve');
+            const capaPvp = getItem('capapvp');
+            const capaPve = getItem('capapve');
+            const bracelete1Pvp = getItem('bracelete1pvp');
+            const bracelete2Pvp = getItem('bracelete2pvp');
+            const bracelete1Pve = getItem('bracelete1pve');
+            const bracelete2Pve = getItem('bracelete2pve');
+
+            function fmtItem(obj) {
+                if (!obj || obj.nao_tem || (typeof obj === 'string' && ['não tenho', 'nao tenho', '-', ''].includes(obj.toLowerCase()))) {
+                    return '<span class="nao-tenho-item">❌ Não</span>';
+                }
+                if (typeof obj === 'string') {
+                    if (obj.includes('+')) return `<span class="amp">⭐ ${obj}</span>`;
+                    return `<span class="equipado-item">✅ ${obj}</span>`;
+                }
+                let res = [];
+                if (obj.amplificacao && obj.amplificacao !== '+0 (Sem amp)') {
+                    res.push(`<span class="amp">⭐ ${obj.amplificacao}</span>`);
+                }
+                if (obj.tipo && obj.tipo !== '-') {
+                    res.push(`<span class="text-amber-200">(${obj.tipo})</span>`);
+                }
+                if (obj.nivel && obj.nivel !== '-') {
+                    res.push(`<span class="text-emerald-400">Nvl ${obj.nivel}</span>`);
+                }
+                return res.length ? res.join(' ') : '<span class="equipado-item">✅ Equipado</span>';
+            }
+
+            const isTribo = !proscritos.includes(membro.char_class);
+            const badgeIcon = isTribo ? '⚔️' : '💀';
+            const resultado = calcularRankPvp(membro);
+            const rankLabel = getRankLabel(resultado.rank);
+            const rankClass = resultado.rank;
+
+            const ramo1 = membro.almahad_branch1 || '❌ Vazio';
+            const ramo2 = membro.almahad_branch2 || '❌ Vazio';
+            const ramo3 = membro.almahad_branch3 || '❌ Vazio';
+            const nivel1 = membro.almahad_level1 || '-';
+            const nivel2 = membro.almahad_level2 || '-';
+            const nivel3 = membro.almahad_level3 || '-';
+            const perf1 = membro.almahad_performance1 || '0%';
+            const perf2 = membro.almahad_performance2 || '0%';
+            const perf3 = membro.almahad_performance3 || '0%';
+            const tal35k1 = membro.almahad_talentos35k_1 || 'Não';
+            const tal35k2 = membro.almahad_talentos35k_2 || 'Não';
+            const tal35k3 = membro.almahad_talentos35k_3 || 'Não';
+
+            const corRamo = (ramo) => {
+                if (ramo === 'Assassinos' || ramo.includes('Assassino')) return '#ef4444';
+                if (ramo === 'Aventureiros' || ramo.includes('Aventureiro')) return '#fbbf24';
+                if (ramo === 'Magos' || ramo.includes('Mago')) return '#60a5fa';
+                return '#94a3b8';
+            };
+
+            return `
+                <div class="preview-nome">${badgeIcon} ${membro.char_name || '-'}</div>
+                <div class="preview-classe">
+                    ${membro.char_class || '-'} 
+                    <span style="font-size:11px;color:#94a3b8;">${isTribo ? 'Clã da Montanha' : 'Proscrito'}</span>
+                    <span class="preview-rank ${rankClass}">${rankLabel}</span>
+                </div>
+                <div class="preview-ramos">
+                    <div class="pr" style="border-left-color: ${corRamo(ramo1)};">
+                        <div class="pr-label" style="color: ${corRamo(ramo1)};">${ramo1}</div>
+                        <div class="pr-value">Ramo 1</div>
+                        <div class="pr-detail">Nvl ${nivel1} • ${perf1}</div>
+                        <div class="pr-talentos">35k: ${tal35k1}</div>
+                    </div>
+                    <div class="pr" style="border-left-color: ${corRamo(ramo2)};">
+                        <div class="pr-label" style="color: ${corRamo(ramo2)};">${ramo2}</div>
+                        <div class="pr-value">Ramo 2</div>
+                        <div class="pr-detail">Nvl ${nivel2} • ${perf2}</div>
+                        <div class="pr-talentos">35k: ${tal35k2}</div>
+                    </div>
+                    <div class="pr" style="border-left-color: ${corRamo(ramo3)};">
+                        <div class="pr-label" style="color: ${corRamo(ramo3)};">${ramo3}</div>
+                        <div class="pr-value">Ramo 3</div>
+                        <div class="pr-detail">Nvl ${nivel3} • ${perf3}</div>
+                        <div class="pr-talentos">35k: ${tal35k3}</div>
+                    </div>
+                </div>
+                <div class="preview-info-extra">
+                    <span class="extra-item">🔥 T5: <span class="extra-value">${membro.almahad_t5 || '-'}</span></span>
+                    <span class="extra-item">🗺️ Map5: <span class="extra-value">${fmtItem(map5)}</span></span>
+                    <span class="extra-item">📚 Full: <span class="extra-value">${membro.full_branches || '-'}</span></span>
+                    <span class="extra-item ${(membro.ferocidade || 'Não') === 'Sim' ? 'sim' : 'nao'}">🔥 Ferocidade: ${membro.ferocidade || 'Não'}</span>
+                    <span class="extra-item ${(membro.resiliencia || 'Não') === 'Sim' ? 'sim' : 'nao'}">🛡️ Resiliência: ${membro.resiliencia || 'Não'}</span>
+                </div>
+                <div class="preview-status">
+                    <span class="st ${membro.has_catacumba ? 'sim' : 'nao'}"><i class="fa-solid fa-dungeon"></i> Catacumba: ${membro.has_catacumba ? (membro.catacumba_type || 'Sim') : 'Não'}</span>
+                    <span class="st ${membro.has_mermem ? 'sim' : 'nao'}"><i class="fa-solid fa-water"></i> Mermem: ${membro.has_mermem ? (membro.mermem_type || 'Sim') : 'Não'}</span>
+                </div>
+                <div class="preview-sets">
+                    <div style="grid-column:1/-1;font-size:10px;color:#a78bfa;text-transform:uppercase;letter-spacing:0.5px;margin-top:4px;margin-bottom:2px;border-bottom:1px solid rgba(139,92,246,0.1);padding-bottom:2px;">⚔️ Set PvP</div>
+                    <div class="ps-item"><span class="ps-label">Elmo</span><span class="ps-value">${fmtItem(helmetPvp)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Peito</span><span class="ps-value">${fmtItem(chestPvp)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Luva</span><span class="ps-value">${fmtItem(glovesPvp)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Bota</span><span class="ps-value">${fmtItem(bootsPvp)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Brac 1</span><span class="ps-value">${fmtItem(bracelete1Pvp)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Brac 2</span><span class="ps-value">${fmtItem(bracelete2Pvp)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Anel 1</span><span class="ps-value">${fmtItem(anel1Pvp)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Anel 2</span><span class="ps-value">${fmtItem(anel2Pvp)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Amuleto</span><span class="ps-value">${fmtItem(amuletoPvp)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Capa</span><span class="ps-value">${fmtItem(capaPvp)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Arma 1</span><span class="ps-value">${fmtItem(pvp1)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Arma 2</span><span class="ps-value">${fmtItem(pvp2)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Escudo</span><span class="ps-value">${fmtItem(shieldPvp)}</span></div>
+                    
+                    <div style="grid-column:1/-1;font-size:10px;color:#6ee7b7;text-transform:uppercase;letter-spacing:0.5px;margin-top:6px;margin-bottom:2px;border-bottom:1px solid rgba(16,185,129,0.1);padding-bottom:2px;">🐉 Set PvE</div>
+                    <div class="ps-item"><span class="ps-label">Elmo</span><span class="ps-value">${fmtItem(helmetPve)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Peito</span><span class="ps-value">${fmtItem(chestPve)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Luva</span><span class="ps-value">${fmtItem(glovesPve)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Bota</span><span class="ps-value">${fmtItem(bootsPve)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Brac 1</span><span class="ps-value">${fmtItem(bracelete1Pve)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Brac 2</span><span class="ps-value">${fmtItem(bracelete2Pve)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Anel 1</span><span class="ps-value">${fmtItem(anel1Pve)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Anel 2</span><span class="ps-value">${fmtItem(anel2Pve)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Amuleto</span><span class="ps-value">${fmtItem(amuletoPve)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Capa</span><span class="ps-value">${fmtItem(capaPve)}</span></div>
+                    <div class="ps-item"><span class="ps-label">T5</span><span class="ps-value">${fmtItem(t5)}</span></div>
+                    <div class="ps-item"><span class="ps-label">PvE</span><span class="ps-value">${fmtItem(pve)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Map5</span><span class="ps-value">${fmtItem(map5)}</span></div>
+                    <div class="ps-item"><span class="ps-label">Escudo</span><span class="ps-value">${fmtItem(shieldPve)}</span></div>
+                </div>
+                <div class="preview-score">
+                    <span class="score-label">📊 Pontuação Total</span>
+                    <span class="score-value ${rankClass}">${resultado.nota.toFixed(1)} / 10</span>
+                </div>
+                <div class="preview-score-detail">
+                    <span>🛡️ Set: <span class="num">${resultado.set.toFixed(1)}</span></span>
+                    <span>💍 Acessórios: <span class="num">${resultado.acessorios.toFixed(1)}</span></span>
+                    <span>⚔️ Armas: <span class="num">${resultado.armas.toFixed(1)}</span></span>
+                </div>
+            `;
+        }
+
+        function abrirPreview(membroId) {
+            const membro = cache.find(m => String(m.id) === String(membroId));
+            if (!membro) {
+                alert('Membro não encontrado!');
+                return;
+            }
+            membroPreviewAtual = membro;
+            document.getElementById('previewContent').innerHTML = gerarPreviewHTML(membro);
+            document.getElementById('previewModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharPreview() {
+            document.getElementById('previewModal').classList.remove('active');
+            document.body.style.overflow = '';
+            membroPreviewAtual = null;
+        }
+
+        // Fechar preview clicando fora
+        document.getElementById('previewModal').addEventListener('click', function(e) {
+            if (e.target === this) fecharPreview();
+        });
 
         // ================================================================
         // FUNÇÕES DE RESERVAS
@@ -1547,163 +2140,40 @@
         }
 
         // ================================================================
-        // TOOLTIP
+        // TOOLTIP (hover simplificado)
         // ================================================================
-        function gerarTooltipMembro(membro) {
+        function gerarTooltipPreview(membro) {
             if (!membro) return '';
-
-            const getItem = (prefix) => ({
-                nivel: membro[`level_${prefix}`] || '-',
-                tipo: membro[`type_${prefix}`] || '-',
-                amplificacao: membro[`amp_${prefix}`] || '+0 (Sem amp)',
-                nao_tem: membro[`no_${prefix}`] || false,
-            });
-
-            const t5 = getItem('t5');
-            const pve = getItem('pve');
-            const map5 = getItem('map5');
-            const pvp1 = getItem('pvp1');
-            const pvp2 = getItem('pvp2');
-            const shieldPve = getItem('shieldpve');
-            const shieldPvp = getItem('shieldpvp');
-            const helmetPvp = getItem('helmetpvp');
-            const chestPvp = getItem('chestpvp');
-            const bootsPvp = getItem('bootspvp');
-            const glovesPvp = getItem('glovespvp');
-            const helmetPve = getItem('helmetpve');
-            const chestPve = getItem('chestpve');
-            const bootsPve = getItem('bootspve');
-            const glovesPve = getItem('glovespve');
-            const anel1Pvp = getItem('anel1pvp');
-            const anel2Pvp = getItem('anel2pvp');
-            const anel1Pve = getItem('anel1pve');
-            const anel2Pve = getItem('anel2pve');
-            const amuletoPvp = getItem('amuletopvp');
-            const amuletoPve = getItem('amuletopve');
-            const capaPvp = getItem('capapvp');
-            const capaPve = getItem('capapve');
-            const bracelete1Pvp = getItem('bracelete1pvp');
-            const bracelete2Pvp = getItem('bracelete2pvp');
-            const bracelete1Pve = getItem('bracelete1pve');
-            const bracelete2Pve = getItem('bracelete2pve');
-
-            function fmtItem(obj) {
-                if (!obj || obj.nao_tem || (typeof obj === 'string' && ['não tenho', 'nao tenho', '-', ''].includes(obj.toLowerCase()))) {
-                    return '<span style="color:#fca5a5;">❌ Não</span>';
-                }
-                if (typeof obj === 'string') {
-                    if (obj.includes('+')) return `<span style="color:#a78bfa;">⭐ ${obj}</span>`;
-                    return `<span style="color:#6ee7b7;">✅ ${obj}</span>`;
-                }
-                let res = [];
-                if (obj.amplificacao && obj.amplificacao !== '+0 (Sem amp)') {
-                    res.push(`<span style="color:#a78bfa;">⭐ ${obj.amplificacao}</span>`);
-                }
-                if (obj.tipo && obj.tipo !== '-') {
-                    res.push(`<span style="color:#fbbf24;">(${obj.tipo})</span>`);
-                }
-                if (obj.nivel && obj.nivel !== '-') {
-                    res.push(`<span style="color:#6ee7b7;">Nvl ${obj.nivel}</span>`);
-                }
-                return res.length ? res.join(' ') : '<span style="color:#6ee7b7;">✅ Equipado</span>';
-            }
-
-            const isTribo = !proscritos.includes(membro.char_class);
-            const badgeIcon = isTribo ? '⚔️' : '💀';
-
-            const ramo1 = membro.almahad_branch1 || '❌ Vazio';
-            const ramo2 = membro.almahad_branch2 || '❌ Vazio';
-            const ramo3 = membro.almahad_branch3 || '❌ Vazio';
-            const nivel1 = membro.almahad_level1 || '-';
-            const nivel2 = membro.almahad_level2 || '-';
-            const nivel3 = membro.almahad_level3 || '-';
-            const perf1 = membro.almahad_performance1 || '0%';
-            const perf2 = membro.almahad_performance2 || '0%';
-            const perf3 = membro.almahad_performance3 || '0%';
-            const tal35k1 = membro.almahad_talentos35k_1 || 'Não';
-            const tal35k2 = membro.almahad_talentos35k_2 || 'Não';
-            const tal35k3 = membro.almahad_talentos35k_3 || 'Não';
-
-            const corRamo = (ramo) => {
-                if (ramo === 'Assassinos' || ramo.includes('Assassino')) return '#ef4444';
-                if (ramo === 'Aventureiros' || ramo.includes('Aventureiro')) return '#fbbf24';
-                if (ramo === 'Magos' || ramo.includes('Mago')) return '#60a5fa';
-                return '#94a3b8';
-            };
-
+            
             const resultado = calcularRankPvp(membro);
             const rankLabel = getRankLabel(resultado.rank);
-
+            const rankClass = resultado.rank;
+            
             return `
-                <div class="preview-nome">${badgeIcon} ${membro.char_name || '-'} <span style="font-size:10px;color:${resultado.rank === 'elite' ? '#a78bfa' : resultado.rank === 'bom' ? '#6ee7b7' : resultado.rank === 'medio' ? '#fbbf24' : resultado.rank === 'ruim' ? '#fca5a5' : '#94a3b8'};">${rankLabel} (${resultado.nota.toFixed(1)})</span></div>
-                <div class="preview-classe">${membro.char_class || '-'} <span style="font-size:9px;color:#94a3b8;">${isTribo ? 'Clã da Montanha' : 'Proscrito'}</span></div>
-                <div class="preview-ramos">
-                    <div class="pr" style="border-left-color: ${corRamo(ramo1)};">
-                        <div class="pr-label" style="color: ${corRamo(ramo1)}; font-weight: 700;">${ramo1}</div>
-                        <div class="pr-value">Ramo 1</div>
-                        <div class="pr-detail">Nvl ${nivel1} • ${perf1}</div>
-                        <div class="pr-talentos">35k: ${tal35k1}</div>
-                    </div>
-                    <div class="pr" style="border-left-color: ${corRamo(ramo2)};">
-                        <div class="pr-label" style="color: ${corRamo(ramo2)}; font-weight: 700;">${ramo2}</div>
-                        <div class="pr-value">Ramo 2</div>
-                        <div class="pr-detail">Nvl ${nivel2} • ${perf2}</div>
-                        <div class="pr-talentos">35k: ${tal35k2}</div>
-                    </div>
-                    <div class="pr" style="border-left-color: ${corRamo(ramo3)};">
-                        <div class="pr-label" style="color: ${corRamo(ramo3)}; font-weight: 700;">${ramo3}</div>
-                        <div class="pr-value">Ramo 3</div>
-                        <div class="pr-detail">Nvl ${nivel3} • ${perf3}</div>
-                        <div class="pr-talentos">35k: ${tal35k3}</div>
-                    </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <span style="font-weight:700;color:#e8d5b8;">${membro.char_name || '-'}</span>
+                    <span class="preview-rank ${rankClass}" style="font-size:9px;padding:1px 10px;">${rankLabel}</span>
                 </div>
-                <div class="preview-info-extra">
-                    <span class="extra-item">🔥 T5: <span class="extra-value">${membro.almahad_t5 || '-'}</span></span>
-                    <span class="extra-item">🗺️ Map5: <span class="extra-value">${fmtItem(map5)}</span></span>
-                    <span class="extra-item">📚 Full: <span class="extra-value">${membro.full_branches || '-'}</span></span>
-                    <span class="extra-item ${(membro.ferocidade || 'Não') === 'Sim' ? 'sim' : 'nao'}">🔥 Ferocidade: ${membro.ferocidade || 'Não'}</span>
-                    <span class="extra-item ${(membro.resiliencia || 'Não') === 'Sim' ? 'sim' : 'nao'}">🛡️ Resiliência: ${membro.resiliencia || 'Não'}</span>
+                <div style="display:flex;gap:12px;margin-top:4px;font-size:10px;color:#b8a088;">
+                    <span>🛡️ ${resultado.set.toFixed(1)}</span>
+                    <span>💍 ${resultado.acessorios.toFixed(1)}</span>
+                    <span>⚔️ ${resultado.armas.toFixed(1)}</span>
+                    <span style="font-weight:700;color:#e8d5b8;">${resultado.nota.toFixed(1)}/10</span>
                 </div>
-                <div class="preview-status">
-                    <span class="st ${membro.has_catacumba ? 'sim' : 'nao'}"><i class="fa-solid fa-dungeon"></i> Catacumba: ${membro.has_catacumba ? (membro.catacumba_type || 'Sim') : 'Não'}</span>
-                    <span class="st ${membro.has_mermem ? 'sim' : 'nao'}"><i class="fa-solid fa-water"></i> Mermem: ${membro.has_mermem ? (membro.mermem_type || 'Sim') : 'Não'}</span>
+                <div style="display:flex;gap:8px;margin-top:2px;font-size:9px;color:#94a3b8;">
+                    <span>${membro.char_class || '-'}</span>
+                    <span>•</span>
+                    <span>Catac: ${membro.has_catacumba ? '✅' : '❌'}</span>
+                    <span>Merm: ${membro.has_mermem ? '✅' : '❌'}</span>
                 </div>
-                <div class="preview-sets">
-                    <div style="grid-column:1/-1;font-size:8px;color:#a78bfa;text-transform:uppercase;letter-spacing:0.3px;margin-top:2px;">PvP</div>
-                    <div class="ps-item"><span class="ps-label">Elmo</span><span class="ps-value">${fmtItem(helmetPvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Peito</span><span class="ps-value">${fmtItem(chestPvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Luva</span><span class="ps-value">${fmtItem(glovesPvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Bota</span><span class="ps-value">${fmtItem(bootsPvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Brac 1</span><span class="ps-value">${fmtItem(bracelete1Pvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Brac 2</span><span class="ps-value">${fmtItem(bracelete2Pvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Anel 1</span><span class="ps-value">${fmtItem(anel1Pvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Anel 2</span><span class="ps-value">${fmtItem(anel2Pvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Amuleto</span><span class="ps-value">${fmtItem(amuletoPvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Capa</span><span class="ps-value">${fmtItem(capaPvp)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Arma 1</span><span class="ps-value">${fmtItem(pvp1)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Arma 2</span><span class="ps-value">${fmtItem(pvp2)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Escudo</span><span class="ps-value">${fmtItem(shieldPvp)}</span></div>
-                    <div style="grid-column:1/-1;font-size:8px;color:#6ee7b7;text-transform:uppercase;letter-spacing:0.3px;margin-top:4px;">PvE</div>
-                    <div class="ps-item"><span class="ps-label">Elmo</span><span class="ps-value">${fmtItem(helmetPve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Peito</span><span class="ps-value">${fmtItem(chestPve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Luva</span><span class="ps-value">${fmtItem(glovesPve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Bota</span><span class="ps-value">${fmtItem(bootsPve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Brac 1</span><span class="ps-value">${fmtItem(bracelete1Pve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Brac 2</span><span class="ps-value">${fmtItem(bracelete2Pve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Anel 1</span><span class="ps-value">${fmtItem(anel1Pve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Anel 2</span><span class="ps-value">${fmtItem(anel2Pve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Amuleto</span><span class="ps-value">${fmtItem(amuletoPve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Capa</span><span class="ps-value">${fmtItem(capaPve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">T5</span><span class="ps-value">${fmtItem(t5)}</span></div>
-                    <div class="ps-item"><span class="ps-label">PvE</span><span class="ps-value">${fmtItem(pve)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Map5</span><span class="ps-value">${fmtItem(map5)}</span></div>
-                    <div class="ps-item"><span class="ps-label">Escudo</span><span class="ps-value">${fmtItem(shieldPve)}</span></div>
+                <div style="margin-top:4px;font-size:9px;color:#6ee7b7;cursor:pointer;text-align:center;border-top:1px solid rgba(80,80,90,0.1);padding-top:4px;">
+                    <i class="fa-solid fa-eye"></i> Clique no botão para detalhes
                 </div>
             `;
         }
 
         // ================================================================
-        // RENDERIZAR PTs
+        // RENDERIZAR PTs (COM BOTÃO DE PREVIEW)
         // ================================================================
         function renderPts() {
             const container = document.getElementById('gridPts');
@@ -1728,7 +2198,9 @@
                     const membro = membroAtual || null;
                     const isVazio = !membro;
                     const isLider = membro && liderId && String(membro.id) === String(liderId);
-                    const tooltipHTML = membro ? gerarTooltipMembro(membro) : '';
+                    const resultado = membro ? calcularRankPvp(membro) : { rank: 'pessimo', nota: 0 };
+                    
+                    const previewTooltip = membro ? gerarTooltipPreview(membro) : '';
 
                     return `<div class="flex items-center justify-between bg-[#130f0d] px-2.5 py-1.5 rounded-lg text-xs border border-[#352214] ${isLider ? 'border-l-4 border-l-yellow-400' : ''}">
                         <span class="text-amber-500 font-bold w-6">#${slotIdx + 1}</span>
@@ -1738,19 +2210,24 @@
                                     <option value="">(Vazio - Selecionar Membro)</option>
                                     ${cache.map(m => {
                                         const isSelected = membro && String(membro.id) === String(m.id);
-                                        return `<option value="${m.id}" ${isSelected ? 'selected' : ''}>${m.char_name} (${m.char_class})</option>`;
+                                        const mResultado = calcularRankPvp(m);
+                                        const notaStr = mResultado.nota.toFixed(1);
+                                        return `<option value="${m.id}" ${isSelected ? 'selected' : ''}>${m.char_name} (${m.char_class}) [${notaStr}]</option>`;
                                     }).join('')}
                                 </select>
-                                ${membro ? `<div class="tooltip-preview">${tooltipHTML}</div>` : ''}
+                                ${membro ? `<div class="tooltip-preview">${previewTooltip}</div>` : ''}
                             </div>
                         </div>
                         ${membro ? `
                             <div class="flex items-center gap-2">
-                                ${isLider ? '<span class="text-yellow-400 text-xs font-bold">⭐ Líder</span>' : ''}
+                                ${isLider ? '<span class="text-yellow-400 text-xs font-bold">⭐</span>' : ''}
                                 <button onclick="definirLider('${ptId}', '${membro.id}')" class="text-xs ${isLider ? 'text-yellow-400' : 'text-amber-600'} hover:text-yellow-400 transition" title="${isLider ? 'Remover líder' : 'Definir como líder'}">
                                     <i class="fa-solid ${isLider ? 'fa-star' : 'fa-star'}"></i>
                                 </button>
                                 <span class="text-[10px] text-amber-400/50">${membro.char_name}</span>
+                                <button onclick="abrirPreview('${membro.id}')" class="btn-preview" title="Ver detalhes completos">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
                             </div>
                         ` : ''}
                     </div>`;
