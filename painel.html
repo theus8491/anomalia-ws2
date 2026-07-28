@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ===== ESTILOS ===== */
         .glass-card { background: rgba(40,40,45,0.35) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(120,120,130,0.15) !important; }
         .glass-card-dark { background: rgba(30,30,35,0.4) !important; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgba(80,80,90,0.12) !important; }
         .glass-header { background: rgba(35,35,40,0.4) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 2px solid rgba(120,120,130,0.2) !important; }
@@ -123,23 +122,6 @@
         .preview-modal .preview-box .preview-sets .ps-item .ps-value .equipado-item { color: #6ee7b7; font-size: 9px; }
         .preview-modal .preview-box .preview-sets .ps-item .ps-value .amp { color: #a78bfa; font-size: 9px; }
         .preview-modal .preview-box .preview-sets .ps-item .ps-value .variant { color: #fbbf24; font-size: 9px; margin-left: 3px; }
-        .preview-modal .preview-box .preview-score { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(80,80,90,0.15); display: flex; align-items: center; justify-content: space-between; font-size: 13px; }
-        .preview-modal .preview-box .preview-score .score-label { color: #b8a088; font-weight: 600; }
-        .preview-modal .preview-box .preview-score .score-value { font-family: 'Cinzel', serif; font-weight: 700; font-size: 18px; }
-        .preview-modal .preview-box .preview-score .score-value.elite { color: #a78bfa; }
-        .preview-modal .preview-box .preview-score .score-value.bom { color: #6ee7b7; }
-        .preview-modal .preview-box .preview-score .score-value.medio { color: #fbbf24; }
-        .preview-modal .preview-box .preview-score .score-value.ruim { color: #fca5a5; }
-        .preview-modal .preview-box .preview-score .score-value.pessimo { color: #94a3b8; }
-        .preview-modal .preview-box .preview-score-detail { display: flex; gap: 16px; font-size: 11px; color: #b8a088; margin-top: 4px; }
-        .preview-modal .preview-box .preview-score-detail span { display: flex; align-items: center; gap: 4px; }
-        .preview-modal .preview-box .preview-score-detail .num { font-weight: 700; color: #e8d5b8; }
-        .preview-modal .preview-box .preview-rank { font-size: 12px; font-weight: 700; font-family: 'Cinzel', serif; padding: 2px 16px; border-radius: 16px; display: inline-block; }
-        .preview-modal .preview-box .preview-rank.elite { color: #a78bfa; background: rgba(139,92,246,0.15); }
-        .preview-modal .preview-box .preview-rank.bom { color: #6ee7b7; background: rgba(16,185,129,0.15); }
-        .preview-modal .preview-box .preview-rank.medio { color: #fbbf24; background: rgba(251,191,36,0.15); }
-        .preview-modal .preview-box .preview-rank.ruim { color: #fca5a5; background: rgba(239,68,68,0.15); }
-        .preview-modal .preview-box .preview-rank.pessimo { color: #94a3b8; background: rgba(100,100,100,0.15); }
 
         .btn-preview { background: rgba(148,163,184,0.1); border: 1px solid rgba(148,163,184,0.15); border-radius: 6px; padding: 2px 10px; font-size: 10px; color: #94a3b8; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 4px; font-family: 'Cinzel', serif; }
         .btn-preview:hover { background: rgba(148,163,184,0.2); border-color: rgba(148,163,184,0.3); color: #cbd5e1; }
@@ -155,6 +137,7 @@
         .preview-badge .horario-texto { color: #6ee7b7; }
         .preview-badge .separador { color: rgba(180,180,190,0.4); }
         .preview-badge .chegada-texto { color: #fca5a5; font-size: 10px; }
+        .preview-badge .dia-texto { color: #a78bfa; }
 
         .input-horario { width: 50px !important; text-align: center; padding: 6px 4px !important; font-size: 14px !important; font-weight: 600 !important; }
         .input-horario:focus { border-color: #94a3b8 !important; }
@@ -266,22 +249,8 @@
         .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-value.roxo { color: #a78bfa; }
         .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-value.vermelho { color: #fca5a5; }
         .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-value.ouro { color: #fbbf24; }
-        .membro-pt-item .tooltip-preview .preview-score { margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(80,80,90,0.15); display: flex; align-items: center; justify-content: space-between; font-size: 11px; }
-        .membro-pt-item .tooltip-preview .preview-score .score-label { color: #b8a088; font-weight: 600; }
-        .membro-pt-item .tooltip-preview .preview-score .score-value { font-family: 'Cinzel', serif; font-weight: 700; font-size: 14px; }
-        .membro-pt-item .tooltip-preview .preview-score .score-value.elite { color: #a78bfa; }
-        .membro-pt-item .tooltip-preview .preview-score .score-value.bom { color: #6ee7b7; }
-        .membro-pt-item .tooltip-preview .preview-score .score-value.medio { color: #fbbf24; }
-        .membro-pt-item .tooltip-preview .preview-score .score-value.ruim { color: #fca5a5; }
-        .membro-pt-item .tooltip-preview .preview-score .score-value.pessimo { color: #94a3b8; }
-        .membro-pt-item .tooltip-preview .preview-rank { font-size: 10px; font-weight: 700; font-family: 'Cinzel', serif; padding: 1px 10px; border-radius: 12px; display: inline-block; }
-        .membro-pt-item .tooltip-preview .preview-rank.elite { color: #a78bfa; background: rgba(139,92,246,0.15); }
-        .membro-pt-item .tooltip-preview .preview-rank.bom { color: #6ee7b7; background: rgba(16,185,129,0.15); }
-        .membro-pt-item .tooltip-preview .preview-rank.medio { color: #fbbf24; background: rgba(251,191,36,0.15); }
-        .membro-pt-item .tooltip-preview .preview-rank.ruim { color: #fca5a5; background: rgba(239,68,68,0.15); }
-        .membro-pt-item .tooltip-preview .preview-rank.pessimo { color: #94a3b8; background: rgba(100,100,100,0.15); }
 
-        /* ===== ESTILOS PARA HISTÓRICO ===== */
+        /* HISTÓRICO */
         .historico-item-card {
             background: rgba(30,30,35,0.3);
             border: 1px solid rgba(80,80,90,0.12);
@@ -389,7 +358,6 @@
             color: #6ee7b7;
         }
 
-        /* ===== MODAL DE HISTÓRICO (versão detalhada) ===== */
         .historico-detalhe-modal {
             display: none;
             position: fixed;
@@ -602,7 +570,7 @@
             </section>
         </div>
 
-        <!-- PTs -->
+        <!-- PTS -->
         <div id="tabPts" class="space-y-4 hidden">
             <section class="glass-card rounded-2xl p-5 shadow-xl">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-amber-subtle pb-3 mb-4">
@@ -614,12 +582,57 @@
                         <button onclick="copiarWhatsApp()" id="btnCopiarWhatsApp" class="btn-glass btn-glass-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
                     </div>
                 </div>
-                <div class="config-block grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
-                    <div><span class="label-config"><i class="fa-solid fa-flag mr-1"></i> Evento</span><select id="eventoSelecionado"><option value="⚔️ GvG (PvP)">⚔️ GvG (PvP)</option><option value="🗺️ Raid Mapa 5">🗺️ Raid Mapa 5</option><option value="🔥 Raid T5">🔥 Raid T5</option></select></div>
-                    <div><span class="label-config"><i class="fa-regular fa-clock mr-1"></i> Início</span><div class="flex items-center gap-1"><div class="flex-1"><input type="number" id="horaInicio" value="12" min="0" max="23" class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario" onblur="validarHora(this)" oninput="atualizarPreview()" /><span class="label-horario">Hora</span></div><span class="horario-separador">:</span><div class="flex-1"><input type="number" id="minutoInicio" value="00" min="0" max="59" class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario" onblur="validarMinuto(this)" oninput="atualizarPreview()" /><span class="label-horario">Min</span></div></div></div>
-                    <div><span class="label-config"><i class="fa-regular fa-clock mr-1"></i> Fim</span><div class="flex items-center gap-1"><div class="flex-1"><input type="number" id="horaFim" value="18" min="0" max="23" class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario" onblur="validarHora(this)" oninput="atualizarPreview()" /><span class="label-horario">Hora</span></div><span class="horario-separador">:</span><div class="flex-1"><input type="number" id="minutoFim" value="00" min="0" max="59" class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario" onblur="validarMinuto(this)" oninput="atualizarPreview()" /><span class="label-horario">Min</span></div></div></div>
-                    <div><span class="label-config chegada-label"><i class="fa-regular fa-clock mr-1"></i> Chegada Máxima</span><div class="flex items-center gap-1"><div class="flex-1"><input type="number" id="horaChegada" value="13" min="0" max="23" class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario chegada" onblur="validarHora(this)" oninput="atualizarPreview()" /><span class="label-horario chegada">Hora</span></div><span class="horario-separador">:</span><div class="flex-1"><input type="number" id="minutoChegada" value="30" min="0" max="59" class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario chegada" onblur="validarMinuto(this)" oninput="atualizarPreview()" /><span class="label-horario chegada">Min</span></div></div><span class="text-[8px] text-red-400/70 block text-center mt-1">⏰ Ultrapassou, perdeu a vaga</span></div>
-                    <div class="flex items-center justify-center"><div class="text-center w-full"><span class="label-config"><i class="fa-regular fa-eye mr-1"></i> Preview</span><div id="previewTexto" class="preview-badge w-full"><span class="evento-texto" id="previewEvento">⚔️ GvG (PvP)</span><span class="separador"> • </span><span class="horario-texto" id="previewHorario">12:00 - 18:00</span><br><span class="chegada-texto" id="previewChegada">⏰ Chegada máx: 13:30</span></div></div></div>
+                <div class="config-block grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 mb-4">
+                    <div><span class="label-config"><i class="fa-regular fa-calendar mr-1"></i> Dia</span>
+                        <select id="diaSemana" class="glass-select rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-amber-600">
+                            <option value="Segunda-feira">Segunda</option>
+                            <option value="Terça-feira">Terça</option>
+                            <option value="Quarta-feira">Quarta</option>
+                            <option value="Quinta-feira">Quinta</option>
+                            <option value="Sexta-feira">Sexta</option>
+                            <option value="Sábado">Sábado</option>
+                            <option value="Domingo">Domingo</option>
+                        </select>
+                    </div>
+                    <div><span class="label-config"><i class="fa-solid fa-flag mr-1"></i> Evento</span>
+                        <select id="eventoSelecionado" class="glass-select rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-amber-600">
+                            <option value="⚔️ Defesa (Castelo)">⚔️ Defesa do (Castelo)</option>
+                            <option value="🗺️ Raid Mapa 5">🗺️ Raid Mapa 5</option>
+                            <option value="🔥 Raid T5">🔥 Raid T5</option>
+                            <option value="🎉 Aniversário">🎉 Gvg Aniversário</option>
+                            <option value="⚔️ GvG Mermem">⚔️ GvG Mermem</option>
+                        </select>
+                    </div>
+                    <div><span class="label-config"><i class="fa-regular fa-clock mr-1"></i> Início</span>
+                        <div class="flex items-center gap-1">
+                            <div class="flex-1"><input type="number" id="horaInicio" value="12" min="0" max="23" class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario" onblur="validarHora(this)" oninput="atualizarPreview()" /><span class="label-horario">Hora</span></div>
+                            <span class="horario-separador">:</span>
+                            <div class="flex-1"><input type="number" id="minutoInicio" value="00" min="0" max="59" class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario" onblur="validarMinuto(this)" oninput="atualizarPreview()" /><span class="label-horario">Min</span></div>
+                        </div>
+                    </div>
+                    <div><span class="label-config"><i class="fa-regular fa-clock mr-1"></i> Fim</span>
+                        <div class="flex items-center gap-1">
+                            <div class="flex-1"><input type="number" id="horaFim" value="18" min="0" max="23" class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario" onblur="validarHora(this)" oninput="atualizarPreview()" /><span class="label-horario">Hora</span></div>
+                            <span class="horario-separador">:</span>
+                            <div class="flex-1"><input type="number" id="minutoFim" value="00" min="0" max="59" class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario" onblur="validarMinuto(this)" oninput="atualizarPreview()" /><span class="label-horario">Min</span></div>
+                        </div>
+                    </div>
+                    <div><span class="label-config chegada-label"><i class="fa-regular fa-clock mr-1"></i> Chegada Máxima</span>
+                        <div class="flex items-center gap-1">
+                            <div class="flex-1"><input type="number" id="horaChegada" value="13" min="0" max="23" class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario chegada" onblur="validarHora(this)" oninput="atualizarPreview()" /><span class="label-horario chegada">Hora</span></div>
+                            <span class="horario-separador">:</span>
+                            <div class="flex-1"><input type="number" id="minutoChegada" value="30" min="0" max="59" class="glass-input rounded-lg px-2 py-2 text-sm w-full text-center input-horario chegada" onblur="validarMinuto(this)" oninput="atualizarPreview()" /><span class="label-horario chegada">Min</span></div>
+                        </div>
+                        <span class="text-[8px] text-red-400/70 block text-center mt-1">⏰ Ultrapassou, perdeu a vaga</span>
+                    </div>
+                    <div class="flex items-center justify-center"><div class="text-center w-full"><span class="label-config"><i class="fa-regular fa-eye mr-1"></i> Preview</span>
+                        <div id="previewTexto" class="preview-badge w-full">
+                            <span class="dia-texto" id="previewDia">Segunda-feira</span><span class="separador"> • </span>
+                            <span class="evento-texto" id="previewEvento">⚔️ Defesa (Castelo)</span><br>
+                            <span class="horario-texto" id="previewHorario">12:00 - 18:00</span><br>
+                            <span class="chegada-texto" id="previewChegada">⏰ Chegada máx: 13:30</span>
+                        </div>
+                    </div></div>
                 </div>
                 <div id="gridPts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </section>
@@ -647,7 +660,7 @@
             </section>
         </div>
 
-        <!-- MODAL DE HISTÓRICO DO MEMBRO -->
+        <!-- MODAIS DE HISTÓRICO -->
         <div id="historicoMembroModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(12px); z-index:99999; align-items:center; justify-content:center; padding:20px;">
             <div style="background:rgba(20,15,10,0.95); border:1px solid rgba(180,150,100,0.2); border-radius:20px; padding:24px 28px; max-width:800px; width:100%; max-height:90vh; overflow-y:auto; box-shadow:0 30px 80px rgba(0,0,0,0.9); animation:modalFadeIn 0.3s ease; position:relative;">
                 <button onclick="fecharHistoricoMembro()" style="position:sticky; top:0; float:right; background:transparent; border:none; color:rgba(180,180,190,0.4); font-size:1.4rem; cursor:pointer; transition:color 0.2s; z-index:10;">
@@ -663,7 +676,6 @@
             </div>
         </div>
 
-        <!-- MODAL DE DETALHES DO HISTÓRICO -->
         <div id="historicoDetalheModal" class="historico-detalhe-modal">
             <div class="modal-box">
                 <button class="close-detalhe" onclick="fecharDetalheHistorico()"><i class="fa-solid fa-xmark"></i></button>
@@ -729,12 +741,13 @@
         var reservas = [];
 
         // ================================================================
-        // FUNÇÕES AUXILIARES (horário, preview)
+        // FUNÇÕES AUXILIARES
         // ================================================================
         function validarHora(input) { let val = parseInt(input.value); if (isNaN(val)) { input.value = '0'; return; } if (val < 0) input.value = '0'; if (val > 23) input.value = '23'; if (input.value.length === 1 && input.value !== '0') input.value = '0' + input.value; atualizarPreview(); }
         function validarMinuto(input) { let val = parseInt(input.value); if (isNaN(val)) { input.value = '00'; return; } if (val < 0) input.value = '00'; if (val > 59) input.value = '59'; if (input.value.length === 1) input.value = '0' + input.value; atualizarPreview(); }
 
         function atualizarPreview() {
+            const dia = document.getElementById('diaSemana').value;
             const evento = document.getElementById('eventoSelecionado').value;
             const hI = String(parseInt(document.getElementById('horaInicio').value) || 0).padStart(2, '0');
             const mI = String(parseInt(document.getElementById('minutoInicio').value) || 0).padStart(2, '0');
@@ -742,19 +755,22 @@
             const mF = String(parseInt(document.getElementById('minutoFim').value) || 0).padStart(2, '0');
             const hC = String(parseInt(document.getElementById('horaChegada').value) || 0).padStart(2, '0');
             const mC = String(parseInt(document.getElementById('minutoChegada').value) || 0).padStart(2, '0');
+            document.getElementById('previewDia').textContent = dia;
             document.getElementById('previewEvento').textContent = evento;
             document.getElementById('previewHorario').textContent = `${hI}:${mI} - ${hF}:${mF}`;
             document.getElementById('previewChegada').textContent = `⏰ Chegada máx: ${hC}:${mC}`;
         }
 
         function getHorarioFormatado() {
+            const dia = document.getElementById('diaSemana').value;
+            const evento = document.getElementById('eventoSelecionado').value;
             const hI = String(parseInt(document.getElementById('horaInicio').value) || 0).padStart(2, '0');
             const mI = String(parseInt(document.getElementById('minutoInicio').value) || 0).padStart(2, '0');
             const hF = String(parseInt(document.getElementById('horaFim').value) || 0).padStart(2, '0');
             const mF = String(parseInt(document.getElementById('minutoFim').value) || 0).padStart(2, '0');
             const hC = String(parseInt(document.getElementById('horaChegada').value) || 0).padStart(2, '0');
             const mC = String(parseInt(document.getElementById('minutoChegada').value) || 0).padStart(2, '0');
-            return { evento: document.getElementById('eventoSelecionado').value, horario: `${hI}:${mI} - ${hF}:${mF}`, chegada: `${hC}:${mC}` };
+            return { dia, evento, horario: `${hI}:${mI} - ${hF}:${mF}`, chegada: `${hC}:${mC}` };
         }
 
         // ================================================================
@@ -786,19 +802,61 @@
             const isBelt = itemKey === 'beltpvp';
 
             if (isSetOrWeapon) {
-                if (level.includes('GZ 34') || level.includes('AP 34')) { cor = 'bom'; label = '🟢 ' + level; fullLabel = level; }
-                else if (level.includes('GZ 32') || level.includes('AP 33')) { cor = 'medio'; label = '🟡 ' + level; fullLabel = level; }
-                else if (level.includes('GZ 30') || level.includes('AP 30')) { cor = 'critico'; label = '🔴 ' + level; fullLabel = level; }
-                else if (level.includes('Resistir')) { cor = 'neutro'; label = '🔵 ' + level; fullLabel = level; }
-                else { cor = 'neutro'; label = '⚪ ' + level; fullLabel = level; }
+                if (level.includes('Mermem 32') || level.includes('Catacumba 34')) {
+                    cor = 'bom';
+                    label = '🟢 ' + level;
+                    fullLabel = level;
+                } else if (level.includes('GZ 34') || level.includes('AP 34')) {
+                    cor = 'bom';
+                    label = '🟢 ' + level;
+                    fullLabel = level;
+                } else if (level.includes('GZ 32') || level.includes('AP 33')) {
+                    cor = 'medio';
+                    label = '🟡 ' + level;
+                    fullLabel = level;
+                } else if (level.includes('GZ 30') || level.includes('AP 30')) {
+                    cor = 'critico';
+                    label = '🔴 ' + level;
+                    fullLabel = level;
+                } else if (level.includes('Resistir')) {
+                    cor = 'neutro';
+                    label = '🔵 ' + level;
+                    fullLabel = level;
+                } else {
+                    cor = 'neutro';
+                    label = '⚪ ' + level;
+                    fullLabel = level;
+                }
             } else if (isAccessory || isCape || isBelt) {
-                if (level.includes('GZ 34') || level.includes('Competidor 34') || level.includes('Competidora 34')) { cor = 'bom'; label = '🟢 ' + level; fullLabel = level; }
-                else if (level.includes('GZ 32') || level.includes('Competidor 33') || level.includes('Competidora 33') || level.includes('Competidor 32') || level.includes('Competidora 32')) { cor = 'medio'; label = '🟡 ' + level; fullLabel = level; }
-                else if (level.includes('GZ 30') || level.includes('Competidor 30') || level.includes('Competidora 30')) { cor = 'critico'; label = '🔴 ' + level; fullLabel = level; }
-                else if (level.includes('GZ') || level.includes('Competidor') || level.includes('Competidora')) { cor = 'medio'; label = '🟡 ' + level; fullLabel = level; }
-                else if (level.includes('33') || level.includes('Craft') || level.includes('Subjugação') || level.includes('Subjugacao')) { cor = 'neutro'; label = '🔵 ' + level; fullLabel = level; }
-                else if (level.includes('Resistir')) { cor = 'neutro'; label = '🔵 ' + level; fullLabel = level; }
-                else { cor = 'neutro'; label = '⚪ ' + level; fullLabel = level; }
+                if (level.includes('GZ 34') || level.includes('Competidor 34') || level.includes('Competidora 34')) {
+                    cor = 'bom';
+                    label = '🟢 ' + level;
+                    fullLabel = level;
+                } else if (level.includes('GZ 32') || level.includes('Competidor 33') || level.includes('Competidora 33') || level.includes('Competidor 32') || level.includes('Competidora 32')) {
+                    cor = 'medio';
+                    label = '🟡 ' + level;
+                    fullLabel = level;
+                } else if (level.includes('GZ 30') || level.includes('Competidor 30') || level.includes('Competidora 30')) {
+                    cor = 'critico';
+                    label = '🔴 ' + level;
+                    fullLabel = level;
+                } else if (level.includes('GZ') || level.includes('Competidor') || level.includes('Competidora')) {
+                    cor = 'medio';
+                    label = '🟡 ' + level;
+                    fullLabel = level;
+                } else if (level.includes('33') || level.includes('Craft') || level.includes('Subjugação') || level.includes('Subjugacao')) {
+                    cor = 'neutro';
+                    label = '🔵 ' + level;
+                    fullLabel = level;
+                } else if (level.includes('Resistir')) {
+                    cor = 'neutro';
+                    label = '🔵 ' + level;
+                    fullLabel = level;
+                } else {
+                    cor = 'neutro';
+                    label = '⚪ ' + level;
+                    fullLabel = level;
+                }
             } else {
                 cor = 'neutro';
                 label = level;
@@ -837,7 +895,7 @@
         }
 
         // ================================================================
-        // RANK PVP (cálculo numérico)
+        // RANK PVP
         // ================================================================
         function avaliarItemScore(membro, itemKey) {
             const levelKey = `level_${itemKey}`;
@@ -848,12 +906,20 @@
             const amp = membro[ampKey] || '+0 (Sem amp)';
             if (!level || level === '-' || level === '') return null;
             let baseScore = 0;
-            if (level.includes('GZ 34') || level.includes('AP 34') || level.includes('Competidor 34') || level.includes('Competidora 34')) baseScore = 3.0;
-            else if (level.includes('GZ 32') || level.includes('AP 33') || level.includes('Competidor 33') || level.includes('Competidora 33') || level.includes('Competidor 32') || level.includes('Competidora 32')) baseScore = 2.0;
-            else if (level.includes('GZ 30') || level.includes('AP 30') || level.includes('Competidor 30') || level.includes('Competidora 30')) baseScore = 0.5;
-            else if (level.includes('AP')) baseScore = 0.4;
-            else if (level.includes('Resistir')) baseScore = 0.2;
-            else if (level.includes('Craft') || level.includes('Subjugação') || level.includes('Subjugacao')) baseScore = 0.5;
+            if (level.includes('GZ 34') || level.includes('AP 34') || level.includes('Competidor 34') || level.includes('Competidora 34') ||
+                level.includes('Mermem 32') || level.includes('Catacumba 34')) {
+                baseScore = 3.0;
+            } else if (level.includes('GZ 32') || level.includes('AP 33') || level.includes('Competidor 33') || level.includes('Competidora 33') || level.includes('Competidor 32') || level.includes('Competidora 32')) {
+                baseScore = 2.0;
+            } else if (level.includes('GZ 30') || level.includes('AP 30') || level.includes('Competidor 30') || level.includes('Competidora 30')) {
+                baseScore = 0.5;
+            } else if (level.includes('AP')) {
+                baseScore = 0.4;
+            } else if (level.includes('Resistir')) {
+                baseScore = 0.2;
+            } else if (level.includes('Craft') || level.includes('Subjugação') || level.includes('Subjugacao')) {
+                baseScore = 0.5;
+            }
             const ampScore = Math.min(extrairEstrelas(amp) * 0.3, 3.0);
             return baseScore + ampScore;
         }
@@ -892,6 +958,7 @@
             const labels = { 'elite': '🟣 Elite', 'bom': '🟢 Bom', 'medio': '🟡 Médio', 'ruim': '🔴 Ruim', 'pessimo': '⚠️ Péssimo' };
             return labels[rank] || '❓ Desconhecido';
         }
+
         function getRankClass(rank) {
             const classes = { 'elite': 'pvp-rank-badge elite', 'bom': 'pvp-rank-badge bom', 'medio': 'pvp-rank-badge medio', 'ruim': 'pvp-rank-badge ruim', 'pessimo': 'pvp-rank-badge pessimo' };
             return classes[rank] || 'pvp-rank-badge pessimo';
@@ -952,9 +1019,6 @@
 
             const isTribo = !proscritos.includes(membro.char_class);
             const badgeIcon = isTribo ? '⚔️' : '💀';
-            const resultado = calcularRankPvp(membro);
-            const rankLabel = getRankLabel(resultado.rank);
-            const rankClass = resultado.rank;
             const ramo1 = membro.almahad_branch1 || '❌ Vazio';
             const ramo2 = membro.almahad_branch2 || '❌ Vazio';
             const ramo3 = membro.almahad_branch3 || '❌ Vazio';
@@ -976,7 +1040,7 @@
 
             return `
                 <div class="preview-nome">${badgeIcon} ${membro.char_name || '-'}</div>
-                <div class="preview-classe">${membro.char_class || '-'} <span style="font-size:11px;color:#94a3b8;">${isTribo ? 'Clã da Montanha' : 'Proscrito'}</span> <span class="preview-rank ${rankClass}">${rankLabel}</span></div>
+                <div class="preview-classe">${membro.char_class || '-'} <span style="font-size:11px;color:#94a3b8;">${isTribo ? 'Clã da Montanha' : 'Proscrito'}</span></div>
                 <div class="preview-ramos">
                     <div class="pr" style="border-left-color: ${corRamo(ramo1)};"><div class="pr-label" style="color: ${corRamo(ramo1)};">${ramo1}</div><div class="pr-value">Ramo 1</div><div class="pr-detail">Nvl ${nivel1} • ${perf1}</div><div class="pr-talentos">35k: ${tal35k1}</div></div>
                     <div class="pr" style="border-left-color: ${corRamo(ramo2)};"><div class="pr-label" style="color: ${corRamo(ramo2)};">${ramo2}</div><div class="pr-value">Ramo 2</div><div class="pr-detail">Nvl ${nivel2} • ${perf2}</div><div class="pr-talentos">35k: ${tal35k2}</div></div>
@@ -1010,8 +1074,6 @@
                     <div class="ps-item"><span class="ps-label">Map5</span><span class="ps-value">${fmtItemComCor(map5, 'map5')}</span></div>
                     <div class="ps-item"><span class="ps-label">Escudo PvE</span><span class="ps-value">${fmtItemComCor(shieldPve, 'shieldpve')}</span></div>
                 </div>
-                <div class="preview-score"><span class="score-label">📊 Pontuação Total</span><span class="score-value ${rankClass}">${resultado.nota.toFixed(1)} / 10</span></div>
-                <div class="preview-score-detail"><span>🛡️ Set: <span class="num">${resultado.set.toFixed(1)}</span></span><span>💍 Acessórios: <span class="num">${resultado.acessorios.toFixed(1)}</span></span><span>⚔️ Armas: <span class="num">${resultado.armas.toFixed(1)}</span></span></div>
             `;
         }
 
@@ -1023,6 +1085,7 @@
             document.getElementById('previewModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
+
         function fecharPreview() {
             document.getElementById('previewModal').classList.remove('active');
             document.body.style.overflow = '';
@@ -1036,6 +1099,7 @@
         async function carregarReservas() {
             try { const { data, error } = await _supabase.from('fila_reservas').select('*').order('created_at', { ascending: false }); if (error) throw error; reservas = data || []; renderReservas(); } catch (err) { console.error(err); reservas = []; renderReservas(); }
         }
+
         async function adicionarReserva() {
             const nome = document.getElementById('reservaNome').value.trim().substring(0, 10);
             const classe = document.getElementById('reservaClasse').value;
@@ -1049,6 +1113,7 @@
             await carregarReservas();
             document.getElementById('statusMensagem').textContent = `✅ ${nome} adicionado à fila de reservas.`;
         }
+
         async function removerReserva(id) {
             const reserva = reservas.find(r => r.id === id);
             if (!reserva) return;
@@ -1058,6 +1123,7 @@
             await carregarReservas();
             document.getElementById('statusMensagem').textContent = `🗑️ ${reserva.nome} removido da fila.`;
         }
+
         function renderReservas() {
             const container = document.getElementById('listaReservas');
             if (!container) return;
@@ -1067,6 +1133,7 @@
                 return `<div class="reserva-item"><div class="info"><span class="nome">${r.nome}</span><span class="classe">${r.classe}</span><span class="whatsapp-num"><i class="fa-brands fa-whatsapp"></i> ${r.whatsapp}</span><span class="data-entry">${new Date(r.created_at).toLocaleDateString('pt-BR')}</span></div><div class="actions"><a href="${waLink}" target="_blank" class="whatsapp-link" title="Chamar no WhatsApp"><i class="fa-brands fa-whatsapp fa-lg"></i></a><button onclick="removerReserva('${r.id}')" class="remove-btn"><i class="fa-solid fa-trash"></i> Remover</button></div></div>`;
             }).join('');
         }
+
         function exportarReservasCSV() {
             if (!reservas.length) { alert('Nenhum reserva para exportar.'); return; }
             let csv = "Nome,Classe,WhatsApp,Data\n";
@@ -1148,7 +1215,6 @@
             lista.innerHTML = '<div style="text-align:center; color:rgba(180,180,190,0.5); padding:20px;"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Carregando histórico...</div>';
 
             try {
-                // Buscar histórico do membro
                 const { data, error } = await _supabase
                     .from('member_history')
                     .select('*')
@@ -1156,8 +1222,6 @@
                     .order('created_at', { ascending: false });
 
                 if (error) throw error;
-
-                // Buscar dados atuais do membro
                 const membroAtual = cache.find(m => m.char_name === charName);
 
                 if (!data || data.length === 0) {
@@ -1165,7 +1229,6 @@
                     return;
                 }
 
-                // Construir lista de histórico
                 let html = '';
                 data.forEach((item, index) => {
                     const isPrimeira = index === 0;
@@ -1175,7 +1238,6 @@
                         hour: '2-digit', minute: '2-digit'
                     });
 
-                    // Comparar com a versão anterior ou com a atual
                     let comparacao = membroAtual || {};
                     if (index < data.length - 1 && data[index + 1]) {
                         comparacao = data[index + 1].data_snapshot || {};
@@ -1253,7 +1315,6 @@
                     hour: '2-digit', minute: '2-digit'
                 });
 
-                // Buscar versão anterior (se existir)
                 const { data: anteriorData } = await _supabase
                     .from('member_history')
                     .select('data_snapshot')
@@ -1289,7 +1350,6 @@
                     html += `<div class="diff-linha sem-mudanca">Nenhuma mudança detectada nesta versão</div>`;
                 }
 
-                // JSON completo
                 html += `
                     <div style="margin-top:12px;font-size:11px;color:#94a3b8;font-weight:600;">📋 Dados completos da versão:</div>
                     <div class="json-view">${JSON.stringify(snapshot, null, 2)}</div>
@@ -1308,14 +1368,12 @@
         }
 
         // ================================================================
-        // GERADOR DE DIFF (comparação entre dois objetos)
+        // GERADOR DE DIFF
         // ================================================================
         function gerarDiff(antigo, novo) {
             if (!antigo || !novo) return [];
             const chaves = new Set([...Object.keys(antigo), ...Object.keys(novo)]);
             const diff = [];
-
-            // Ignorar campos que não queremos comparar
             const camposIgnorar = ['id', 'char_name', 'created_at', 'deleted_at'];
 
             chaves.forEach(chave => {
@@ -1346,7 +1404,7 @@
         }
 
         // ================================================================
-        // RENDER MEMBROS (com botão de histórico)
+        // RENDER MEMBROS
         // ================================================================
         function render(membros) {
             const grid = document.getElementById('gridMembros');
@@ -1368,10 +1426,6 @@
                     nao_tem: m[`no_${prefix}`] || false,
                     variant: m[`variant_${prefix}`] || '-'
                 });
-
-                const resultado = calcularRankPvp(m);
-                const rankLabel = getRankLabel(resultado.rank);
-                const rankClass = getRankClass(resultado.rank);
 
                 const t5 = getItem('t5');
                 const pve = getItem('pve');
@@ -1403,12 +1457,6 @@
                             <div class="flex items-center gap-2 flex-wrap">
                                 <span class="text-xs text-amber-400 font-semibold">${m.char_class || '-'}</span>
                                 <span class="badge-classe ${badgeClass}">${badgeLabel}</span>
-                                <span class="${rankClass}">${rankLabel} <span class="text-amber-400 font-normal">(${resultado.nota.toFixed(1)})</span></span>
-                            </div>
-                            <div class="flex items-center gap-2 mt-1 text-[10px] text-amber-500/60">
-                                <span>🛡️ Set: ${resultado.set.toFixed(1)}</span>
-                                <span>💍 Acess: ${resultado.acessorios.toFixed(1)}</span>
-                                <span>⚔️ Armas: ${resultado.armas.toFixed(1)}</span>
                             </div>
                         </div>
                         <div class="flex gap-2">
@@ -1498,6 +1546,7 @@
             if (error) { alert('Erro ao excluir: ' + error.message); return; }
             carregarMembros();
         }
+
         async function resetarHerois() {
             if (!confirm('⚠️ ATENÇÃO: Isso irá marcar TODOS os heróis como deletados (lixeira). Deseja continuar?')) return;
             if (!confirm('Última chance! Tem certeza que quer resetar todos os heróis cadastrados?')) return;
@@ -1527,20 +1576,52 @@
         // FUNÇÕES DE PTs
         // ================================================================
         function salvarPtsStorage() { localStorage.setItem('guilda_anomalia_pts', JSON.stringify(gruposPts)); }
+
         function adicionarPt() { const num = Math.max(0, ...Object.keys(gruposPts).map(Number)) + 1; gruposPts[num] = { slots: [null, null, null, null, null], modo: 'normal', lider: null }; salvarPtsStorage(); renderPts(); }
+
         function removerPt(ptId) { delete gruposPts[ptId]; salvarPtsStorage(); renderPts(); }
+
         function mudarModoPt(ptId, modo) { if (gruposPts[ptId]) { gruposPts[ptId].modo = modo; salvarPtsStorage(); renderPts(); } }
-        function definirLider(ptId, membroId) { if (!gruposPts[ptId]) return; gruposPts[ptId].lider = (gruposPts[ptId].lider === membroId ? null : membroId); salvarPtsStorage(); renderPts(); }
-        function escalarMembro(ptId, slotIndex, membroId) { if (!gruposPts[ptId]) gruposPts[ptId] = { slots: [null, null, null, null, null], modo: 'normal', lider: null }; gruposPts[ptId].slots[slotIndex] = membroId ? (cache.find(m => String(m.id) === String(membroId)) || null) : null; salvarPtsStorage(); renderPts(); }
+
+        function definirLider(ptId, membroId) {
+            if (!gruposPts[ptId]) return;
+            gruposPts[ptId].lider = (gruposPts[ptId].lider === membroId ? null : membroId);
+            salvarPtsStorage();
+            renderPts();
+        }
+
+        function escalarMembro(ptId, slotIndex, membroId) {
+            if (!gruposPts[ptId]) gruposPts[ptId] = { slots: [null, null, null, null, null], modo: 'normal', lider: null };
+            if (membroId) {
+                const jaAlocado = Object.keys(gruposPts).some(id => {
+                    if (String(id) === String(ptId)) return false;
+                    const slots = gruposPts[id].slots || [];
+                    return slots.some(s => s && String(s.id) === String(membroId));
+                });
+                if (jaAlocado) {
+                    alert('⚠️ Este membro já está alocado em outra PT!');
+                    renderPts();
+                    return;
+                }
+            }
+            gruposPts[ptId].slots[slotIndex] = membroId ? (cache.find(m => String(m.id) === String(membroId)) || null) : null;
+            salvarPtsStorage();
+            renderPts();
+        }
+
+        function getMembrosDisponiveis(ptId) {
+            const idsAlocados = new Set();
+            Object.keys(gruposPts).forEach(id => {
+                if (String(id) === String(ptId)) return;
+                const slots = gruposPts[id].slots || [];
+                slots.forEach(s => { if (s && s.id) idsAlocados.add(String(s.id)); });
+            });
+            return cache.filter(m => !idsAlocados.has(String(m.id)));
+        }
 
         function gerarTooltipPreview(membro) {
             if (!membro) return '';
-            const resultado = calcularRankPvp(membro);
-            const rankLabel = getRankLabel(resultado.rank);
-            const rankClass = resultado.rank;
-            return `<div style="display:flex;justify-content:space-between;"><span style="font-weight:700;color:#e8d5b8;">${membro.char_name}</span><span class="preview-rank ${rankClass}" style="font-size:9px;padding:1px 10px;">${rankLabel}</span></div>
-                <div style="display:flex;gap:12px;margin-top:4px;font-size:10px;color:#b8a088;"><span>🛡️ ${resultado.set.toFixed(1)}</span><span>💍 ${resultado.acessorios.toFixed(1)}</span><span>⚔️ ${resultado.armas.toFixed(1)}</span><span style="font-weight:700;color:#e8d5b8;">${resultado.nota.toFixed(1)}/10</span></div>
-                <div style="display:flex;gap:8px;margin-top:2px;font-size:9px;color:#94a3b8;"><span>${membro.char_class}</span></div>
+            return `<div style="display:flex;justify-content:space-between;"><span style="font-weight:700;color:#e8d5b8;">${membro.char_name}</span><span style="font-size:9px;color:#94a3b8;">${membro.char_class}</span></div>
                 <div style="margin-top:4px;font-size:9px;color:#6ee7b7;text-align:center;border-top:1px solid rgba(80,80,90,0.1);padding-top:4px;"><i class="fa-solid fa-eye"></i> Clique para detalhes</div>`;
         }
 
@@ -1550,11 +1631,14 @@
             const idsPt = Object.keys(gruposPts);
             if (!idsPt.length) { container.innerHTML = '<div class="text-center py-10 text-amber-600 italic col-span-full">Nenhuma PT criada. Clique em "Nova PT" ou "Reconstruir PTs".</div>'; return; }
             const nomesModos = { normal: 'Padrão', gvg: 'GvG (PvP)', pve: 'PvE Geral', map5: 'Raide Mapa 5', t5: 'Raide T5' };
+
             idsPt.forEach((ptId, index) => {
                 const ptData = gruposPts[ptId] || { slots: [null, null, null, null, null], modo: 'normal', lider: null };
                 const slots = ptData.slots || [null, null, null, null, null];
                 const modo = ptData.modo || 'normal';
                 const liderId = ptData.lider || null;
+                const liderMembro = liderId ? cache.find(m => String(m.id) === String(liderId)) : null;
+                const membrosDisponiveis = getMembrosDisponiveis(ptId);
 
                 const ptCard = document.createElement('div');
                 ptCard.className = `pt-card ${modo !== 'normal' ? 'modo-especial' : ''}`;
@@ -1565,18 +1649,22 @@
                     const isLider = membro && liderId && String(membro.id) === String(liderId);
                     const previewTooltip = membro ? gerarTooltipPreview(membro) : '';
 
+                    let opcoes = `<option value="">(Vazio - Selecionar Membro)</option>`;
+                    const membrosParaMostrar = membro ? [...membrosDisponiveis, membro] : membrosDisponiveis;
+                    const idsVistos = new Set();
+                    membrosParaMostrar.forEach(m => {
+                        if (!m || idsVistos.has(String(m.id))) return;
+                        idsVistos.add(String(m.id));
+                        const isSelected = membro && String(membro.id) === String(m.id);
+                        opcoes += `<option value="${m.id}" ${isSelected ? 'selected' : ''}>${m.char_name} (${m.char_class})</option>`;
+                    });
+
                     return `<div class="flex items-center justify-between bg-[#130f0d] px-2.5 py-1.5 rounded-lg text-xs border border-[#352214] ${isLider ? 'border-l-4 border-l-yellow-400' : ''}">
                         <span class="text-amber-500 font-bold w-6">#${slotIdx + 1}</span>
                         <div class="flex-1 mx-2">
                             <div class="${membro ? 'membro-pt-item' : ''}">
                                 <select onchange="escalarMembro('${ptId}', ${slotIdx}, this.value)" class="bg-[#0d0b09] border border-[#422b17] rounded px-2 py-1 text-amber-200 w-full focus:outline-none ${isVazio ? 'text-amber-500/50' : 'text-amber-200'}">
-                                    <option value="">(Vazio - Selecionar Membro)</option>
-                                    ${cache.map(m => {
-                                        const isSelected = membro && String(membro.id) === String(m.id);
-                                        const mResultado = calcularRankPvp(m);
-                                        const notaStr = mResultado.nota.toFixed(1);
-                                        return `<option value="${m.id}" ${isSelected ? 'selected' : ''}>${m.char_name} (${m.char_class}) [${notaStr}]</option>`;
-                                    }).join('')}
+                                    ${opcoes}
                                 </select>
                                 ${membro ? `<div class="tooltip-preview">${previewTooltip}</div>` : ''}
                             </div>
@@ -1585,11 +1673,11 @@
                     </div>`;
                 }).join('');
 
-                const liderAtual = liderId ? cache.find(m => String(m.id) === String(liderId)) : null;
+                const liderDisplay = liderMembro ? `${liderMembro.char_name} (${liderMembro.char_class})` : 'Sem líder';
 
                 ptCard.innerHTML = `
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-[#352214] pb-2 gap-2">
-                        <h3 class="text-sm font-black text-amber-100 font-rpg"><i class="fa-solid fa-people-group text-amber-600"></i> PT ${index + 1} ${liderAtual ? `<span class="text-[10px] text-yellow-400 font-rpg ml-2">⭐ Líder: ${liderAtual.char_name}</span>` : ''}</h3>
+                        <h3 class="text-sm font-black text-amber-100 font-rpg"><i class="fa-solid fa-people-group text-amber-600"></i> PT ${index + 1} ${liderMembro ? `<span class="text-[10px] text-yellow-400 font-rpg ml-2">⭐ Líder: ${liderDisplay}</span>` : ''}</h3>
                         <div class="flex items-center gap-2 w-full sm:w-auto justify-between">
                             <select onchange="mudarModoPt('${ptId}', this.value)" class="bg-[#0d0b09] border border-[#422b17] rounded px-2 py-1 text-[11px] font-rpg font-bold focus:outline-none text-amber-200">${Object.entries(nomesModos).map(([k, v]) => `<option value="${k}" ${modo === k ? 'selected' : ''}>${v}</option>`).join('')}</select>
                             <button onclick="removerPt('${ptId}')" class="text-red-400 hover:text-red-300 text-xs"><i class="fa-solid fa-trash"></i></button>
@@ -1621,33 +1709,47 @@
         }
 
         // ================================================================
-        // COPIAR PARA DISCORD E WHATSAPP
+        // COPIAR PARA DISCORD E WHATSAPP (SEM NOTAS)
         // ================================================================
+        function getNomeEventoParaExibicao(evento) {
+            const mapa = {
+                '⚔️ Defesa (Castelo)': '⚔️ Defesa do Castelo',
+                '🗺️ Raid Mapa 5': '🗺️ Raid Mapa 5',
+                '🔥 Raid T5': '🔥 Raid T5',
+                '🎉 Aniversário': '🎉 Gvg Aniversário',
+                '⚔️ GvG Mermem': '⚔️ GvG Mermem'
+            };
+            return mapa[evento] || evento;
+        }
+
         function copiarDiscord() {
             const dados = getHorarioFormatado();
             const agora = new Date();
             const offsetBrasilia = -3;
             const utc = agora.getTime() + (agora.getTimezoneOffset() * 60000);
             const horaBrasilia = new Date(utc + (3600000 * offsetBrasilia));
-            const diaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+            const diaSemana = dados.dia;
             const mes = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-            const dataFormatada = `${diaSemana[horaBrasilia.getDay()]}, ${String(horaBrasilia.getDate()).padStart(2, '0')} de ${mes[horaBrasilia.getMonth()]} de ${horaBrasilia.getFullYear()}`;
+            const dataFormatada = `${diaSemana}, ${String(horaBrasilia.getDate()).padStart(2, '0')} de ${mes[horaBrasilia.getMonth()]} de ${horaBrasilia.getFullYear()}`;
             const horaFormatada = `${String(horaBrasilia.getHours()).padStart(2, '0')}:${String(horaBrasilia.getMinutes()).padStart(2, '0')}`;
-            let texto = `⚔️ **ESCALAÇÃO DE PTs - GUILDA ANOMALIA** ⚔️\n\n📅 **Data:** ${dataFormatada}\n⏰ **Horário:** ${dados.horario}\n⏳ **Chegada Máxima:** ${dados.chegada} (ultrapassou, perdeu a vaga)\n🏷️ **Evento:** ${dados.evento}\n🕐 **Gerado em:** ${horaFormatada} (Horário de Brasília)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+            const eventoNome = getNomeEventoParaExibicao(dados.evento);
+            let texto = `⚔️ **ESCALAÇÃO DE PTs - GUILDA ANOMALIA** ⚔️\n\n📅 **Data:** ${dataFormatada}\n⏰ **Horário:** ${dados.horario}\n⏳ **Chegada Máxima:** ${dados.chegada} (ultrapassou, perdeu a vaga)\n🏷️ **Evento:** ${eventoNome}\n🕐 **Gerado em:** ${horaFormatada} (Horário de Brasília)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
             const idsPt = Object.keys(gruposPts);
             if (!idsPt.length) { alert('Nenhuma PT para copiar.'); return; }
             const nomesModos = { normal: 'Padrão', gvg: 'GvG (PvP)', pve: 'PvE Geral', map5: 'Raide Mapa 5', t5: 'Raide T5' };
-            const rankEmoji = { 'elite': '🟣', 'bom': '🟢', 'medio': '🟡', 'ruim': '🔴', 'pessimo': '⚫' };
             idsPt.forEach((ptId, index) => {
                 const ptData = gruposPts[ptId] || {};
                 const liderId = ptData.lider || null;
-                const liderNome = liderId ? cache.find(m => String(m.id) === String(liderId))?.char_name || 'Sem líder' : 'Sem líder';
+                const liderMembro = liderId ? cache.find(m => String(m.id) === String(liderId)) : null;
+                const liderNome = liderMembro ? `${liderMembro.char_name} (${liderMembro.char_class})` : 'Sem líder';
                 texto += `🔹 **PT ${index + 1}** [Modo: ${nomesModos[ptData.modo || 'normal']}] ⭐ Líder: ${liderNome}\n`;
                 (ptData.slots || []).forEach((m, sIdx) => {
                     const isLider = m && liderId && String(m.id) === String(liderId);
-                    const resultado = m ? calcularRankPvp(m) : { rank: 'pessimo', nota: 0 };
-                    const emoji = rankEmoji[resultado.rank] || '⚪';
-                    texto += m && m.char_name ? `> ${sIdx + 1}. ${isLider ? '⭐ ' : ''}${emoji} ${m.char_name} (${m.char_class}) | Nota: ${resultado.nota.toFixed(1)} | Rank: ${getRankLabel(resultado.rank)}\n` : `> ${sIdx + 1}. [Vazio]\n`;
+                    if (m && m.char_name) {
+                        texto += `> ${sIdx + 1}. ${isLider ? '⭐ ' : ''}${m.char_name} (${m.char_class})\n`;
+                    } else {
+                        texto += `> ${sIdx + 1}. [Vazio]\n`;
+                    }
                 });
                 texto += `\n`;
             });
@@ -1660,29 +1762,30 @@
             const offsetBrasilia = -3;
             const utc = agora.getTime() + (agora.getTimezoneOffset() * 60000);
             const horaBrasilia = new Date(utc + (3600000 * offsetBrasilia));
-            const diaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+            const diaSemana = dados.dia;
             const mes = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-            const dataFormatada = `${diaSemana[horaBrasilia.getDay()]}, ${String(horaBrasilia.getDate()).padStart(2, '0')} de ${mes[horaBrasilia.getMonth()]} de ${horaBrasilia.getFullYear()}`;
+            const dataFormatada = `${diaSemana}, ${String(horaBrasilia.getDate()).padStart(2, '0')} de ${mes[horaBrasilia.getMonth()]} de ${horaBrasilia.getFullYear()}`;
             const horaFormatada = `${String(horaBrasilia.getHours()).padStart(2, '0')}:${String(horaBrasilia.getMinutes()).padStart(2, '0')}`;
-            let texto = `⚔️ ESCALAÇÃO DE PTs - GUILDA ANOMALIA ⚔️\n\n📅 Data: ${dataFormatada}\n⏰ Horário: ${dados.horario}\n⏳ Chegada Máxima: ${dados.chegada} (ultrapassou, perdeu a vaga)\n🏷️ Evento: ${dados.evento}\n🕐 Gerado: ${horaFormatada} (Brasília)\n\n`;
+            const eventoNome = getNomeEventoParaExibicao(dados.evento);
+            let texto = `⚔️ ESCALAÇÃO DE PTs - GUILDA ANOMALIA ⚔️\n\n📅 Data: ${dataFormatada}\n⏰ Horário: ${dados.horario}\n⏳ Chegada Máxima: ${dados.chegada} (ultrapassou, perdeu a vaga)\n🏷️ Evento: ${eventoNome}\n🕐 Gerado: ${horaFormatada} (Brasília)\n\n`;
             const idsPt = Object.keys(gruposPts);
             if (!idsPt.length) { alert('Nenhuma PT para copiar.'); return; }
             const nomesModos = { normal: 'Padrão', gvg: 'GvG (PvP)', pve: 'PvE Geral', map5: 'Raide Mapa 5', t5: 'Raide T5' };
-            const rankEmoji = { 'elite': '🟣', 'bom': '🟢', 'medio': '🟡', 'ruim': '🔴', 'pessimo': '⚫' };
             idsPt.forEach((ptId, index) => {
                 const ptData = gruposPts[ptId] || {};
                 const slots = ptData.slots || [null, null, null, null, null];
                 const modo = ptData.modo || 'normal';
                 const liderId = ptData.lider || null;
-                const liderNome = liderId ? cache.find(m => String(m.id) === String(liderId))?.char_name || 'Sem líder' : 'Sem líder';
+                const liderMembro = liderId ? cache.find(m => String(m.id) === String(liderId)) : null;
+                const liderNome = liderMembro ? `${liderMembro.char_name} (${liderMembro.char_class})` : 'Sem líder';
                 texto += `🔹 PT ${index + 1} [${nomesModos[modo]}] ⭐ Líder: ${liderNome}\n`;
                 slots.forEach((m, sIdx) => {
-                    if (m) {
+                    if (m && m.char_name) {
                         const isLider = liderId && String(m.id) === String(liderId);
-                        const resultado = calcularRankPvp(m);
-                        const emoji = rankEmoji[resultado.rank] || '⚪';
-                        texto += `   ${sIdx + 1}. ${isLider ? '⭐ ' : ''}${emoji} ${m.char_name} (${m.char_class}) [${getRankLabel(resultado.rank)} - ${resultado.nota.toFixed(1)} pts]\n`;
-                    } else { texto += `   ${sIdx + 1}. [Vazio]\n`; }
+                        texto += `   ${sIdx + 1}. ${isLider ? '⭐ ' : ''}${m.char_name} (${m.char_class})\n`;
+                    } else {
+                        texto += `   ${sIdx + 1}. [Vazio]\n`;
+                    }
                 });
                 texto += `\n`;
             });
@@ -1700,9 +1803,9 @@
             renderPts();
             renderReservas();
             document.getElementById('eventoSelecionado').addEventListener('change', atualizarPreview);
+            document.getElementById('diaSemana').addEventListener('change', atualizarPreview);
             atualizarPreview();
             document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { fecharPreview(); fecharHistoricoMembro(); fecharDetalheHistorico(); } });
-            // Fechar modais de histórico ao clicar fora
             document.getElementById('historicoMembroModal').addEventListener('click', function(e) {
                 if (e.target === this) fecharHistoricoMembro();
             });
@@ -1712,4 +1815,4 @@
         });
     </script>
 </body>
-</html>
+</html>>

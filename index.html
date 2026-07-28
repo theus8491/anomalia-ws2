@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -230,7 +231,7 @@
         #loginScreen .login-box .login-msg.error { color: #fca5a5; }
         #loginScreen .login-box .login-msg.success { color: #6ee7b7; }
 
-        /* ===== BOTÃO PAINEL ADM (aparece apenas na tela de login) ===== */
+        /* ===== BOTÃO PAINEL ADM ===== */
         #loginScreen .login-box .btn-painel-adm {
             width: 100%;
             padding: 12px;
@@ -616,7 +617,6 @@
                 <button class="btn-login" id="btnLogin" onclick="login()"><i class="fa-solid fa-right-to-bracket mr-2"></i>Entrar</button>
                 <button class="btn-login secondary" onclick="registrar()"><i class="fa-solid fa-user-plus mr-2"></i>Cadastrar novo personagem</button>
 
-                <!-- ===== BOTÃO PAINEL ADM (visível apenas aqui) ===== -->
                 <a href="login.html" class="btn-painel-adm">
                     <i class="fa-solid fa-lock"></i> Painel Adm
                 </a>
@@ -1024,7 +1024,7 @@
                     mostrarMsg('changePassMsg', '⚠️ Use a senha padrão. Defina uma nova senha.', '');
                     document.getElementById('newPass1').value = '';
                     document.getElementById('newPass2').value = '';
-                    localStorage.setItem('anomalia_user', nick);
+                    sessionStorage.setItem('anomalia_user', nick);
                     return;
                 } else {
                     mostrarMsg('loginMsg', '❌ Senha incorreta. Use a senha padrão: 1234', 'error');
@@ -1038,7 +1038,7 @@
             }
 
             currentUser = userData.nick;
-            localStorage.setItem('anomalia_user', currentUser);
+            sessionStorage.setItem('anomalia_user', currentUser);
             mostrarMsg('loginMsg', '✅ Login efetuado!', 'success');
 
             if (userData.must_change_password === true) {
@@ -1143,7 +1143,7 @@
             currentUser = null;
             pendingUser = null;
             dadosAtuais = null;
-            localStorage.removeItem('anomalia_user');
+            sessionStorage.removeItem('anomalia_user');
             document.getElementById('loginScreen').style.display = 'flex';
             document.getElementById('changePassScreen').style.display = 'none';
             document.getElementById('appScreen').classList.add('hidden');
@@ -1179,7 +1179,7 @@
         }
 
         function verificarSessao() {
-            const saved = localStorage.getItem('anomalia_user');
+            const saved = sessionStorage.getItem('anomalia_user');
             if (saved) {
                 currentUser = saved;
                 supabaseClient
@@ -1199,13 +1199,15 @@
                         } else if (data) {
                             entrarNoApp(saved, data.role);
                         } else {
-                            localStorage.removeItem('anomalia_user');
+                            sessionStorage.removeItem('anomalia_user');
                             document.getElementById('loginScreen').style.display = 'flex';
                         }
                     })
                     .catch(() => {
                         entrarNoApp(saved);
                     });
+            } else {
+                document.getElementById('loginScreen').style.display = 'flex';
             }
         }
 
@@ -1599,7 +1601,7 @@
                 <div class="field-group" style="grid-column: 1 / -1;">
                     <label>Nível</label>
                     <select id="level_${itemId}">
-                        ${generateLevelOptions(['GZ 30', 'GZ 32', 'GZ 34', 'AP 30', 'AP 33'])}
+                        ${generateLevelOptions(['GZ 30', 'GZ 32', 'GZ 34', 'AP 30', 'AP 33','Mermem 32','Catacumba 34'])}
                     </select>
                 </div>
             `;
@@ -2115,6 +2117,7 @@
                     .maybeSingle();
 
                 if (dadosAtuaisDoBanco && !fetchError) {
+                    // Verifica se a tabela member_history existe e insere
                     const { error: histError } = await supabaseClient
                         .from('member_history')
                         .insert([{
@@ -2124,9 +2127,12 @@
                         }]);
                     if (histError) {
                         console.warn('Erro ao salvar histórico:', histError);
+                        // Se o erro for porque a tabela não existe, ignore
                     } else {
                         console.log('✅ Histórico salvo com sucesso!');
                     }
+                } else {
+                    console.warn('Nenhum dado anterior para salvar no histórico.');
                 }
 
                 const hasCatacumba = document.querySelector('input[name="hasCatacumba"]:checked');
@@ -2326,3 +2332,4 @@
     </script>
 </body>
 </html>
+```
