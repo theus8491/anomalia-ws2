@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
+        /* ===== TODOS OS ESTILOS ===== */
         .glass-card { background: rgba(40,40,45,0.35) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(120,120,130,0.15) !important; }
         .glass-card-dark { background: rgba(30,30,35,0.4) !important; backdrop-filter: blur(6px); border: 1px solid rgba(80,80,90,0.12) !important; }
         .glass-header { background: rgba(35,35,40,0.4) !important; backdrop-filter: blur(12px); border: 2px solid rgba(120,120,130,0.2) !important; }
@@ -120,6 +121,447 @@
         #submitBtn:active .glass-submit { transform: scale(0.97); }
         .btn-glow { transition: box-shadow 0.4s ease; }
         #submitBtn:hover .btn-glow { box-shadow: 0 0 40px rgba(255,200,50,0.2), inset 0 0 30px rgba(255,200,50,0.05); }
+
+        .info-text-nivel {
+            font-size: 10px;
+            color: rgba(180,180,190,0.5);
+            background: rgba(30,30,35,0.15);
+            border: 1px solid rgba(80,80,90,0.1);
+            border-radius: 6px;
+            padding: 4px 10px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .info-text-nivel .icon { color: #fbbf24; }
+
+        /* ===== TELA DE LOGIN ===== */
+        #loginScreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+        }
+        #loginScreen .login-box {
+            background: rgba(30,30,35,0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(120,120,130,0.2);
+            border-radius: 24px;
+            padding: 40px 32px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        #loginScreen .login-box h2 {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #e8e8e8;
+            margin-bottom: 8px;
+        }
+        #loginScreen .login-box .sub {
+            color: rgba(180,180,190,0.6);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+        #loginScreen .login-box .input-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        #loginScreen .login-box .input-group label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(180,180,190,0.6);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+        }
+        #loginScreen .login-box .input-group input {
+            width: 100%;
+            background: rgba(25,25,30,0.5);
+            border: 1px solid rgba(80,80,90,0.3);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #d0d0d0;
+            font-size: 1rem;
+            transition: border 0.2s;
+        }
+        #loginScreen .login-box .input-group input:focus {
+            outline: none;
+            border-color: #94a3b8;
+        }
+        #loginScreen .login-box .input-group input::placeholder {
+            color: rgba(160,160,170,0.4);
+        }
+        #loginScreen .login-box .btn-login {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            background: rgba(148,163,184,0.15);
+            border: 1px solid rgba(148,163,184,0.3);
+            color: #e8e8e8;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+            margin-top: 8px;
+        }
+        #loginScreen .login-box .btn-login:hover {
+            background: rgba(148,163,184,0.25);
+            border-color: #94a3b8;
+        }
+        #loginScreen .login-box .btn-login.secondary {
+            background: rgba(212,175,55,0.1);
+            border-color: rgba(212,175,55,0.3);
+            color: #fbbf24;
+        }
+        #loginScreen .login-box .btn-login.secondary:hover {
+            background: rgba(212,175,55,0.2);
+            border-color: rgba(212,175,55,0.5);
+        }
+        #loginScreen .login-box .login-msg {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            min-height: 24px;
+        }
+        #loginScreen .login-box .login-msg.error { color: #fca5a5; }
+        #loginScreen .login-box .login-msg.success { color: #6ee7b7; }
+
+        /* ===== BOTÃO PAINEL ADM (aparece apenas na tela de login) ===== */
+        #loginScreen .login-box .btn-painel-adm {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            background: rgba(139,92,246,0.15);
+            border: 1px solid rgba(139,92,246,0.3);
+            color: #a78bfa;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        #loginScreen .login-box .btn-painel-adm:hover {
+            background: rgba(139,92,246,0.25);
+            border-color: rgba(139,92,246,0.5);
+        }
+
+        /* ===== TELA DE TROCA DE SENHA ===== */
+        #changePassScreen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+        }
+        #changePassScreen .login-box {
+            background: rgba(30,30,35,0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(120,120,130,0.2);
+            border-radius: 24px;
+            padding: 40px 32px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        #changePassScreen .login-box h2 {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 8px;
+        }
+        #changePassScreen .login-box .sub {
+            color: rgba(180,180,190,0.6);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+        #changePassScreen .login-box .input-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        #changePassScreen .login-box .input-group label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(180,180,190,0.6);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+        }
+        #changePassScreen .login-box .input-group input {
+            width: 100%;
+            background: rgba(25,25,30,0.5);
+            border: 1px solid rgba(80,80,90,0.3);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #d0d0d0;
+            font-size: 1rem;
+            transition: border 0.2s;
+        }
+        #changePassScreen .login-box .input-group input:focus {
+            outline: none;
+            border-color: #94a3b8;
+        }
+        #changePassScreen .login-box .input-group input::placeholder {
+            color: rgba(160,160,170,0.4);
+        }
+        #changePassScreen .login-box .btn-login {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            background: rgba(148,163,184,0.15);
+            border: 1px solid rgba(148,163,184,0.3);
+            color: #e8e8e8;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+            margin-top: 8px;
+        }
+        #changePassScreen .login-box .btn-login:hover {
+            background: rgba(148,163,184,0.25);
+            border-color: #94a3b8;
+        }
+        #changePassScreen .login-box .login-msg {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            min-height: 24px;
+        }
+        #changePassScreen .login-box .login-msg.error { color: #fca5a5; }
+        #changePassScreen .login-box .login-msg.success { color: #6ee7b7; }
+
+        /* ===== BOTÃO HISTÓRICO ===== */
+        .btn-historico {
+            background: rgba(139,92,246,0.15);
+            border: 1px solid rgba(139,92,246,0.3);
+            color: #a78bfa;
+            padding: 6px 16px;
+            border-radius: 12px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-historico:hover {
+            background: rgba(139,92,246,0.25);
+            border-color: rgba(139,92,246,0.5);
+        }
+
+        .header-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .header-actions .nick-display {
+            color: #6ee7b7;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: rgba(16,185,129,0.1);
+            padding: 4px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(16,185,129,0.2);
+        }
+        .btn-sair {
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: #fca5a5;
+            padding: 6px 16px;
+            border-radius: 12px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-sair:hover {
+            background: rgba(239,68,68,0.25);
+            border-color: rgba(239,68,68,0.5);
+        }
+
+        /* ===== MODAL HISTÓRICO ===== */
+        .historico-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .historico-modal.active { display: flex; }
+        .historico-modal .modal-box {
+            background: rgba(20,15,10,0.95);
+            border: 1px solid rgba(180,150,100,0.2);
+            border-radius: 20px;
+            padding: 24px 28px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+            animation: modalFadeIn 0.3s ease;
+            position: relative;
+        }
+        .historico-modal .modal-box::-webkit-scrollbar { width: 6px; }
+        .historico-modal .modal-box::-webkit-scrollbar-track { background: rgba(30,30,35,0.3); border-radius: 10px; }
+        .historico-modal .modal-box::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.3); border-radius: 10px; }
+        .historico-modal .modal-box::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.5); }
+
+        .historico-modal .modal-box .close-modal {
+            position: sticky;
+            top: 0;
+            float: right;
+            background: transparent;
+            border: none;
+            color: rgba(180,180,190,0.4);
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            z-index: 10;
+        }
+        .historico-modal .modal-box .close-modal:hover { color: #fca5a5; }
+        .historico-modal .modal-box .modal-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #e8d5b8;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(180,150,100,0.15);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            margin-top: 0;
+        }
+
+        .historico-item {
+            background: rgba(30,30,35,0.3);
+            border: 1px solid rgba(80,80,90,0.12);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        .historico-item:hover {
+            border-color: rgba(148,163,184,0.3);
+            background: rgba(40,40,45,0.3);
+        }
+        .historico-item .data {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+        .historico-item .btn-ver-versao {
+            background: rgba(148,163,184,0.1);
+            border: 1px solid rgba(148,163,184,0.15);
+            border-radius: 8px;
+            padding: 4px 14px;
+            font-size: 11px;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Cinzel', serif;
+        }
+        .historico-item .btn-ver-versao:hover {
+            background: rgba(148,163,184,0.2);
+            border-color: rgba(148,163,184,0.3);
+            color: #cbd5e1;
+        }
+
+        /* ===== SNAPSHOT VIEW ===== */
+        .snapshot-view {
+            display: none;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(80,80,90,0.15);
+        }
+        .snapshot-view.active { display: block; }
+        .snapshot-view .snapshot-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #fbbf24;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .snapshot-view .diff-list {
+            background: rgba(30,30,35,0.2);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            border-left: 3px solid #fbbf24;
+        }
+        .snapshot-view .diff-list .diff-item {
+            font-size: 12px;
+            padding: 2px 0;
+            color: #e8d5b8;
+        }
+        .snapshot-view .diff-list .diff-item .campo {
+            color: #94a3b8;
+            font-weight: 600;
+        }
+        .snapshot-view .diff-list .diff-item .antigo {
+            color: #fca5a5;
+            text-decoration: line-through;
+        }
+        .snapshot-view .diff-list .diff-item .novo {
+            color: #6ee7b7;
+            font-weight: 600;
+        }
+        .snapshot-view .diff-list .diff-item .seta {
+            color: rgba(180,180,190,0.4);
+            margin: 0 6px;
+        }
+        .snapshot-view .snapshot-json {
+            background: rgba(10,10,12,0.6);
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 11px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 300px;
+            overflow-y: auto;
+            color: #d0d0d0;
+        }
+        .snapshot-view .snapshot-json .diff-destaque {
+            background: rgba(251,191,36,0.2);
+            border-left: 3px solid #fbbf24;
+            padding-left: 6px;
+        }
+        .snapshot-view .snapshot-json .diff-destaque.removido {
+            background: rgba(239,68,68,0.15);
+            border-left-color: #ef4444;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        .snapshot-view .snapshot-json .diff-destaque.adicionado {
+            background: rgba(16,185,129,0.15);
+            border-left-color: #10b981;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-slate-400 selection:text-white text-[#e8e8e8] relative">
@@ -137,10 +579,14 @@
                     </div>
                     <h1 class="text-3xl sm:text-4xl font-black text-white/90 font-rpg tracking-wide drop-shadow-lg">Guilda Anomalia</h1>
                 </div>
-                <div class="flex flex-wrap items-center justify-center gap-3">
-                    <a href="painel.html" class="flex items-center gap-2 glass-card-dark hover:bg-[#201813]/80 border border-[#63452c]/50 px-4 py-2.5 rounded-xl shadow-lg transition text-amber-300 hover:text-amber-100 text-xs font-bold font-rpg tracking-wider">
-                        <i class="fa-solid fa-lock text-amber-500"></i> Painel Adm
-                    </a>
+                <div class="header-actions">
+                    <span id="userNickDisplay" class="nick-display hidden"></span>
+                    <button id="btnHistorico" class="btn-historico hidden" onclick="abrirHistorico()">
+                        <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+                    </button>
+                    <button id="btnSair" class="btn-sair hidden" onclick="logout()">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sair
+                    </button>
                     <div class="flex items-center gap-3 glass-card-dark px-4 py-2.5 rounded-xl shadow-inner">
                         <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
                             <i class="fa-solid fa-shield-halved text-sm"></i>
@@ -154,332 +600,771 @@
             </div>
         </header>
 
-        <form id="itemForm" class="space-y-6">
-            <!-- SEÇÃO I: IDENTIDADE -->
-            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
-                <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
-                    <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">I</span>
-                    <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">IDENTIDADE DO HERÓI</h2>
+        <!-- ===== TELA DE LOGIN ===== -->
+        <div id="loginScreen">
+            <div class="login-box">
+                <h2><i class="fa-solid fa-shield-halved text-amber-500 mr-2"></i>Acesso ao Formulário</h2>
+                <p class="sub">Faça login com seu nick. <span style="color:#fbbf24;">Senha padrão: 1234</span></p>
+                <div class="input-group">
+                    <label>Nick (seu nome de personagem)</label>
+                    <input type="text" id="loginNick" placeholder="Ex: Anomalla" maxlength="10" />
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label for="charName" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1.5">Nome do Personagem</label>
-                        <input type="text" id="charName" placeholder="Ex: Anomalla" maxlength="10" required class="w-full glass-input rounded-xl px-4 py-2.5 text-amber-100 placeholder:text-amber-700/50 focus:outline-none focus:border-amber-600 text-sm" oninput="updateCharCounter(this)" />
-                        <div id="charCounter" class="char-counter">0/10</div>
-                    </div>
-                    <div>
-                        <label for="charClass" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1.5">Classe</label>
-                        <select id="charClass" required class="w-full glass-select rounded-xl px-4 py-2.5 text-amber-100 focus:outline-none focus:border-amber-600 text-sm">
-                            <option value="" disabled selected>Selecione sua classe</option>
-                            <optgroup label="Segunda Facção / Tribos e Legião">
-                                <option value="Bárbaro">Bárbaro</option>
-                                <option value="Ladino">Ladino</option>
-                                <option value="Xamã">Xamã</option>
-                                <option value="Caçador">Caçador</option>
-                                <option value="Cacique">Cacique</option>
-                            </optgroup>
-                            <optgroup label="Proscritos">
-                                <option value="Necromante">Necromante</option>
-                                <option value="Cavaleiro da Morte">Cavaleiro da Morte</option>
-                                <option value="Bruxo">Bruxo</option>
-                                <option value="Encantador">Encantador</option>
-                                <option value="Ceifador">Ceifador</option>
-                            </optgroup>
-                        </select>
-                    </div>
+                <div class="input-group">
+                    <label>Senha</label>
+                    <input type="password" id="loginPass" placeholder="••••••" />
                 </div>
-            </section>
+                <button class="btn-login" id="btnLogin" onclick="login()"><i class="fa-solid fa-right-to-bracket mr-2"></i>Entrar</button>
+                <button class="btn-login secondary" onclick="registrar()"><i class="fa-solid fa-user-plus mr-2"></i>Cadastrar novo personagem</button>
 
-            <!-- SEÇÃO II: TALENTOS DE ALMAHAD -->
-            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
-                <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
-                    <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">II</span>
-                    <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">TALENTOS DE ALMAHAD</h2>
-                </div>
-                <div class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="branch-card">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
-                                <i class="fa-solid fa-chess-rook text-amber-600"></i> Ramo 1
-                            </label>
-                            <select id="almahadBranch1" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600 mb-2">
-                                <option value="" disabled selected>Selecione o ramo</option>
-                                <option value="Assassinos">Assassinos</option>
-                                <option value="Aventureiros">Aventureiros</option>
-                                <option value="Magos">Magos</option>
-                            </select>
-                            <select id="almahadLevel1" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600" onchange="updatePerformance('1', this.value)">
-                                <option value="" disabled selected>Nível (1-39)</option>
-                                <script>
-                                    for (let i = 1; i <= 39; i++) document.write(`<option value="${i}">${i}</option>`);
-                                </script>
-                            </select>
-                            <div class="performance-bar">
-                                <div id="performanceFill1" class="fill" style="width: 0%;"></div>
-                            </div>
-                            <div class="performance-label">
-                                <span>Desempenho</span>
-                                <span id="performanceText1">0%</span>
-                            </div>
-                            <div class="mt-2 pt-2 border-t border-amber-subtle">
-                                <span class="text-[9px] uppercase tracking-wider text-amber-500/70 font-bold">Talentos 35k</span>
-                                <div class="talentos-35k-ramo">
-                                    <label><input type="radio" name="talentos35k_1" value="Possuo os 2" /> Os 2</label>
-                                    <label><input type="radio" name="talentos35k_1" value="Possuo 1" /> 1</label>
-                                    <label><input type="radio" name="talentos35k_1" value="Não" checked /> Não</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="branch-card">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
-                                <i class="fa-solid fa-chess-rook text-amber-600"></i> Ramo 2
-                            </label>
-                            <select id="almahadBranch2" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600 mb-2">
-                                <option value="" disabled selected>Selecione o ramo</option>
-                                <option value="Assassinos">Assassinos</option>
-                                <option value="Aventureiros">Aventureiros</option>
-                                <option value="Magos">Magos</option>
-                            </select>
-                            <select id="almahadLevel2" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600" onchange="updatePerformance('2', this.value)">
-                                <option value="" disabled selected>Nível (1-39)</option>
-                                <script>
-                                    for (let i = 1; i <= 39; i++) document.write(`<option value="${i}">${i}</option>`);
-                                </script>
-                            </select>
-                            <div class="performance-bar">
-                                <div id="performanceFill2" class="fill" style="width: 0%;"></div>
-                            </div>
-                            <div class="performance-label">
-                                <span>Desempenho</span>
-                                <span id="performanceText2">0%</span>
-                            </div>
-                            <div class="mt-2 pt-2 border-t border-amber-subtle">
-                                <span class="text-[9px] uppercase tracking-wider text-amber-500/70 font-bold">Talentos 35k</span>
-                                <div class="talentos-35k-ramo">
-                                    <label><input type="radio" name="talentos35k_2" value="Possuo os 2" /> Os 2</label>
-                                    <label><input type="radio" name="talentos35k_2" value="Possuo 1" /> 1</label>
-                                    <label><input type="radio" name="talentos35k_2" value="Não" checked /> Não</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="branch-card">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
-                                <i class="fa-solid fa-chess-rook text-amber-600"></i> Ramo 3
-                            </label>
-                            <select id="almahadBranch3" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600 mb-2">
-                                <option value="" disabled selected>Selecione o ramo</option>
-                                <option value="Assassinos">Assassinos</option>
-                                <option value="Aventureiros">Aventureiros</option>
-                                <option value="Magos">Magos</option>
-                            </select>
-                            <select id="almahadLevel3" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600" onchange="updatePerformance('3', this.value)">
-                                <option value="" disabled selected>Nível (1-39)</option>
-                                <script>
-                                    for (let i = 1; i <= 39; i++) document.write(`<option value="${i}">${i}</option>`);
-                                </script>
-                            </select>
-                            <div class="performance-bar">
-                                <div id="performanceFill3" class="fill" style="width: 0%;"></div>
-                            </div>
-                            <div class="performance-label">
-                                <span>Desempenho</span>
-                                <span id="performanceText3">0%</span>
-                            </div>
-                            <div class="mt-2 pt-2 border-t border-amber-subtle">
-                                <span class="text-[9px] uppercase tracking-wider text-amber-500/70 font-bold">Talentos 35k</span>
-                                <div class="talentos-35k-ramo">
-                                    <label><input type="radio" name="talentos35k_3" value="Possuo os 2" /> Os 2</label>
-                                    <label><input type="radio" name="talentos35k_3" value="Possuo 1" /> 1</label>
-                                    <label><input type="radio" name="talentos35k_3" value="Não" checked /> Não</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <!-- ===== BOTÃO PAINEL ADM (visível apenas aqui) ===== -->
+                <a href="login.html" class="btn-painel-adm">
+                    <i class="fa-solid fa-lock"></i> Painel Adm
+                </a>
 
+                <div id="loginMsg" class="login-msg"></div>
+            </div>
+        </div>
+
+        <!-- ===== TELA DE TROCA DE SENHA ===== -->
+        <div id="changePassScreen">
+            <div class="login-box">
+                <h2><i class="fa-solid fa-key text-amber-500 mr-2"></i>Altere sua senha</h2>
+                <p class="sub">Você está usando a senha padrão. Defina uma nova senha para continuar.</p>
+                <div class="input-group">
+                    <label>Nova Senha (mínimo 4 caracteres)</label>
+                    <input type="password" id="newPass1" placeholder="Nova senha" minlength="4" />
+                </div>
+                <div class="input-group">
+                    <label>Confirmar Nova Senha</label>
+                    <input type="password" id="newPass2" placeholder="Confirme a nova senha" minlength="4" />
+                </div>
+                <button class="btn-login" onclick="trocarSenha()"><i class="fa-solid fa-save mr-2"></i>Salvar nova senha</button>
+                <div id="changePassMsg" class="login-msg"></div>
+            </div>
+        </div>
+
+        <!-- ===== FORMULÁRIO PRINCIPAL ===== -->
+        <div id="appScreen" class="hidden">
+            <form id="itemForm" class="space-y-6">
+                <!-- SEÇÃO I: IDENTIDADE -->
+                <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                    <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
+                        <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">I</span>
+                        <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">IDENTIDADE DO HERÓI</h2>
+                    </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label for="almahadT5" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1.5 flex items-center gap-1.5">
-                                <i class="fa-solid fa-fire text-amber-600"></i> Talento da T5
-                            </label>
-                            <select id="almahadT5" class="w-full glass-select rounded-xl px-4 py-2.5 text-amber-100 focus:outline-none focus:border-amber-600 text-sm transition">
-                                <option value="" disabled selected>Escolha o número (1 a 36)</option>
-                                <script>
-                                    for (let i = 1; i <= 36; i++) document.write(`<option value="T5 Nível ${i}">${i}</option>`);
-                                </script>
-                            </select>
+                            <label for="charName" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1.5">Nome do Personagem</label>
+                            <input type="text" id="charName" placeholder="Ex: Anomalla" maxlength="10" readonly
+                                   class="w-full glass-input rounded-xl px-4 py-2.5 text-amber-100 placeholder:text-amber-700/50 focus:outline-none focus:border-amber-600 text-sm cursor-not-allowed opacity-80" />
+                            <div id="charCounter" class="char-counter">0/10</div>
                         </div>
                         <div>
-                            <label for="fullBranches" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1.5 flex items-center gap-1.5">
-                                <i class="fa-solid fa-layer-group text-amber-600"></i> Ramos Full (1 a 3)
-                            </label>
-                            <select id="fullBranches" class="w-full glass-select rounded-xl px-4 py-2.5 text-amber-100 focus:outline-none focus:border-amber-600 text-sm transition">
-                                <option value="" disabled selected>Quantos ramos full?</option>
-                                <option value="Não">Não</option>
-                                <option value="1 Ramo Full">1 Ramo Full</option>
-                                <option value="2 Ramos Full">2 Ramos Full</option>
-                                <option value="3 Ramos Full">3 Ramos Full</option>
+                            <label for="charClass" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1.5">Classe</label>
+                            <select id="charClass" required class="w-full glass-select rounded-xl px-4 py-2.5 text-amber-100 focus:outline-none focus:border-amber-600 text-sm">
+                                <option value="" disabled selected>Selecione sua classe</option>
+                                <optgroup label="Segunda Facção / Tribos e Legião">
+                                    <option value="Bárbaro">Bárbaro</option>
+                                    <option value="Ladino">Ladino</option>
+                                    <option value="Xamã">Xamã</option>
+                                    <option value="Caçador">Caçador</option>
+                                    <option value="Cacique">Cacique</option>
+                                </optgroup>
+                                <optgroup label="Proscritos">
+                                    <option value="Necromante">Necromante</option>
+                                    <option value="Cavaleiro da Morte">Cavaleiro da Morte</option>
+                                    <option value="Bruxo">Bruxo</option>
+                                    <option value="Encantador">Encantador</option>
+                                    <option value="Ceifador">Ceifador</option>
+                                </optgroup>
                             </select>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- SEÇÃO II.5: LIVRO DE ARENA -->
-            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
-                <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
-                    <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">II</span>
-                    <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">LIVRO DE ARENA</h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="livro-card">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
-                            <i class="fa-solid fa-fire-flame-curved text-red-400"></i> Ferocidade
-                        </label>
-                        <div class="livro-radio-group">
-                            <label><input type="radio" name="ferocidade" value="Sim" /> Sim</label>
-                            <label><input type="radio" name="ferocidade" value="Não" checked /> Não</label>
+                <!-- SEÇÃO II: TALENTOS DE ALMAHAD -->
+                <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                    <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
+                        <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">II</span>
+                        <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">TALENTOS DE ALMAHAD</h2>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="branch-card">
+                                <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-chess-rook text-amber-600"></i> Ramo 1
+                                </label>
+                                <select id="almahadBranch1" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600 mb-2">
+                                    <option value="" disabled selected>Selecione o ramo</option>
+                                    <option value="Assassinos">Assassinos</option>
+                                    <option value="Aventureiros">Aventureiros</option>
+                                    <option value="Magos">Magos</option>
+                                </select>
+                                <select id="almahadLevel1" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600" onchange="updatePerformance('1', this.value)">
+                                    <option value="" disabled selected>Nível (1-39)</option>
+                                    <script>
+                                        for (let i = 1; i <= 39; i++) document.write(`<option value="${i}">${i}</option>`);
+                                    </script>
+                                </select>
+                                <div class="performance-bar">
+                                    <div id="performanceFill1" class="fill" style="width: 0%;"></div>
+                                </div>
+                                <div class="performance-label">
+                                    <span>Desempenho</span>
+                                    <span id="performanceText1">0%</span>
+                                </div>
+                                <div class="mt-2 pt-2 border-t border-amber-subtle">
+                                    <span class="text-[9px] uppercase tracking-wider text-amber-500/70 font-bold">Talentos 35k</span>
+                                    <div class="talentos-35k-ramo">
+                                        <label><input type="radio" name="talentos35k_1" value="Possuo os 2" /> Os 2</label>
+                                        <label><input type="radio" name="talentos35k_1" value="Possuo 1" /> 1</label>
+                                        <label><input type="radio" name="talentos35k_1" value="Não" checked /> Não</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="branch-card">
+                                <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-chess-rook text-amber-600"></i> Ramo 2
+                                </label>
+                                <select id="almahadBranch2" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600 mb-2">
+                                    <option value="" disabled selected>Selecione o ramo</option>
+                                    <option value="Assassinos">Assassinos</option>
+                                    <option value="Aventureiros">Aventureiros</option>
+                                    <option value="Magos">Magos</option>
+                                </select>
+                                <select id="almahadLevel2" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600" onchange="updatePerformance('2', this.value)">
+                                    <option value="" disabled selected>Nível (1-39)</option>
+                                    <script>
+                                        for (let i = 1; i <= 39; i++) document.write(`<option value="${i}">${i}</option>`);
+                                    </script>
+                                </select>
+                                <div class="performance-bar">
+                                    <div id="performanceFill2" class="fill" style="width: 0%;"></div>
+                                </div>
+                                <div class="performance-label">
+                                    <span>Desempenho</span>
+                                    <span id="performanceText2">0%</span>
+                                </div>
+                                <div class="mt-2 pt-2 border-t border-amber-subtle">
+                                    <span class="text-[9px] uppercase tracking-wider text-amber-500/70 font-bold">Talentos 35k</span>
+                                    <div class="talentos-35k-ramo">
+                                        <label><input type="radio" name="talentos35k_2" value="Possuo os 2" /> Os 2</label>
+                                        <label><input type="radio" name="talentos35k_2" value="Possuo 1" /> 1</label>
+                                        <label><input type="radio" name="talentos35k_2" value="Não" checked /> Não</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="branch-card">
+                                <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-chess-rook text-amber-600"></i> Ramo 3
+                                </label>
+                                <select id="almahadBranch3" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600 mb-2">
+                                    <option value="" disabled selected>Selecione o ramo</option>
+                                    <option value="Assassinos">Assassinos</option>
+                                    <option value="Aventureiros">Aventureiros</option>
+                                    <option value="Magos">Magos</option>
+                                </select>
+                                <select id="almahadLevel3" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600" onchange="updatePerformance('3', this.value)">
+                                    <option value="" disabled selected>Nível (1-39)</option>
+                                    <script>
+                                        for (let i = 1; i <= 39; i++) document.write(`<option value="${i}">${i}</option>`);
+                                    </script>
+                                </select>
+                                <div class="performance-bar">
+                                    <div id="performanceFill3" class="fill" style="width: 0%;"></div>
+                                </div>
+                                <div class="performance-label">
+                                    <span>Desempenho</span>
+                                    <span id="performanceText3">0%</span>
+                                </div>
+                                <div class="mt-2 pt-2 border-t border-amber-subtle">
+                                    <span class="text-[9px] uppercase tracking-wider text-amber-500/70 font-bold">Talentos 35k</span>
+                                    <div class="talentos-35k-ramo">
+                                        <label><input type="radio" name="talentos35k_3" value="Possuo os 2" /> Os 2</label>
+                                        <label><input type="radio" name="talentos35k_3" value="Possuo 1" /> 1</label>
+                                        <label><input type="radio" name="talentos35k_3" value="Não" checked /> Não</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="almahadT5" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1.5 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-fire text-amber-600"></i> Talento da T5
+                                </label>
+                                <select id="almahadT5" class="w-full glass-select rounded-xl px-4 py-2.5 text-amber-100 focus:outline-none focus:border-amber-600 text-sm transition">
+                                    <option value="" disabled selected>Escolha o número (1 a 36)</option>
+                                    <script>
+                                        for (let i = 1; i <= 36; i++) document.write(`<option value="T5 Nível ${i}">${i}</option>`);
+                                    </script>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="fullBranches" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1.5 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-layer-group text-amber-600"></i> Ramos Full (1 a 3)
+                                </label>
+                                <select id="fullBranches" class="w-full glass-select rounded-xl px-4 py-2.5 text-amber-100 focus:outline-none focus:border-amber-600 text-sm transition">
+                                    <option value="" disabled selected>Quantos ramos full?</option>
+                                    <option value="Não">Não</option>
+                                    <option value="1 Ramo Full">1 Ramo Full</option>
+                                    <option value="2 Ramos Full">2 Ramos Full</option>
+                                    <option value="3 Ramos Full">3 Ramos Full</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="livro-card">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
-                            <i class="fa-solid fa-shield text-emerald-400"></i> Resiliência
-                        </label>
-                        <div class="livro-radio-group">
-                            <label><input type="radio" name="resiliencia" value="Sim" /> Sim</label>
-                            <label><input type="radio" name="resiliencia" value="Não" checked /> Não</label>
+                </section>
+
+                <!-- SEÇÃO II.5: LIVRO DE ARENA -->
+                <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                    <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
+                        <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">II</span>
+                        <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">LIVRO DE ARENA</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="livro-card">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
+                                <i class="fa-solid fa-fire-flame-curved text-red-400"></i> Ferocidade
+                            </label>
+                            <div class="livro-radio-group">
+                                <label><input type="radio" name="ferocidade" value="Sim" /> Sim</label>
+                                <label><input type="radio" name="ferocidade" value="Não" checked /> Não</label>
+                            </div>
+                        </div>
+                        <div class="livro-card">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-2 flex items-center gap-1.5">
+                                <i class="fa-solid fa-shield text-emerald-400"></i> Resiliência
+                            </label>
+                            <div class="livro-radio-group">
+                                <label><input type="radio" name="resiliencia" value="Sim" /> Sim</label>
+                                <label><input type="radio" name="resiliencia" value="Não" checked /> Não</label>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- SEÇÃO III: ARMAS & ESCUDOS -->
-            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
-                <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
-                    <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">III</span>
-                    <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">AMPLIFICAÇÃO DE ARMAS & ESCUDOS (1 A 10 ESTRELAS)</h2>
-                </div>
-                <div class="items-grid" id="weaponsContainer">
-                    <!-- Gerado pelo JavaScript -->
-                </div>
-            </section>
-
-            <!-- SEÇÃO IV: ACESSÓRIOS PvP -->
-            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
-                <div class="flex items-center justify-between mb-5 pb-3 border-b border-amber-subtle">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">IV</span>
-                        <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">ACESSÓRIOS PvP & AMPLIFICAÇÃO</h2>
+                <!-- SEÇÃO III: ARMAS & ESCUDOS -->
+                <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                    <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
+                        <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">III</span>
+                        <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">AMPLIFICAÇÃO DE ARMAS & ESCUDOS (1 A 10 ESTRELAS)</h2>
                     </div>
-                </div>
-                <div class="items-grid" id="pvpAccessoriesContainer">
-                    <!-- Gerado pelo JavaScript -->
-                </div>
-            </section>
+                    <div class="items-grid" id="weaponsContainer">
+                        <!-- Gerado pelo JavaScript -->
+                    </div>
+                </section>
 
-            <!-- SEÇÃO V: SET PvP -->
-            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
-                <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
-                    <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">V</span>
-                    <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">SET PvP & AMPLIFICAÇÃO</h2>
-                </div>
-                <div class="items-grid" id="pvpSetContainer">
-                    <!-- Gerado pelo JavaScript -->
-                </div>
-                <div class="mt-6 glass-card-dark rounded-xl p-4 space-y-3">
-                    <div class="flex items-center justify-between flex-wrap gap-3">
-                        <span class="text-sm font-bold text-white/90 font-rpg flex items-center gap-2">
-                            <i class="fa-solid fa-skull text-red-500"></i> Possui Set Catacumba?
-                        </span>
-                        <div class="flex items-center gap-4">
-                            <label class="flex items-center gap-1.5 text-xs text-amber-300 cursor-pointer">
-                                <input type="radio" name="hasCatacumba" value="nao" checked onchange="toggleCatacumbaType(false)" class="custom-radio" /> Não
-                            </label>
-                            <label class="flex items-center gap-1.5 text-xs text-amber-300 cursor-pointer">
-                                <input type="radio" name="hasCatacumba" value="sim" onchange="toggleCatacumbaType(true)" class="custom-radio" /> Sim
-                            </label>
+                <!-- SEÇÃO IV: ACESSÓRIOS PvP -->
+                <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                    <div class="flex items-center justify-between mb-5 pb-3 border-b border-amber-subtle">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">IV</span>
+                            <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">ACESSÓRIOS PvP & AMPLIFICAÇÃO</h2>
                         </div>
                     </div>
-                    <div id="catacumbaTypeContainer" class="hidden space-y-1.5 pt-3 border-t border-amber-subtle">
-                        <label for="catacumbaType" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1">Tipo do Catacumba</label>
-                        <select id="catacumbaType" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600">
-                            <option value="" disabled selected>Selecione o tipo</option>
-                            <option value="Leve">Leve</option>
-                            <option value="Tecido">Tecido</option>
-                            <option value="Pesado">Pesado</option>
-                        </select>
+                    <div class="items-grid" id="pvpAccessoriesContainer">
+                        <!-- Gerado pelo JavaScript -->
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- SEÇÃO VI: ACESSÓRIOS PvE -->
-            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
-                <div class="flex items-center justify-between mb-5 pb-3 border-b border-amber-subtle">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">VI</span>
-                        <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">ACESSÓRIOS PvE & AMPLIFICAÇÃO</h2>
+                <!-- SEÇÃO V: SET PvP + CINTO -->
+                <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
+                    <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
+                        <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">V</span>
+                        <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">SET PvP & AMPLIFICAÇÃO</h2>
                     </div>
-                </div>
-                <div class="items-grid" id="pveAccessoriesContainer">
-                    <!-- Gerado pelo JavaScript -->
-                </div>
-            </section>
-
-            <!-- SEÇÃO VII: SET PvE -->
-            <section class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl">
-                <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-amber-subtle">
-                    <span class="w-7 h-7 rounded-lg glass-card-dark border border-[#63452c]/50 flex items-center justify-center text-amber-400 font-rpg text-xs font-bold">VII</span>
-                    <h2 class="text-base sm:text-lg font-bold text-white/90 font-rpg tracking-wide">SET PvE & AMPLIFICAÇÃO</h2>
-                </div>
-                <div class="items-grid" id="pveSetContainer">
-                    <!-- Gerado pelo JavaScript -->
-                </div>
-                <div class="mt-6 glass-card-dark rounded-xl p-4 space-y-3">
-                    <div class="flex items-center justify-between flex-wrap gap-3">
-                        <span class="text-sm font-bold text-white/90 font-rpg flex items-center gap-2">
-                            <i class="fa-solid fa-water text-cyan-500"></i> Possui Set Mermem?
-                        </span>
-                        <div class="flex items-center gap-4">
-                            <label class="flex items-center gap-1.5 text-xs text-amber-300 cursor-pointer">
-                                <input type="radio" name="hasMermem" value="nao" checked onchange="toggleMermemType(false)" class="custom-radio" /> Não
-                            </label>
-                            <label class="flex items-center gap-1.5 text-xs text-amber-300 cursor-pointer">
-                                <input type="radio" name="hasMermem" value="sim" onchange="toggleMermemType(true)" class="custom-radio" /> Sim
-                            </label>
+                    <div class="items-grid" id="pvpSetContainer">
+                        <!-- Gerado pelo JavaScript -->
+                    </div>
+                    <div class="mt-6" id="beltContainer">
+                        <!-- Gerado pelo JavaScript -->
+                    </div>
+                    <div class="mt-6 glass-card-dark rounded-xl p-4 space-y-3">
+                        <div class="flex items-center justify-between flex-wrap gap-3">
+                            <span class="text-sm font-bold text-white/90 font-rpg flex items-center gap-2">
+                                <i class="fa-solid fa-skull text-red-500"></i> Possui Set Catacumba?
+                            </span>
+                            <div class="flex items-center gap-4">
+                                <label class="flex items-center gap-1.5 text-xs text-amber-300 cursor-pointer">
+                                    <input type="radio" name="hasCatacumba" value="nao" checked onchange="toggleCatacumbaType(false)" class="custom-radio" /> Não
+                                </label>
+                                <label class="flex items-center gap-1.5 text-xs text-amber-300 cursor-pointer">
+                                    <input type="radio" name="hasCatacumba" value="sim" onchange="toggleCatacumbaType(true)" class="custom-radio" /> Sim
+                                </label>
+                            </div>
+                        </div>
+                        <div id="catacumbaTypeContainer" class="hidden space-y-1.5 pt-3 border-t border-amber-subtle">
+                            <label for="catacumbaType" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1">Tipo do Catacumba</label>
+                            <select id="catacumbaType" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600">
+                                <option value="" disabled selected>Selecione o tipo</option>
+                                <option value="Leve">Leve</option>
+                                <option value="Tecido">Tecido</option>
+                                <option value="Pesado">Pesado</option>
+                            </select>
                         </div>
                     </div>
-                    <div id="mermemTypeContainer" class="hidden space-y-1.5 pt-3 border-t border-amber-subtle">
-                        <label for="mermemType" class="block text-xs font-bold uppercase tracking-wider text-amber-500/90 mb-1">Tipo do Mermem</label>
-                        <select id="mermemType" class="w-full glass-select rounded-lg px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-600">
-                            <option value="" disabled selected>Selecione o tipo</option>
-                            <option value="Leve">Leve</option>
-                            <option value="Tecido">Tecido</option>
-                            <option value="Pesado">Pesado</option>
-                        </select>
-                    </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- BOTÃO DE ENVIO -->
-            <button type="submit" id="submitBtn" class="w-full relative group cursor-pointer transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] py-3">
-                <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-400/80 via-amber-500/80 to-orange-600/80 shadow-2xl shadow-amber-500/30 border-2 border-amber-300/50 group-hover:shadow-amber-400/50 group-hover:border-amber-200/80 transition-all duration-300 btn-glow"></div>
-                <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
-                <div class="relative m-1.5 glass-submit rounded-xl py-4 px-8 shadow-inner border border-cyan-200/30 flex items-center justify-center gap-3 group-hover:border-cyan-200/60 transition-all duration-300 bg-black/10 backdrop-blur-sm">
-                    <i class="fa-solid fa-scroll text-cyan-100 drop-shadow-lg text-xl animate-float group-hover:rotate-[-5deg] transition-transform duration-300" id="submitIcon"></i>
-                    <span class="font-rpg font-black text-white text-lg sm:text-xl tracking-widest drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]" id="btnText">ENVIAR DADOS DA GUILDA</span>
-                    <i class="fa-solid fa-arrow-right text-cyan-100/70 text-sm group-hover:translate-x-1 transition-transform duration-300"></i>
-                </div>
-            </button>
-        </form>
+                <!-- BOTÃO DE ENVIO -->
+                <button type="submit" id="submitBtn" class="w-full relative group cursor-pointer transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] py-3">
+                    <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-400/80 via-amber-500/80 to-orange-600/80 shadow-2xl shadow-amber-500/30 border-2 border-amber-300/50 group-hover:shadow-amber-400/50 group-hover:border-amber-200/80 transition-all duration-300 btn-glow"></div>
+                    <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
+                    <div class="relative m-1.5 glass-submit rounded-xl py-4 px-8 shadow-inner border border-cyan-200/30 flex items-center justify-center gap-3 group-hover:border-cyan-200/60 transition-all duration-300 bg-black/10 backdrop-blur-sm">
+                        <i class="fa-solid fa-scroll text-cyan-100 drop-shadow-lg text-xl animate-float group-hover:rotate-[-5deg] transition-transform duration-300" id="submitIcon"></i>
+                        <span class="font-rpg font-black text-white text-lg sm:text-xl tracking-widest drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]" id="btnText">ENVIAR DADOS DA GUILDA</span>
+                        <i class="fa-solid fa-arrow-right text-cyan-100/70 text-sm group-hover:translate-x-1 transition-transform duration-300"></i>
+                    </div>
+                </button>
+            </form>
+        </div>
     </main>
+
+    <!-- ===== MODAL HISTÓRICO ===== -->
+    <div id="historicoModal" class="historico-modal">
+        <div class="modal-box">
+            <button class="close-modal" onclick="fecharHistorico()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-title"><i class="fa-solid fa-clock-rotate-left text-purple-400 mr-2"></i>Histórico de Alterações</div>
+            <div id="historicoLista">
+                <div class="text-center text-amber-500/50 py-8">Carregando histórico...</div>
+            </div>
+            <div id="snapshotView" class="snapshot-view">
+                <div class="snapshot-title">📸 Versão anterior</div>
+                <div id="diffList" class="diff-list"></div>
+                <div id="snapshotJson" class="snapshot-json"></div>
+            </div>
+        </div>
+    </div>
 
     <footer class="w-full text-center py-6 text-xs text-amber-700/60 font-rpg tracking-wider relative z-10 glass-footer mt-12">
         GUILDA ANOMALIA &copy; 2026 &bull; Servidor BR-Tourmaline. Todos os direitos reservados.
     </footer>
 
     <script>
-        // ============================================================
-        // CONTADOR DE CARACTERES
-        // ============================================================
+        // ================================================================
+        // CONFIGURAÇÃO SUPABASE
+        // ================================================================
+        const SUPABASE_URL = 'https://tfgjfscnuemunuwzvtjr.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_vCiz2wBxb7yRfrfhJxYOfg__u3kka3W';
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        let currentUser = null;
+        let pendingUser = null;
+        let dadosAtuais = null;
+
+        // ================================================================
+        // FUNÇÕES DE HASH
+        // ================================================================
+        async function hashPassword(pass) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(pass);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // ================================================================
+        // FUNÇÃO PARA CRIAR USUÁRIO
+        // ================================================================
+        async function criarUsuario(nick, hashedPassword, mustChange) {
+            const { data, error } = await supabaseClient
+                .from('users')
+                .insert([{
+                    nick: nick,
+                    password: hashedPassword,
+                    must_change_password: mustChange,
+                    role: 'member'
+                }])
+                .select('nick, must_change_password, role');
+
+            if (error) {
+                console.error('Erro ao criar usuário:', error);
+                return { data: null, error };
+            }
+            return { data: data ? data[0] : null, error: null };
+        }
+
+        // ================================================================
+        // FUNÇÕES DE LOGIN
+        // ================================================================
+        window.login = async function() {
+            const nick = document.getElementById('loginNick').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+
+            if (!nick) { mostrarMsg('loginMsg', 'Digite seu nick.', 'error'); return; }
+            if (!pass) { mostrarMsg('loginMsg', 'Digite sua senha.', 'error'); return; }
+
+            const { exists } = await verificarNickNoGuild(nick);
+            if (!exists) {
+                mostrarMsg('loginMsg', '❌ Personagem não encontrado. Cadastre-se primeiro.', 'error');
+                return;
+            }
+
+            const hashed = await hashPassword(pass);
+            const { data: userData, error: userError } = await supabaseClient
+                .from('users')
+                .select('nick, must_change_password, password, role')
+                .eq('nick', nick)
+                .maybeSingle();
+
+            if (!userData) {
+                const senhaPadrao = await hashPassword('1234');
+                const { data: newUser, error: insertError } = await criarUsuario(nick, senhaPadrao, true);
+
+                if (insertError) {
+                    mostrarMsg('loginMsg', 'Erro ao configurar acesso: ' + insertError.message, 'error');
+                    return;
+                }
+
+                if (pass === '1234') {
+                    pendingUser = nick;
+                    currentUser = nick;
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('changePassScreen').style.display = 'flex';
+                    document.getElementById('appScreen').classList.add('hidden');
+                    mostrarMsg('changePassMsg', '⚠️ Use a senha padrão. Defina uma nova senha.', '');
+                    document.getElementById('newPass1').value = '';
+                    document.getElementById('newPass2').value = '';
+                    localStorage.setItem('anomalia_user', nick);
+                    return;
+                } else {
+                    mostrarMsg('loginMsg', '❌ Senha incorreta. Use a senha padrão: 1234', 'error');
+                    return;
+                }
+            }
+
+            if (userData.password !== hashed) {
+                mostrarMsg('loginMsg', '❌ Senha incorreta.', 'error');
+                return;
+            }
+
+            currentUser = userData.nick;
+            localStorage.setItem('anomalia_user', currentUser);
+            mostrarMsg('loginMsg', '✅ Login efetuado!', 'success');
+
+            if (userData.must_change_password === true) {
+                pendingUser = userData.nick;
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('changePassScreen').style.display = 'flex';
+                document.getElementById('appScreen').classList.add('hidden');
+                mostrarMsg('changePassMsg', '⚠️ Você precisa definir uma nova senha.', '');
+                document.getElementById('newPass1').value = '';
+                document.getElementById('newPass2').value = '';
+                return;
+            }
+
+            setTimeout(() => {
+                entrarNoApp(userData.nick, userData.role);
+            }, 500);
+        };
+
+        window.registrar = async function() {
+            const nick = document.getElementById('loginNick').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+
+            if (!nick || nick.length < 3) {
+                mostrarMsg('loginMsg', 'Nick deve ter pelo menos 3 caracteres.', 'error');
+                return;
+            }
+            if (!pass || pass.length < 4) {
+                mostrarMsg('loginMsg', 'Senha deve ter pelo menos 4 caracteres.', 'error');
+                return;
+            }
+
+            const { exists } = await verificarNickNoGuild(nick);
+            if (exists) {
+                mostrarMsg('loginMsg', '❌ Este nick já existe na guilda! Faça login.', 'error');
+                return;
+            }
+
+            const hashed = await hashPassword(pass);
+            const { data: userData, error: userError } = await criarUsuario(nick, hashed, false);
+
+            if (userError) {
+                if (userError.code === '23505') {
+                    mostrarMsg('loginMsg', 'Este nick já está em uso no sistema. Tente outro.', 'error');
+                } else {
+                    mostrarMsg('loginMsg', 'Erro ao cadastrar: ' + userError.message, 'error');
+                }
+                return;
+            }
+
+            const { error: guildError } = await supabaseClient
+                .from('guild_members')
+                .insert([{
+                    char_name: nick,
+                    char_class: '',
+                    created_at: new Date().toISOString()
+                }]);
+
+            if (guildError) {
+                await supabaseClient.from('users').delete().eq('nick', nick);
+                mostrarMsg('loginMsg', 'Erro ao criar personagem: ' + guildError.message, 'error');
+                return;
+            }
+
+            mostrarMsg('loginMsg', '✅ Cadastro realizado com sucesso! Faça login.', 'success');
+            document.getElementById('loginPass').value = '';
+            setTimeout(() => window.login(), 500);
+        };
+
+        window.trocarSenha = async function() {
+            const nova = document.getElementById('newPass1').value.trim();
+            const confirm = document.getElementById('newPass2').value.trim();
+
+            if (!nova || nova.length < 4) {
+                mostrarMsg('changePassMsg', 'A nova senha deve ter pelo menos 4 caracteres.', 'error');
+                return;
+            }
+            if (nova !== confirm) {
+                mostrarMsg('changePassMsg', 'As senhas não coincidem.', 'error');
+                return;
+            }
+
+            const hashed = await hashPassword(nova);
+            const { error } = await supabaseClient
+                .from('users')
+                .update({ password: hashed, must_change_password: false })
+                .eq('nick', pendingUser);
+
+            if (error) {
+                mostrarMsg('changePassMsg', 'Erro ao atualizar senha: ' + error.message, 'error');
+                return;
+            }
+
+            mostrarMsg('changePassMsg', '✅ Senha alterada com sucesso!', 'success');
+            document.getElementById('changePassScreen').style.display = 'none';
+            setTimeout(() => {
+                entrarNoApp(pendingUser);
+                pendingUser = null;
+            }, 500);
+        };
+
+        window.logout = function() {
+            currentUser = null;
+            pendingUser = null;
+            dadosAtuais = null;
+            localStorage.removeItem('anomalia_user');
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('changePassScreen').style.display = 'none';
+            document.getElementById('appScreen').classList.add('hidden');
+            document.getElementById('userNickDisplay').classList.add('hidden');
+            document.getElementById('btnSair').classList.add('hidden');
+            document.getElementById('btnHistorico').classList.add('hidden');
+            document.getElementById('loginMsg').textContent = '';
+            document.getElementById('loginMsg').className = 'login-msg';
+            document.getElementById('loginNick').value = '';
+            document.getElementById('loginPass').value = '';
+            fecharHistorico();
+        };
+
+        // ================================================================
+        // FUNÇÕES AUXILIARES
+        // ================================================================
+        function mostrarMsg(elId, texto, tipo) {
+            const el = document.getElementById(elId);
+            if (el) {
+                el.textContent = texto;
+                el.className = 'login-msg ' + (tipo || '');
+            }
+        }
+
+        async function verificarNickNoGuild(nick) {
+            const { data, error } = await supabaseClient
+                .from('guild_members')
+                .select('char_name')
+                .eq('char_name', nick)
+                .maybeSingle();
+            if (error) return { exists: false, error };
+            return { exists: !!data, data };
+        }
+
+        function verificarSessao() {
+            const saved = localStorage.getItem('anomalia_user');
+            if (saved) {
+                currentUser = saved;
+                supabaseClient
+                    .from('users')
+                    .select('must_change_password, role')
+                    .eq('nick', saved)
+                    .maybeSingle()
+                    .then(({ data }) => {
+                        if (data && data.must_change_password === true) {
+                            pendingUser = saved;
+                            document.getElementById('loginScreen').style.display = 'none';
+                            document.getElementById('changePassScreen').style.display = 'flex';
+                            document.getElementById('appScreen').classList.add('hidden');
+                            mostrarMsg('changePassMsg', '⚠️ Você precisa definir uma nova senha.', '');
+                            document.getElementById('newPass1').value = '';
+                            document.getElementById('newPass2').value = '';
+                        } else if (data) {
+                            entrarNoApp(saved, data.role);
+                        } else {
+                            localStorage.removeItem('anomalia_user');
+                            document.getElementById('loginScreen').style.display = 'flex';
+                        }
+                    })
+                    .catch(() => {
+                        entrarNoApp(saved);
+                    });
+            }
+        }
+
+        function entrarNoApp(nick, role) {
+            if (!nick) return;
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('changePassScreen').style.display = 'none';
+            document.getElementById('appScreen').classList.remove('hidden');
+            document.getElementById('userNickDisplay').textContent = '👤 ' + nick;
+            document.getElementById('userNickDisplay').classList.remove('hidden');
+            document.getElementById('btnSair').classList.remove('hidden');
+            document.getElementById('btnHistorico').classList.remove('hidden');
+
+            const charNameInput = document.getElementById('charName');
+            charNameInput.value = nick;
+            updateCharCounter(charNameInput);
+
+            carregarDadosMembro(nick);
+        }
+
+        // ================================================================
+        // FUNÇÕES DO HISTÓRICO
+        // ================================================================
+        window.abrirHistorico = async function() {
+            if (!currentUser) return;
+            const modal = document.getElementById('historicoModal');
+            const lista = document.getElementById('historicoLista');
+            const snapshotView = document.getElementById('snapshotView');
+            snapshotView.classList.remove('active');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            lista.innerHTML = '<div class="text-center text-amber-500/50 py-8"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Carregando histórico...</div>';
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('member_history')
+                    .select('*')
+                    .eq('char_name', currentUser)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    lista.innerHTML = '<div class="text-center text-amber-500/50 py-8">Nenhuma alteração registrada ainda.</div>';
+                    return;
+                }
+
+                lista.innerHTML = data.map((item, index) => {
+                    const dataFormatada = new Date(item.created_at).toLocaleString('pt-BR', {
+                        day: '2-digit', month: '2-digit', year: 'numeric',
+                        hour: '2-digit', minute: '2-digit'
+                    });
+                    const isUltimo = index === 0;
+                    return `
+                        <div class="historico-item">
+                            <span class="data"><i class="fa-regular fa-clock mr-2"></i>${dataFormatada} ${isUltimo ? '🔄 (mais recente)' : ''}</span>
+                            <button class="btn-ver-versao" onclick="verVersao('${item.id}', ${index})">
+                                <i class="fa-regular fa-eye"></i> Ver versão
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+
+                window._historicoData = data;
+
+            } catch (err) {
+                console.error('Erro ao carregar histórico:', err);
+                lista.innerHTML = '<div class="text-center text-red-400 py-8">Erro ao carregar histórico: ' + err.message + '</div>';
+            }
+        };
+
+        window.fecharHistorico = function() {
+            document.getElementById('historicoModal').classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('snapshotView').classList.remove('active');
+        };
+
+        window.verVersao = function(historyId, index) {
+            const data = window._historicoData || [];
+            const item = data.find(h => h.id === historyId);
+            if (!item) return;
+
+            const snapshot = item.data_snapshot;
+            const snapshotView = document.getElementById('snapshotView');
+            const diffList = document.getElementById('diffList');
+            const jsonContainer = document.getElementById('snapshotJson');
+
+            let versaoComparacao = dadosAtuais;
+            if (index > 0 && data[index - 1]) {
+                versaoComparacao = data[index - 1].data_snapshot;
+            }
+
+            const diff = gerarDiff(snapshot, versaoComparacao);
+
+            if (diff.length === 0) {
+                diffList.innerHTML = '<div class="text-amber-500/60 text-sm">Nenhuma mudança detectada nesta versão.</div>';
+            } else {
+                diffList.innerHTML = diff.map(d => `
+                    <div class="diff-item">
+                        <span class="campo">${d.campo}:</span>
+                        <span class="antigo">${d.antigo || 'vazio'}</span>
+                        <span class="seta">→</span>
+                        <span class="novo">${d.novo || 'vazio'}</span>
+                    </div>
+                `).join('');
+            }
+
+            const snapshotStr = JSON.stringify(snapshot, null, 2);
+            let jsonComDestaque = '';
+            const linhas = snapshotStr.split('\n');
+            linhas.forEach(linha => {
+                let linhaModificada = linha;
+                diff.forEach(d => {
+                    if (linha.includes(`"${d.campo}"`)) {
+                        linhaModificada = `<span class="diff-destaque">${linha}</span>`;
+                    }
+                });
+                jsonComDestaque += linhaModificada + '\n';
+            });
+
+            jsonContainer.innerHTML = jsonComDestaque;
+            snapshotView.classList.add('active');
+            snapshotView.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
+        function gerarDiff(antigo, novo) {
+            if (!novo) novo = {};
+            const chaves = new Set([...Object.keys(antigo), ...Object.keys(novo)]);
+            const diff = [];
+
+            chaves.forEach(chave => {
+                const valAntigo = antigo[chave] !== undefined ? antigo[chave] : null;
+                const valNovo = novo[chave] !== undefined ? novo[chave] : null;
+
+                if (valAntigo === valNovo) return;
+                if (valAntigo === null && valNovo === null) return;
+                if (valAntigo === undefined && valNovo === undefined) return;
+                if (valAntigo === null && valNovo === undefined) return;
+                if (valAntigo === undefined && valNovo === null) return;
+
+                const antigoStr = valAntigo !== null && valAntigo !== undefined ? String(valAntigo) : '';
+                const novoStr = valNovo !== null && valNovo !== undefined ? String(valNovo) : '';
+
+                if (antigoStr === '' && novoStr === '') return;
+
+                diff.push({
+                    campo: chave,
+                    antigo: antigoStr || 'vazio',
+                    novo: novoStr || 'vazio'
+                });
+            });
+
+            return diff;
+        }
+
+        // ================================================================
+        // DEMAIS FUNÇÕES
+        // ================================================================
         function updateCharCounter(input) {
             const counter = document.getElementById('charCounter');
             const length = input.value.length;
@@ -488,9 +1373,6 @@
             else counter.classList.remove('limit');
         }
 
-        // ============================================================
-        // DESEMPENHO DOS RAMOS
-        // ============================================================
         function updatePerformance(ramo, nivel) {
             const fill = document.getElementById('performanceFill' + ramo);
             const text = document.getElementById('performanceText' + ramo);
@@ -505,16 +1387,9 @@
             else fill.style.background = 'linear-gradient(90deg, #475569, #64748b)';
         }
 
-        // ============================================================
-        // SUPABASE
-        // ============================================================
-        const SUPABASE_URL = 'https://tfgjfscnuemunuwzvtjr.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_vCiz2wBxb7yRfrfhJxYOfg__u3kka3W';
-        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // ============================================================
-        // FILTRAGEM ARMAS POR CLASSE (CORRIGIDO: CACIQUE SEM CAJADO, COM ESPADA)
-        // ============================================================
+        // ================================================================
+        // FILTRAGEM ARMAS POR CLASSE, SET TYPES, ETC
+        // ================================================================
         const classWeapons = {
             'Necromante': ['Cajado'],
             'Bruxo': ['Cajado'],
@@ -525,7 +1400,7 @@
             'Bárbaro': ['Maça de duas mãos', 'Machado de duas mãos', 'Maça de uma mão', 'Machado de uma mão', 'Lança', 'Espada de uma mão', 'Espada de duas mãos', 'Escudo'],
             'Ladino': ['Machado de uma mão', 'Espada de uma mão', 'Adaga'],
             'Ceifador': ['Espada de uma mão', 'Machado de uma mão', 'Adaga'],
-            'Cacique': ['Espada de uma mão', 'Maça de uma mão', 'Maça de duas mãos'] // Removido Cajado, adicionado Espada
+            'Cacique': ['Maça de uma mão', 'Maça de duas mãos']
         };
 
         const classSetTypes = {
@@ -534,18 +1409,28 @@
             'Bruxo': ['Tecido'],
             'Ladino': ['Leve'],
             'Caçador': ['Leve'],
-            'Cacique': ['Leve'],
+            'Cacique': ['Leve', 'Tecido'],
             'Encantador': ['Pesado', 'Tecido', 'Leve'],
             'Bárbaro': ['Leve', 'Pesado'],
             'Cavaleiro da Morte': ['Leve', 'Pesado'],
             'Ceifador': ['Leve', 'Pesado']
         };
 
-        // ============================================================
-        // DADOS DOS ITENS
-        // ============================================================
+        const classAccessoryType = {
+            'Necromante': 'magico',
+            'Bruxo': 'magico',
+            'Xamã': 'magico',
+            'Bárbaro': 'fisico',
+            'Ladino': 'fisico',
+            'Caçador': 'fisico',
+            'Ceifador': 'fisico',
+            'Cavaleiro da Morte': 'ambos',
+            'Encantador': 'ambos',
+            'Cacique': 'ambos'
+        };
+
         const weaponItems = [
-            { id: 'T5', name: 'Arma T5', icon: '⚔️', badge: 'T5' }, // Emoji de espada
+            { id: 'T5', name: 'Arma T5', icon: 'fa-sword', badge: 'T5' },
             { id: 'Pve', name: 'Arma PvE', icon: 'fa-shield-halved', badge: 'PvE' },
             { id: 'Map5', name: 'Arma Map 5', icon: 'fa-map', badge: 'Map 5' },
             { id: 'Pvp1', name: 'Arma PvP 1', icon: 'fa-crosshairs', badge: 'PvP 1' },
@@ -570,25 +1455,34 @@
             { id: 'GlovesPvp', name: 'Luva PvP', icon: 'fa-hand-sparkles' }
         ];
 
-        const pveAccessories = [
-            { id: 'Anel1Pve', name: 'Anel 1', icon: 'fa-ring' },
-            { id: 'Anel2Pve', name: 'Anel 2', icon: 'fa-ring' },
-            { id: 'Bracelete1Pve', name: 'Bracelete 1', icon: 'fa-hand' },
-            { id: 'Bracelete2Pve', name: 'Bracelete 2', icon: 'fa-hand' },
-            { id: 'AmuletoPve', name: 'Amuleto', icon: 'fa-gem' },
-            { id: 'CapaPve', name: 'Capa', icon: 'fa-vest' }
-        ];
+        // ================================================================
+        // CINTO PVP
+        // ================================================================
+        const beltOptions = {
+            'Tecido': [
+                { value: 'Cinto Craft HP Mágico', level: '34' },
+                { value: 'Cinto AP Arena', level: '33' },
+                { value: 'Cinto Catacumba CD', level: '33' },
+                { value: 'Cinto Catacumba Penetração', level: '33' }
+            ],
+            'Leve': [
+                { value: 'Cinto Craft HP', level: '34' },
+                { value: 'Cinto AP Arena', level: '33' },
+                { value: 'Cinto Catacumba Speed', level: '33' },
+                { value: 'Cinto Catacumba Penetração', level: '33' }
+            ],
+            'Pesado': [
+                { value: 'Cinto Craft HP', level: '34' },
+                { value: 'Cinto AP Arena', level: '33' },
+                { value: 'Cinto Catacumba Precisão', level: '33' },
+                { value: 'Cinto Catacumba Penetração', level: '33' },
+                { value: 'Cinto Catacumba CD', level: '33' }
+            ]
+        };
 
-        const pveSetItems = [
-            { id: 'HelmetPve', name: 'Elmo PvE', icon: 'fa-hat-wizard' },
-            { id: 'ChestPve', name: 'Peito PvE', icon: 'fa-vest' },
-            { id: 'BootsPve', name: 'Bota PvE', icon: 'fa-shoe-prints' },
-            { id: 'GlovesPve', name: 'Luva PvE', icon: 'fa-hand-sparkles' }
-        ];
-
-        // ============================================================
+        // ================================================================
         // UTILITÁRIOS
-        // ============================================================
+        // ================================================================
         function updateStars(selectId, starsId) {
             const select = document.getElementById(selectId);
             const starsContainer = document.getElementById(starsId);
@@ -614,9 +1508,13 @@
             return options;
         }
 
-        // ============================================================
-        // GERADOR DE CARD DE ARMA
-        // ============================================================
+        function generateLevelOptions(levels) {
+            return levels.map(level => `<option value="${level}">${level}</option>`).join('');
+        }
+
+        // ================================================================
+        // GERADORES DE CARDS
+        // ================================================================
         function generateWeaponCard(item, classValue) {
             const isCaster = ['Necromante', 'Bruxo', 'Xamã'].includes(classValue);
             let allowedWeapons = [];
@@ -637,35 +1535,24 @@
             const weaponOptions = allowedWeapons.map(w => `<option value="${w}">${w}</option>`).join('');
             const itemId = item.id;
 
-            // ===== REGRAS DE NÍVEIS =====
             let levelOptions = '';
             if (itemId === 'Pve') {
-                levelOptions = `
-                    <option value="Nível 32">Nível 32</option>
-                    <option value="Nível 34">Nível 34</option>
-                `;
+                levelOptions = generateLevelOptions(['Nível 32', 'Nível 34']);
             } else if (itemId === 'Map5') {
-                levelOptions = `
-                    <option value="Nível 33">Nível 33</option>
-                `;
+                levelOptions = generateLevelOptions(['Nível 33']);
             } else {
-                levelOptions = `
-                    <option value="Nível 30">Nível 30</option>
-                    <option value="Nível 33">Nível 33</option>
-                `;
+                levelOptions = generateLevelOptions(['Nível 30', 'Nível 33']);
             }
-
-            // Verifica se item.icon é um emoji ou uma classe Font Awesome
-            const iconHtml = item.icon.startsWith('fa-') ? 
-                `<i class="fa-solid ${item.icon}"></i>` : 
-                `<span style="font-size:22px;">${item.icon}</span>`;
 
             return `
                 <div class="item-card" id="card${item.id}">
                     <div class="item-header">
-                        <div class="item-icon">${iconHtml}</div>
+                        <div class="item-icon"><i class="fa-solid ${item.icon}"></i></div>
                         <span class="item-name">${item.name}</span>
                         <span class="item-badge primary">${item.badge}</span>
+                    </div>
+                    <div class="info-text-nivel">
+                        <span class="icon">ℹ️</span> Se não possuir nenhum nível listado, marque <strong>"Não tenho"</strong> abaixo
                     </div>
                     <div class="item-fields">
                         <div class="field-group">
@@ -696,10 +1583,7 @@
             `;
         }
 
-        // ============================================================
-        // GERADOR DE CARD DE SET (PvP/PvE)
-        // ============================================================
-        function generateSetCard(item, typeOptions, classValue, isPvp) {
+        function generateSetCard(item, typeOptions, classValue) {
             let filteredOptions = [...typeOptions];
             if (classValue && classSetTypes[classValue]) {
                 const allowedTypes = classSetTypes[classValue];
@@ -711,38 +1595,23 @@
             const typeOpts = filteredOptions.map(t => `<option value="${t}">${t}</option>`).join('');
             const itemId = item.id;
 
-            let levelOptions = '';
-            if (isPvp) {
-                levelOptions = `
-                    <div class="field-group" style="grid-column: 1 / -1;">
-                        <label>Nível</label>
-                        <select id="level_${itemId}">
-                            <option value="GZ 30">GZ 30</option>
-                            <option value="GZ 32">GZ 32</option>
-                            <option value="GZ 34">GZ 34</option>
-                            <option value="AP 30">AP 30</option>
-                            <option value="AP 33">AP 33</option>
-                        </select>
-                    </div>
-                `;
-            } else {
-                levelOptions = `
-                    <div class="field-group" style="grid-column: 1 / -1;">
-                        <label>Nível</label>
-                        <select id="level_${itemId}">
-                            <option value="Nível 30">Nível 30</option>
-                            <option value="Nível 32">Nível 32</option>
-                            <option value="Nível 34">Nível 34</option>
-                        </select>
-                    </div>
-                `;
-            }
+            const levelOptions = `
+                <div class="field-group" style="grid-column: 1 / -1;">
+                    <label>Nível</label>
+                    <select id="level_${itemId}">
+                        ${generateLevelOptions(['GZ 30', 'GZ 32', 'GZ 34', 'AP 30', 'AP 33'])}
+                    </select>
+                </div>
+            `;
 
             return `
                 <div class="item-card">
                     <div class="item-header">
                         <div class="item-icon"><i class="fa-solid ${item.icon}"></i></div>
                         <span class="item-name">${item.name}</span>
+                    </div>
+                    <div class="info-text-nivel">
+                        <span class="icon">ℹ️</span> Se não possuir nenhum nível listado, marque <strong>"Não tenho"</strong> abaixo
                     </div>
                     <div class="item-fields">
                         <div class="field-group" style="grid-column: 1 / -1;">
@@ -767,31 +1636,61 @@
             `;
         }
 
-        // ============================================================
-        // GERADOR DE CARD DE ACESSÓRIO PvP
-        // ============================================================
-        function generatePvpAccessoryCard(item, typeOptions) {
-            const typeOpts = typeOptions.map(t => `<option value="${t}">${t}</option>`).join('');
+        function generatePvpAccessoryCard(item, classValue) {
             const itemId = item.id;
+
+            const accessoryType = classAccessoryType[classValue] || 'ambos';
+            let typeOptions = [];
+            if (accessoryType === 'magico') {
+                typeOptions = ['Mágico'];
+            } else if (accessoryType === 'fisico') {
+                typeOptions = ['Físico'];
+            } else {
+                typeOptions = ['Mágico', 'Físico'];
+            }
+            const typeOpts = typeOptions.map(t => `<option value="${t}">${t}</option>`).join('');
+
+            const levelOptions = `
+                <option value="Nível 30">Nível 30</option>
+                <option value="Nível 32">Nível 32</option>
+                <option value="Nível 33" selected>Nível 33</option>
+                <option value="Nível 34">Nível 34</option>
+            `;
+
+            let variantOptions = [];
+            if (itemId === 'CapaPvp') {
+                variantOptions = ['GZ', 'Competidor', 'Resistir', 'Craft'];
+            } else {
+                variantOptions = ['GZ', 'Competidor', 'Resistir', 'Subjulgação'];
+            }
+            const variantOpts = variantOptions.map(v => `<option value="${v}">${v}</option>`).join('');
+
             return `
                 <div class="item-card">
                     <div class="item-header">
                         <div class="item-icon"><i class="fa-solid ${item.icon}"></i></div>
                         <span class="item-name">${item.name}</span>
                     </div>
+                    <div class="info-text-nivel">
+                        <span class="icon">ℹ️</span> Se não possuir nenhum nível listado, marque <strong>"Não tenho"</strong> abaixo
+                    </div>
                     <div class="item-fields">
                         <div class="field-group" style="grid-column: 1 / -1;">
                             <label>Nível</label>
                             <select id="level_${itemId}">
-                                <option value="Nível 30">Nível 30</option>
-                                <option value="Nível 32">Nível 32</option>
-                                <option value="Nível 34">Nível 34</option>
+                                ${levelOptions}
                             </select>
                         </div>
                         <div class="field-group" style="grid-column: 1 / -1;">
-                            <label>Tipo</label>
+                            <label>Tipo (Mágico/Físico)</label>
                             <select id="type_${itemId}">
                                 ${typeOpts}
+                            </select>
+                        </div>
+                        <div class="field-group" style="grid-column: 1 / -1;">
+                            <label>Variação</label>
+                            <select id="variant_${itemId}">
+                                ${variantOpts}
                             </select>
                         </div>
                     </div>
@@ -809,51 +1708,95 @@
             `;
         }
 
-        // ============================================================
-        // GERADOR DE CARD DE ACESSÓRIO PvE
-        // ============================================================
-        function generatePveAccessoryCard(item, typeOptions) {
-            const typeOpts = typeOptions.map(t => `<option value="${t}">${t}</option>`).join('');
-            const itemId = item.id;
+        function generateBeltCard(classValue) {
+            let allowedTypes = ['Leve'];
+            if (classValue && classSetTypes[classValue]) {
+                allowedTypes = classSetTypes[classValue];
+            }
+
+            let availableOptions = [];
+            allowedTypes.forEach(type => {
+                if (beltOptions[type]) {
+                    beltOptions[type].forEach(opt => {
+                        availableOptions.push({ ...opt, armorType: type });
+                    });
+                }
+            });
+
+            const uniqueOptions = [];
+            const seenNames = new Set();
+            availableOptions.forEach(opt => {
+                if (!seenNames.has(opt.value)) {
+                    seenNames.add(opt.value);
+                    uniqueOptions.push(opt);
+                }
+            });
+
+            if (uniqueOptions.length === 0) {
+                beltOptions['Leve'].forEach(opt => {
+                    uniqueOptions.push({ ...opt, armorType: 'Leve' });
+                });
+            }
+
+            const beltOpts = uniqueOptions.map(opt => 
+                `<option value="${opt.value}" data-level="${opt.level}" data-armor="${opt.armorType}">${opt.value}</option>`
+            ).join('');
+
             return `
                 <div class="item-card">
                     <div class="item-header">
-                        <div class="item-icon"><i class="fa-solid ${item.icon}"></i></div>
-                        <span class="item-name">${item.name}</span>
+                        <div class="item-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <span class="item-name">Cinto PvP</span>
+                        <span class="item-badge primary">Cinto</span>
+                    </div>
+                    <div class="info-text-nivel">
+                        <span class="icon">ℹ️</span> Se não possuir, marque <strong>"Não tenho"</strong> abaixo
                     </div>
                     <div class="item-fields">
                         <div class="field-group" style="grid-column: 1 / -1;">
-                            <label>Nível</label>
-                            <select id="level_${itemId}">
-                                <option value="Nível 30">Nível 30</option>
-                                <option value="Nível 32">Nível 32</option>
-                                <option value="Nível 34">Nível 34</option>
+                            <label>Tipo de Cinto</label>
+                            <select id="type_BeltPvp" onchange="atualizarNivelCinto()">
+                                ${beltOpts}
                             </select>
                         </div>
                         <div class="field-group" style="grid-column: 1 / -1;">
-                            <label>Tipo</label>
-                            <select id="type_${itemId}">
-                                ${typeOpts}
+                            <label>Nível</label>
+                            <select id="level_BeltPvp">
+                                <option value="33">33</option>
+                                <option value="34">34</option>
                             </select>
                         </div>
                     </div>
-                    <select id="amp_${itemId}" onchange="updateStars('amp_${itemId}', 'stars_${itemId}')" class="item-amp-select">
+                    <select id="amp_BeltPvp" onchange="updateStars('amp_BeltPvp', 'stars_BeltPvp')" class="item-amp-select">
                         ${generateAmpOptions()}
                     </select>
-                    <div id="stars_${itemId}" class="item-stars">
+                    <div id="stars_BeltPvp" class="item-stars">
                         ${'<span class="star-inactive">★</span>'.repeat(10)}
                     </div>
                     <div class="item-actions">
-                        <label><input type="checkbox" id="no_${itemId}" class="custom-checkbox" /> Não tenho</label>
-                        <label><input type="checkbox" id="check_${itemId}" class="custom-checkbox" /> Equipado</label>
+                        <label><input type="checkbox" id="no_BeltPvp" class="custom-checkbox" /> Não tenho</label>
+                        <label><input type="checkbox" id="check_BeltPvp" class="custom-checkbox" /> Equipado</label>
                     </div>
                 </div>
             `;
         }
 
-        // ============================================================
-        // CONFIGURAR CHECKBOXES (MÚTUA EXCLUSÃO)
-        // ============================================================
+        function atualizarNivelCinto() {
+            const select = document.getElementById('type_BeltPvp');
+            const levelSelect = document.getElementById('level_BeltPvp');
+            if (!select || !levelSelect) return;
+
+            const selectedOption = select.options[select.selectedIndex];
+            const level = selectedOption ? selectedOption.getAttribute('data-level') : '33';
+
+            for (let i = 0; i < levelSelect.options.length; i++) {
+                if (levelSelect.options[i].value === level) {
+                    levelSelect.selectedIndex = i;
+                    break;
+                }
+            }
+        }
+
         function setupCheckboxes() {
             setTimeout(function() {
                 const cards = document.querySelectorAll('.item-card');
@@ -863,6 +1806,8 @@
                     const ampEl = card.querySelector('select[id^="amp_"]');
                     const levelEl = card.querySelector('select[id^="level_"]');
                     const typeEl = card.querySelector('select[id^="type_"]');
+                    const variantEl = card.querySelector('select[id^="variant_"]');
+
                     if (noCheck && checkEl) {
                         const newNoCheck = noCheck.cloneNode(true);
                         const newCheckEl = checkEl.cloneNode(true);
@@ -870,6 +1815,7 @@
                         checkEl.parentNode.replaceChild(newCheckEl, checkEl);
                         const finalNoCheck = newNoCheck;
                         const finalCheckEl = newCheckEl;
+
                         finalNoCheck.addEventListener('change', function() {
                             if (this.checked) {
                                 finalCheckEl.checked = false;
@@ -877,15 +1823,18 @@
                                 if (ampEl) { ampEl.value = '+0 (Sem amp)'; ampEl.disabled = true; ampEl.style.opacity = '0.5'; }
                                 if (levelEl) { levelEl.disabled = true; levelEl.style.opacity = '0.5'; }
                                 if (typeEl) { typeEl.disabled = true; typeEl.style.opacity = '0.5'; }
+                                if (variantEl) { variantEl.disabled = true; variantEl.style.opacity = '0.5'; }
                             } else {
                                 finalCheckEl.disabled = false;
                                 if (ampEl) { ampEl.disabled = false; ampEl.style.opacity = '1'; }
                                 if (levelEl) { levelEl.disabled = false; levelEl.style.opacity = '1'; }
                                 if (typeEl) { typeEl.disabled = false; typeEl.style.opacity = '1'; }
+                                if (variantEl) { variantEl.disabled = false; variantEl.style.opacity = '1'; }
                             }
                             const starsId = ampEl ? ampEl.id.replace('amp_', 'stars_') : null;
                             if (starsId) updateStars(ampEl.id, starsId);
                         });
+
                         finalCheckEl.addEventListener('change', function() {
                             if (this.checked) {
                                 finalNoCheck.checked = false;
@@ -893,6 +1842,7 @@
                                 if (ampEl) { ampEl.disabled = false; ampEl.style.opacity = '1'; }
                                 if (levelEl) { levelEl.disabled = false; levelEl.style.opacity = '1'; }
                                 if (typeEl) { typeEl.disabled = false; typeEl.style.opacity = '1'; }
+                                if (variantEl) { variantEl.disabled = false; variantEl.style.opacity = '1'; }
                             } else {
                                 finalNoCheck.disabled = false;
                             }
@@ -902,9 +1852,21 @@
             }, 100);
         }
 
-        // ============================================================
-        // RENDERIZAR TODOS OS ITENS
-        // ============================================================
+        function selecionarCajadoAutomatico() {
+            const weaponTypes = ['T5', 'Pve', 'Map5', 'Pvp1', 'Pvp2'];
+            weaponTypes.forEach(id => {
+                const select = document.getElementById('type_' + id);
+                if (select) {
+                    for (let i = 0; i < select.options.length; i++) {
+                        if (select.options[i].value === 'Cajado') {
+                            select.value = 'Cajado';
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+
         function renderItems(classValue) {
             const weaponsContainer = document.getElementById('weaponsContainer');
             let weaponsHTML = '';
@@ -915,31 +1877,159 @@
             weaponsContainer.innerHTML = weaponsHTML;
 
             const pvpAccContainer = document.getElementById('pvpAccessoriesContainer');
-            const pvpTypeOptions = ['Competidor', 'GZ', 'Resistir'];
-            pvpAccContainer.innerHTML = pvpAccessories.map(item => generatePvpAccessoryCard(item, pvpTypeOptions)).join('');
+            pvpAccContainer.innerHTML = pvpAccessories.map(item => generatePvpAccessoryCard(item, classValue)).join('');
 
             const pvpSetContainer = document.getElementById('pvpSetContainer');
             const setPvpTypeOptions = ['Tecido', 'Leve', 'Pesado'];
-            pvpSetContainer.innerHTML = pvpSetItems.map(item => generateSetCard(item, setPvpTypeOptions, classValue, true)).join('');
+            pvpSetContainer.innerHTML = pvpSetItems.map(item => generateSetCard(item, setPvpTypeOptions, classValue)).join('');
 
-            const pveAccContainer = document.getElementById('pveAccessoriesContainer');
-            const pveTypeOptions = ['CD', 'F.A.', 'F.A.C.', 'PH', 'Fúria'];
-            pveAccContainer.innerHTML = pveAccessories.map(item => generatePveAccessoryCard(item, pveTypeOptions)).join('');
-
-            const pveSetContainer = document.getElementById('pveSetContainer');
-            const setPveTypeOptions = ['Tecido', 'Leve', 'Pesado'];
-            pveSetContainer.innerHTML = pveSetItems.map(item => generateSetCard(item, setPveTypeOptions, classValue, false)).join('');
+            const beltContainer = document.getElementById('beltContainer');
+            beltContainer.innerHTML = generateBeltCard(classValue);
 
             setupCheckboxes();
+
+            if (['Necromante', 'Bruxo', 'Xamã'].includes(classValue)) {
+                setTimeout(selecionarCajadoAutomatico, 150);
+            }
+
+            setTimeout(atualizarNivelCinto, 200);
+
             document.querySelectorAll('[id^="amp_"]').forEach(select => {
                 const starsId = select.id.replace('amp_', 'stars_');
                 updateStars(select.id, starsId);
             });
         }
 
-        // ============================================================
-        // EVENTOS
-        // ============================================================
+        async function carregarDadosMembro(nick) {
+            if (!nick) return;
+            try {
+                const { data, error } = await supabaseClient
+                    .from('guild_members')
+                    .select('*')
+                    .eq('char_name', nick)
+                    .maybeSingle();
+
+                if (error) throw error;
+                if (data) {
+                    dadosAtuais = data;
+                    preencherFormulario(data);
+                } else {
+                    dadosAtuais = null;
+                }
+            } catch (err) {
+                console.error('Erro ao carregar dados:', err);
+            }
+        }
+
+        function preencherFormulario(dados) {
+            const mapSimple = {
+                'char_class': dados.char_class,
+                'almahad_branch1': dados.almahad_branch1,
+                'almahad_level1': dados.almahad_level1,
+                'almahad_branch2': dados.almahad_branch2,
+                'almahad_level2': dados.almahad_level2,
+                'almahad_branch3': dados.almahad_branch3,
+                'almahad_level3': dados.almahad_level3,
+                'almahad_t5': dados.almahad_t5,
+                'full_branches': dados.full_branches,
+                'catacumbaType': dados.catacumba_type
+            };
+            for (const [id, value] of Object.entries(mapSimple)) {
+                const el = document.getElementById(id);
+                if (el && value) {
+                    if (el.tagName === 'SELECT') {
+                        const opt = Array.from(el.options).find(o => o.value === value);
+                        if (opt) el.value = value;
+                    } else {
+                        el.value = value;
+                    }
+                }
+            }
+
+            for (let i = 1; i <= 3; i++) {
+                const val = dados[`almahad_talentos35k_${i}`];
+                if (val) {
+                    const radios = document.querySelectorAll(`input[name="talentos35k_${i}"]`);
+                    radios.forEach(r => {
+                        if (r.value === val) r.checked = true;
+                    });
+                }
+            }
+
+            const ferocidade = dados.ferocidade || 'Não';
+            document.querySelectorAll('input[name="ferocidade"]').forEach(r => {
+                if (r.value === ferocidade) r.checked = true;
+            });
+            const resiliencia = dados.resiliencia || 'Não';
+            document.querySelectorAll('input[name="resiliencia"]').forEach(r => {
+                if (r.value === resiliencia) r.checked = true;
+            });
+
+            const hasCatacumba = dados.has_catacumba;
+            if (hasCatacumba !== undefined && hasCatacumba !== null) {
+                const value = hasCatacumba ? 'sim' : 'nao';
+                document.querySelectorAll('input[name="hasCatacumba"]').forEach(r => {
+                    if (r.value === value) r.checked = true;
+                });
+                toggleCatacumbaType(hasCatacumba);
+            }
+
+            const prefixes = [
+                'T5', 'Pve', 'Map5', 'Pvp1', 'Pvp2', 'ShieldPve', 'ShieldPvp',
+                'Anel1Pvp', 'Anel2Pvp', 'Bracelete1Pvp', 'Bracelete2Pvp', 'AmuletoPvp', 'CapaPvp',
+                'HelmetPvp', 'ChestPvp', 'BootsPvp', 'GlovesPvp', 'BeltPvp'
+            ];
+            prefixes.forEach(prefix => {
+                const levelEl = document.getElementById(`level_${prefix}`);
+                const typeEl = document.getElementById(`type_${prefix}`);
+                const ampEl = document.getElementById(`amp_${prefix}`);
+                const variantEl = document.getElementById(`variant_${prefix}`);
+                const checkEl = document.getElementById(`check_${prefix}`);
+                const noEl = document.getElementById(`no_${prefix}`);
+
+                const levelVal = dados[`level_${prefix}`];
+                const typeVal = dados[`type_${prefix}`];
+                const ampVal = dados[`amp_${prefix}`];
+                const variantVal = dados[`variant_${prefix}`];
+                const checkVal = dados[`check_${prefix}`];
+                const noVal = dados[`no_${prefix}`];
+
+                if (levelEl && levelVal) {
+                    const opt = Array.from(levelEl.options).find(o => o.value === levelVal);
+                    if (opt) levelEl.value = levelVal;
+                }
+                if (typeEl && typeVal) {
+                    const opt = Array.from(typeEl.options).find(o => o.value === typeVal);
+                    if (opt) typeEl.value = typeVal;
+                }
+                if (ampEl && ampVal) {
+                    const opt = Array.from(ampEl.options).find(o => o.value === ampVal);
+                    if (opt) ampEl.value = ampVal;
+                }
+                if (variantEl && variantVal) {
+                    const opt = Array.from(variantEl.options).find(o => o.value === variantVal);
+                    if (opt) variantEl.value = variantVal;
+                }
+                if (checkEl && checkVal !== undefined && checkVal !== null) {
+                    checkEl.checked = checkVal;
+                }
+                if (noEl && noVal !== undefined && noVal !== null) {
+                    noEl.checked = noVal;
+                }
+            });
+
+            setTimeout(atualizarNivelCinto, 100);
+
+            document.querySelectorAll('[id^="amp_"]').forEach(select => {
+                const starsId = select.id.replace('amp_', 'stars_');
+                updateStars(select.id, starsId);
+            });
+
+            updatePerformance('1', document.getElementById('almahadLevel1')?.value || '');
+            updatePerformance('2', document.getElementById('almahadLevel2')?.value || '');
+            updatePerformance('3', document.getElementById('almahadLevel3')?.value || '');
+        }
+
         document.getElementById('charClass').addEventListener('change', function() {
             renderItems(this.value);
         });
@@ -959,52 +2049,44 @@
             }
         }
 
-        function toggleMermemType(show) {
-            const container = document.getElementById('mermemTypeContainer');
-            const select = document.getElementById('mermemType');
-            if (container && select) {
-                if (show) {
-                    container.classList.remove('hidden');
-                    select.setAttribute('required', 'true');
-                } else {
-                    container.classList.add('hidden');
-                    select.removeAttribute('required');
-                    select.value = '';
-                }
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
+            verificarSessao();
+
+            document.getElementById('loginPass').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') window.login();
+            });
+            document.getElementById('loginNick').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') document.getElementById('loginPass').focus();
+            });
+            document.getElementById('newPass2').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') window.trocarSenha();
+            });
+
             const classSelect = document.getElementById('charClass');
             renderItems(classSelect.value || '');
             toggleCatacumbaType(false);
-            toggleMermemType(false);
             updatePerformance('1', '');
             updatePerformance('2', '');
             updatePerformance('3', '');
         });
 
-        // ============================================================
-        // PEGAR DADOS DO ITEM
-        // ============================================================
         function getItemData(id) {
             const levelEl = document.getElementById('level_' + id);
             const typeEl = document.getElementById('type_' + id);
+            const variantEl = document.getElementById('variant_' + id);
             const ampEl = document.getElementById('amp_' + id);
             const checkEl = document.getElementById('check_' + id);
             const noEl = document.getElementById('no_' + id);
             return {
                 level: levelEl ? levelEl.value : '-',
                 type: typeEl ? typeEl.value : '-',
+                variant: variantEl ? variantEl.value : '-',
                 amp: ampEl ? ampEl.value : '+0 (Sem amp)',
                 check: checkEl ? checkEl.checked : false,
                 no: noEl ? noEl.checked : false
             };
         }
 
-        // ============================================================
-        // SUBMIT
-        // ============================================================
         document.getElementById('itemForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
@@ -1018,22 +2100,36 @@
             try {
                 const charName = document.getElementById('charName').value.trim();
                 if (!charName) {
-                    alert('❌ Digite o nome do personagem!');
-                    btn.disabled = false;
-                    icon.className = 'fa-solid fa-scroll text-cyan-100 drop-shadow-lg text-xl animate-float';
-                    btnText.textContent = 'ENVIAR DADOS DA GUILDA';
-                    return;
-                }
-                if (charName.length > 10) {
-                    alert('❌ O nome do personagem deve ter no máximo 10 caracteres!');
+                    alert('❌ Nome do personagem não definido. Faça login novamente.');
                     btn.disabled = false;
                     icon.className = 'fa-solid fa-scroll text-cyan-100 drop-shadow-lg text-xl animate-float';
                     btnText.textContent = 'ENVIAR DADOS DA GUILDA';
                     return;
                 }
 
+                // ===== SALVA O SNAPSHOT ANTES DE ATUALIZAR =====
+                const { data: dadosAtuaisDoBanco, error: fetchError } = await supabaseClient
+                    .from('guild_members')
+                    .select('*')
+                    .eq('char_name', charName)
+                    .maybeSingle();
+
+                if (dadosAtuaisDoBanco && !fetchError) {
+                    const { error: histError } = await supabaseClient
+                        .from('member_history')
+                        .insert([{
+                            char_name: charName,
+                            data_snapshot: dadosAtuaisDoBanco,
+                            created_at: new Date().toISOString()
+                        }]);
+                    if (histError) {
+                        console.warn('Erro ao salvar histórico:', histError);
+                    } else {
+                        console.log('✅ Histórico salvo com sucesso!');
+                    }
+                }
+
                 const hasCatacumba = document.querySelector('input[name="hasCatacumba"]:checked');
-                const hasMermem = document.querySelector('input[name="hasMermem"]:checked');
                 const ferocidade = document.querySelector('input[name="ferocidade"]:checked');
                 const resiliencia = document.querySelector('input[name="resiliencia"]:checked');
 
@@ -1106,36 +2202,42 @@
 
                     level_anel1pvp: getItemData('Anel1Pvp').level,
                     type_anel1pvp: getItemData('Anel1Pvp').type,
+                    variant_anel1pvp: getItemData('Anel1Pvp').variant,
                     amp_anel1pvp: getItemData('Anel1Pvp').amp,
                     check_anel1pvp: getItemData('Anel1Pvp').check,
                     no_anel1pvp: getItemData('Anel1Pvp').no,
 
                     level_anel2pvp: getItemData('Anel2Pvp').level,
                     type_anel2pvp: getItemData('Anel2Pvp').type,
+                    variant_anel2pvp: getItemData('Anel2Pvp').variant,
                     amp_anel2pvp: getItemData('Anel2Pvp').amp,
                     check_anel2pvp: getItemData('Anel2Pvp').check,
                     no_anel2pvp: getItemData('Anel2Pvp').no,
 
                     level_bracelete1pvp: getItemData('Bracelete1Pvp').level,
                     type_bracelete1pvp: getItemData('Bracelete1Pvp').type,
+                    variant_bracelete1pvp: getItemData('Bracelete1Pvp').variant,
                     amp_bracelete1pvp: getItemData('Bracelete1Pvp').amp,
                     check_bracelete1pvp: getItemData('Bracelete1Pvp').check,
                     no_bracelete1pvp: getItemData('Bracelete1Pvp').no,
 
                     level_bracelete2pvp: getItemData('Bracelete2Pvp').level,
                     type_bracelete2pvp: getItemData('Bracelete2Pvp').type,
+                    variant_bracelete2pvp: getItemData('Bracelete2Pvp').variant,
                     amp_bracelete2pvp: getItemData('Bracelete2Pvp').amp,
                     check_bracelete2pvp: getItemData('Bracelete2Pvp').check,
                     no_bracelete2pvp: getItemData('Bracelete2Pvp').no,
 
                     level_amuletopvp: getItemData('AmuletoPvp').level,
                     type_amuletopvp: getItemData('AmuletoPvp').type,
+                    variant_amuletopvp: getItemData('AmuletoPvp').variant,
                     amp_amuletopvp: getItemData('AmuletoPvp').amp,
                     check_amuletopvp: getItemData('AmuletoPvp').check,
                     no_amuletopvp: getItemData('AmuletoPvp').no,
 
                     level_capapvp: getItemData('CapaPvp').level,
                     type_capapvp: getItemData('CapaPvp').type,
+                    variant_capapvp: getItemData('CapaPvp').variant,
                     amp_capapvp: getItemData('CapaPvp').amp,
                     check_capapvp: getItemData('CapaPvp').check,
                     no_capapvp: getItemData('CapaPvp').no,
@@ -1164,71 +2266,14 @@
                     check_glovespvp: getItemData('GlovesPvp').check,
                     no_glovespvp: getItemData('GlovesPvp').no,
 
+                    level_beltpvp: getItemData('BeltPvp').level,
+                    type_beltpvp: getItemData('BeltPvp').type,
+                    amp_beltpvp: getItemData('BeltPvp').amp,
+                    check_beltpvp: getItemData('BeltPvp').check,
+                    no_beltpvp: getItemData('BeltPvp').no,
+
                     has_catacumba: hasCatacumba ? hasCatacumba.value === 'sim' : false,
                     catacumba_type: document.getElementById('catacumbaType')?.value || '-',
-
-                    level_anel1pve: getItemData('Anel1Pve').level,
-                    type_anel1pve: getItemData('Anel1Pve').type,
-                    amp_anel1pve: getItemData('Anel1Pve').amp,
-                    check_anel1pve: getItemData('Anel1Pve').check,
-                    no_anel1pve: getItemData('Anel1Pve').no,
-
-                    level_anel2pve: getItemData('Anel2Pve').level,
-                    type_anel2pve: getItemData('Anel2Pve').type,
-                    amp_anel2pve: getItemData('Anel2Pve').amp,
-                    check_anel2pve: getItemData('Anel2Pve').check,
-                    no_anel2pve: getItemData('Anel2Pve').no,
-
-                    level_bracelete1pve: getItemData('Bracelete1Pve').level,
-                    type_bracelete1pve: getItemData('Bracelete1Pve').type,
-                    amp_bracelete1pve: getItemData('Bracelete1Pve').amp,
-                    check_bracelete1pve: getItemData('Bracelete1Pve').check,
-                    no_bracelete1pve: getItemData('Bracelete1Pve').no,
-
-                    level_bracelete2pve: getItemData('Bracelete2Pve').level,
-                    type_bracelete2pve: getItemData('Bracelete2Pve').type,
-                    amp_bracelete2pve: getItemData('Bracelete2Pve').amp,
-                    check_bracelete2pve: getItemData('Bracelete2Pve').check,
-                    no_bracelete2pve: getItemData('Bracelete2Pve').no,
-
-                    level_amuletopve: getItemData('AmuletoPve').level,
-                    type_amuletopve: getItemData('AmuletoPve').type,
-                    amp_amuletopve: getItemData('AmuletoPve').amp,
-                    check_amuletopve: getItemData('AmuletoPve').check,
-                    no_amuletopve: getItemData('AmuletoPve').no,
-
-                    level_capapve: getItemData('CapaPve').level,
-                    type_capapve: getItemData('CapaPve').type,
-                    amp_capapve: getItemData('CapaPve').amp,
-                    check_capapve: getItemData('CapaPve').check,
-                    no_capapve: getItemData('CapaPve').no,
-
-                    level_helmetpve: getItemData('HelmetPve').level,
-                    type_helmetpve: getItemData('HelmetPve').type,
-                    amp_helmetpve: getItemData('HelmetPve').amp,
-                    check_helmetpve: getItemData('HelmetPve').check,
-                    no_helmetpve: getItemData('HelmetPve').no,
-
-                    level_chestpve: getItemData('ChestPve').level,
-                    type_chestpve: getItemData('ChestPve').type,
-                    amp_chestpve: getItemData('ChestPve').amp,
-                    check_chestpve: getItemData('ChestPve').check,
-                    no_chestpve: getItemData('ChestPve').no,
-
-                    level_bootspve: getItemData('BootsPve').level,
-                    type_bootspve: getItemData('BootsPve').type,
-                    amp_bootspve: getItemData('BootsPve').amp,
-                    check_bootspve: getItemData('BootsPve').check,
-                    no_bootspve: getItemData('BootsPve').no,
-
-                    level_glovespve: getItemData('GlovesPve').level,
-                    type_glovespve: getItemData('GlovesPve').type,
-                    amp_glovespve: getItemData('GlovesPve').amp,
-                    check_glovespve: getItemData('GlovesPve').check,
-                    no_glovespve: getItemData('GlovesPve').no,
-
-                    has_mermem: hasMermem ? hasMermem.value === 'sim' : false,
-                    mermem_type: document.getElementById('mermemType')?.value || '-',
 
                     created_at: new Date().toISOString()
                 };
@@ -1255,7 +2300,6 @@
                 alert('✅ Dados do herói enviados com sucesso!');
                 this.reset();
                 toggleCatacumbaType(false);
-                toggleMermemType(false);
                 document.querySelectorAll('[id^="amp_"]').forEach(select => {
                     const starsId = select.id.replace('amp_', 'stars_');
                     updateStars(select.id, starsId);
@@ -1265,6 +2309,10 @@
                 updatePerformance('3', '');
                 const counter = document.getElementById('charCounter');
                 if (counter) counter.textContent = '0/10';
+
+                if (currentUser) {
+                    carregarDadosMembro(currentUser);
+                }
 
             } catch (error) {
                 console.error('Erro:', error);
@@ -1278,4 +2326,3 @@
     </script>
 </body>
 </html>
-```

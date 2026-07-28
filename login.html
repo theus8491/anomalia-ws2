@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Painel Adm Guilda Anomalia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== TODOS OS ESTILOS (mantidos) ===== */
+        .glass-card { background: rgba(40,40,45,0.35) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(120,120,130,0.15) !important; }
+        .glass-card-dark { background: rgba(30,30,35,0.4) !important; backdrop-filter: blur(6px); border: 1px solid rgba(80,80,90,0.12) !important; }
+        .glass-header { background: rgba(35,35,40,0.4) !important; backdrop-filter: blur(12px); border: 2px solid rgba(120,120,130,0.2) !important; }
+        .glass-input { background: rgba(25,25,30,0.35) !important; backdrop-filter: blur(4px); border: 1px solid rgba(80,80,90,0.3) !important; color: #d0d0d0 !important; }
+        .glass-input:focus { border-color: #94a3b8 !important; background: rgba(25,25,30,0.5) !important; outline: none; }
+        .glass-input::placeholder { color: rgba(160,160,170,0.4) !important; }
+        .glass-select { background: rgba(25,25,30,0.35) !important; backdrop-filter: blur(4px); border: 1px solid rgba(80,80,90,0.3) !important; color: #d0d0d0 !important; }
+        .glass-select:focus { border-color: #94a3b8 !important; background: rgba(25,25,30,0.5) !important; }
+        .glass-select option { background: #1a1a1e; color: #d0d0d0; }
+        .glass-badge { background: rgba(30,30,35,0.35) !important; backdrop-filter: blur(4px); border: 1px solid rgba(80,80,90,0.2) !important; }
+        .glass-footer { background: rgba(30,30,35,0.15) !important; backdrop-filter: blur(6px); border-top: 1px solid rgba(80,80,90,0.1) !important; }
+        .glass-submit { background: rgba(20,20,25,0.25) !important; backdrop-filter: blur(12px); border: 2px solid rgba(148,163,184,0.25) !important; transition: all 0.3s ease; }
+        .glass-submit:hover { background: rgba(30,30,35,0.35) !important; border-color: rgba(255,215,100,0.6) !important; box-shadow: 0 0 30px rgba(255,200,50,0.15); }
+        .border-amber-subtle { border-color: rgba(120,120,130,0.15) !important; }
+        .text-amber-100, .text-amber-200, .text-amber-300, .text-amber-400,
+        .text-amber-500, .text-amber-600, .text-amber-700 { color: #d0d0d0 !important; }
+        .text-emerald-400 { color: #6ee7b7 !important; }
+        .text-red-400 { color: #fca5a5 !important; }
+        .text-amber-500\/80 { color: rgba(180,180,190,0.8) !important; }
+        .text-amber-500\/90 { color: rgba(180,180,190,0.9) !important; }
+        .text-amber-700\/60 { color: rgba(120,120,130,0.6) !important; }
+        .border-amber-600 { border-color: #94a3b8 !important; }
+        .hover\:border-amber-600:hover { border-color: #94a3b8 !important; }
+        .focus\:border-amber-600:focus { border-color: #94a3b8 !important; }
+        .bg-amber-600 { background: #64748b !important; }
+        .bg-amber-600\/10 { background: rgba(148,163,184,0.1) !important; }
+
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0d0b09 radial-gradient(circle at 50% 10%, #291c13 0%, #0d0b09 60%); color: #e8e8e8; min-height: 100vh; }
+        h1, h2, h3, .font-rpg { font-family: 'Cinzel', serif; }
+
+        .login-box {
+            background: rgba(30,30,35,0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(120,120,130,0.2);
+            border-radius: 24px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px 32px;
+            border-radius: 14px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(20,20,25,0.25);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(148,163,184,0.25);
+            color: #e8e8e8;
+        }
+        .btn-login:hover {
+            background: rgba(30,30,35,0.35);
+            border-color: rgba(255,215,100,0.6);
+            box-shadow: 0 0 30px rgba(255,200,50,0.15);
+            transform: translateY(-2px);
+        }
+        .btn-login:active {
+            transform: scale(0.97);
+        }
+        .btn-login:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-box .logo-icon {
+            font-size: 2.8rem;
+            color: #fbbf24;
+            margin-bottom: 6px;
+        }
+        .login-box h2 {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #e8e8e8;
+            margin-bottom: 4px;
+            font-size: 1.4rem;
+        }
+        .login-box .sub {
+            color: rgba(180,180,190,0.6);
+            font-size: 0.85rem;
+            margin-bottom: 28px;
+        }
+        .login-box .input-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+        .login-box .input-group label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(180,180,190,0.6);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .login-box .input-group input {
+            width: 100%;
+            background: rgba(25,25,30,0.5);
+            border: 1px solid rgba(80,80,90,0.3);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #d0d0d0;
+            font-size: 1rem;
+            transition: border 0.2s;
+        }
+        .login-box .input-group input:focus {
+            outline: none;
+            border-color: #94a3b8;
+        }
+        .login-box .input-group input::placeholder {
+            color: rgba(160,160,170,0.4);
+        }
+        .login-box .login-msg {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            min-height: 24px;
+            text-align: center;
+        }
+        .login-box .login-msg.error { color: #fca5a5; }
+        .login-box .login-msg.success { color: #6ee7b7; }
+        .login-box .login-msg.info { color: #60a5fa; }
+
+        .senha-padrao-hint {
+            background: rgba(212,175,55,0.05);
+            border: 1px solid rgba(212,175,55,0.15);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 12px;
+            color: #fbbf24;
+            text-align: center;
+            margin-top: 12px;
+        }
+        .senha-padrao-hint i { margin-right: 6px; }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            font-size: 11px;
+        }
+        .footer-links span {
+            color: rgba(180,180,190,0.3);
+        }
+
+        /* ===== MODAL DE TROCA DE SENHA ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: rgba(20,15,10,0.95);
+            border: 1px solid rgba(180,150,100,0.2);
+            border-radius: 20px;
+            padding: 32px 28px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-box h3 {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #fbbf24;
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+        .modal-box .modal-sub {
+            color: rgba(180,180,190,0.6);
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+        .modal-box .input-group {
+            margin-bottom: 14px;
+            text-align: left;
+        }
+        .modal-box .input-group label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(180,180,190,0.6);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .modal-box .input-group input {
+            width: 100%;
+            background: rgba(25,25,30,0.5);
+            border: 1px solid rgba(80,80,90,0.3);
+            border-radius: 12px;
+            padding: 10px 14px;
+            color: #d0d0d0;
+            font-size: 0.95rem;
+            transition: border 0.2s;
+        }
+        .modal-box .input-group input:focus {
+            outline: none;
+            border-color: #94a3b8;
+        }
+        .modal-box .modal-msg {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            min-height: 20px;
+            text-align: center;
+        }
+        .modal-box .modal-msg.error { color: #fca5a5; }
+        .modal-box .modal-msg.success { color: #6ee7b7; }
+        .modal-box .modal-msg.info { color: #60a5fa; }
+        .modal-box .close-modal {
+            float: right;
+            background: transparent;
+            border: none;
+            color: rgba(180,180,190,0.4);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .modal-box .close-modal:hover { color: #fca5a5; }
+        .btn-modal {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            background: rgba(148,163,184,0.15);
+            border: 1px solid rgba(148,163,184,0.3);
+            color: #e8e8e8;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+        .btn-modal:hover {
+            background: rgba(148,163,184,0.25);
+            border-color: #94a3b8;
+        }
+
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(180,180,190,0.4);
+            font-size: 12px;
+            text-decoration: none;
+            transition: color 0.2s;
+            margin-top: 12px;
+        }
+        .btn-voltar:hover {
+            color: rgba(180,180,190,0.7);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 16px 0;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(80,80,90,0.2);
+        }
+        .divider span {
+            color: rgba(180,180,190,0.3);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* ===== ESTILO DO HEADER (igual ao index) ===== */
+        .glass-header { background: rgba(35,35,40,0.4) !important; backdrop-filter: blur(12px); border: 2px solid rgba(120,120,130,0.2) !important; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center relative">
+
+    <img src="warspear.png" alt="Fundo Guilda Anomalia" class="fixed inset-0 w-full h-full object-cover z-0" />
+    <div class="fixed inset-0 bg-black/70 z-[1]"></div>
+
+    <main class="w-full max-w-4xl mx-auto my-auto relative z-10 p-4">
+        <header class="glass-header rounded-2xl p-5 shadow-2xl relative overflow-hidden mb-6">
+            <div class="absolute top-0 right-0 w-48 h-48 bg-slate-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="space-y-1 text-center sm:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold glass-badge text-emerald-400">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Servidor Oficial: BR-Tourmaline
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl font-black text-white/90 font-rpg tracking-wide drop-shadow-lg">Guilda Anomalia</h1>
+                    <p class="text-xs text-amber-500/60 font-rpg tracking-wider">Painel Administrativo</p>
+                </div>
+                <div class="flex items-center gap-3 glass-card-dark px-4 py-2.5 rounded-xl shadow-inner">
+                    <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                        <i class="fa-solid fa-shield-halved text-sm"></i>
+                    </div>
+                    <div>
+                        <div class="text-[10px] uppercase tracking-wider text-amber-500/80 font-bold">Acesso Restrito</div>
+                        <div class="text-xs font-semibold text-emerald-400">Autenticação</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="login-box mx-auto">
+            <div class="text-center">
+                <div class="logo-icon"><i class="fa-solid fa-lock"></i></div>
+                <h2>Login Administrativo</h2>
+                <p class="sub">Entre com suas credenciais para acessar o painel</p>
+            </div>
+
+            <div id="loginForm">
+                <div class="input-group">
+                    <label><i class="fa-regular fa-user mr-1"></i> Nick do Personagem</label>
+                    <input type="text" id="loginNick" placeholder="Ex: Anomalla" maxlength="10" autocomplete="username" />
+                </div>
+                <div class="input-group">
+                    <label><i class="fa-regular fa-lock mr-1"></i> Senha</label>
+                    <input type="password" id="loginPass" placeholder="••••••" autocomplete="current-password" />
+                </div>
+
+                <button class="btn-login" id="btnLogin" onclick="login()">
+                    <i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel
+                </button>
+
+                <div class="senha-padrao-hint">
+                    <i class="fa-regular fa-circle-info"></i> Apenas perfis <strong>Adm</strong>
+                </div>
+
+                <div id="loginMsg" class="login-msg"></div>
+
+                <div class="divider"><span>informação</span></div>
+
+                <div class="text-center text-xs text-amber-500/50">
+                    <i class="fa-regular fa-circle-info mr-1"></i> Apenas administradores cadastrados podem acessar
+                </div>
+
+                <div class="text-center mt-3">
+                    <a href="index.html" class="btn-voltar">
+                        <i class="fa-regular fa-arrow-left"></i> Voltar ao formulário principal
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <span>🔒 Conexão segura</span>
+                <span>•</span>
+                <span><i class="fa-regular fa-clock"></i> Supabase</span>
+            </div>
+        </div>
+    </main>
+
+    <div id="changePassModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="close-modal" onclick="fecharModalSenha()"><i class="fa-solid fa-xmark"></i></button>
+            <h3><i class="fa-solid fa-key text-amber-500 mr-2"></i>Altere sua senha</h3>
+            <p class="modal-sub">Você está usando a senha padrão. Defina uma nova senha para continuar.</p>
+            <div class="input-group">
+                <label>Nova Senha (mínimo 4 caracteres)</label>
+                <input type="password" id="newPass1" placeholder="Nova senha" minlength="4" />
+            </div>
+            <div class="input-group">
+                <label>Confirmar Nova Senha</label>
+                <input type="password" id="newPass2" placeholder="Confirme a nova senha" minlength="4" />
+            </div>
+            <button class="btn-modal" onclick="trocarSenha()"><i class="fa-solid fa-save mr-2"></i>Salvar nova senha</button>
+            <div id="changePassMsg" class="modal-msg"></div>
+        </div>
+    </div>
+
+    <footer class="w-full text-center py-4 text-xs text-amber-700/60 font-rpg tracking-wider relative z-10 glass-footer">
+        GUILDA ANOMALIA &copy; 2026 &bull; Servidor BR-Tourmaline. Todos os direitos reservados.
+    </footer>
+
+    <script>
+        // ================================================================
+        // CONFIGURAÇÃO SUPABASE
+        // ================================================================
+        const SUPABASE_URL = 'https://tfgjfscnuemunuwzvtjr.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_vCiz2wBxb7yRfrfhJxYOfg__u3kka3W';
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        let pendingUser = null;
+
+        // ================================================================
+        // FUNÇÕES DE HASH
+        // ================================================================
+        async function hashPassword(pass) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(pass);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // ================================================================
+        // VERIFICAR SE O NICK É ADMIN (na tabela 'admin_logins')
+        // ================================================================
+        async function verificarAdmin(nick) {
+            try {
+                // 🔥 TABELA CORRETA: admin_logins
+                const { data, error } = await supabaseClient
+                    .from('admin_logins')
+                    .select('nome_heroi, senha')
+                    .eq('nome_heroi', nick)
+                    .maybeSingle();
+
+                if (error) {
+                    console.error('Erro ao verificar admin:', error);
+                    return { exists: false, error };
+                }
+
+                return { exists: !!data, data };
+            } catch (err) {
+                console.error('Exceção ao verificar admin:', err);
+                return { exists: false, error: err };
+            }
+        }
+
+        // ================================================================
+        // FUNÇÕES DE MOSTRAR MENSAGEM
+        // ================================================================
+        function mostrarMsg(elId, texto, tipo) {
+            const el = document.getElementById(elId);
+            if (el) {
+                el.textContent = texto;
+                el.className = 'login-msg ' + (tipo || '');
+            }
+        }
+
+        function mostrarMsgModal(texto, tipo) {
+            const el = document.getElementById('changePassMsg');
+            if (el) {
+                el.textContent = texto;
+                el.className = 'modal-msg ' + (tipo || '');
+            }
+        }
+
+        // ================================================================
+        // FUNÇÃO DE LOGIN (GLOBAL)
+        // ================================================================
+        window.login = async function() {
+            const btn = document.getElementById('btnLogin');
+            const nick = document.getElementById('loginNick').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+
+            if (!nick) { mostrarMsg('loginMsg', 'Digite seu nick.', 'error'); return; }
+            if (!pass) { mostrarMsg('loginMsg', 'Digite sua senha.', 'error'); return; }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Entrando...';
+
+            try {
+                // 1. Verifica se o nick existe na tabela admin_logins
+                const { exists, data: adminData } = await verificarAdmin(nick);
+                if (!exists) {
+                    mostrarMsg('loginMsg', '❌ Administrador não encontrado.', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel';
+                    return;
+                }
+
+                // 2. Compara a senha fornecida com a senha armazenada (texto puro)
+                const senhaAdmin = adminData.senha;
+                if (pass !== senhaAdmin) {
+                    mostrarMsg('loginMsg', '❌ Senha incorreta.', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel';
+                    return;
+                }
+
+                // 3. Verifica se o admin já tem registro na tabela 'users'
+                const { data: userData, error: userError } = await supabaseClient
+                    .from('users')
+                    .select('nick, must_change_password, password')
+                    .eq('nick', nick)
+                    .maybeSingle();
+
+                // Se não existe na tabela 'users', cria um registro
+                if (!userData) {
+                    const hashed = await hashPassword(pass);
+                    const { error: insertError } = await supabaseClient
+                        .from('users')
+                        .insert([{
+                            nick: nick,
+                            password: hashed,
+                            must_change_password: false
+                        }]);
+
+                    if (insertError) {
+                        console.error('Erro ao criar usuário na tabela users:', insertError);
+                        mostrarMsg('loginMsg', 'Erro ao configurar acesso: ' + insertError.message, 'error');
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel';
+                        return;
+                    }
+
+                    // Se a senha for "1234", força troca
+                    if (pass === '1234') {
+                        pendingUser = nick;
+                        document.getElementById('loginForm').style.display = 'none';
+                        document.getElementById('loginMsg').textContent = '';
+                        document.getElementById('changePassModal').classList.add('active');
+                        mostrarMsgModal('⚠️ Use a senha padrão. Defina uma nova senha.', 'info');
+                        document.getElementById('newPass1').value = '';
+                        document.getElementById('newPass2').value = '';
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel';
+                        return;
+                    }
+
+                    localStorage.setItem('anomalia_user', nick);
+                    mostrarMsg('loginMsg', '✅ Login efetuado! Redirecionando...', 'success');
+                    setTimeout(() => { window.location.href = 'painel.html'; }, 800);
+                    return;
+                }
+
+                // Se existe, verifica se precisa trocar a senha
+                if (userData.must_change_password === true) {
+                    pendingUser = userData.nick;
+                    document.getElementById('loginForm').style.display = 'none';
+                    document.getElementById('loginMsg').textContent = '';
+                    document.getElementById('changePassModal').classList.add('active');
+                    mostrarMsgModal('⚠️ Você precisa definir uma nova senha.', 'info');
+                    document.getElementById('newPass1').value = '';
+                    document.getElementById('newPass2').value = '';
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel';
+                    return;
+                }
+
+                // Login ok
+                localStorage.setItem('anomalia_user', nick);
+                mostrarMsg('loginMsg', '✅ Login efetuado! Redirecionando...', 'success');
+                setTimeout(() => { window.location.href = 'painel.html'; }, 800);
+
+            } catch (err) {
+                console.error('Erro no login:', err);
+                mostrarMsg('loginMsg', '❌ Erro ao fazer login: ' + err.message, 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel';
+            }
+        };
+
+        // ================================================================
+        // FUNÇÃO DE TROCA DE SENHA (MODAL)
+        // ================================================================
+        window.trocarSenha = async function() {
+            const nova = document.getElementById('newPass1').value.trim();
+            const confirm = document.getElementById('newPass2').value.trim();
+
+            if (!nova || nova.length < 4) {
+                mostrarMsgModal('A nova senha deve ter pelo menos 4 caracteres.', 'error');
+                return;
+            }
+            if (nova !== confirm) {
+                mostrarMsgModal('As senhas não coincidem.', 'error');
+                return;
+            }
+
+            try {
+                // Atualiza a senha na tabela 'admin_logins' (texto puro)
+                const { error: updateAdminError } = await supabaseClient
+                    .from('admin_logins')
+                    .update({ senha: nova })
+                    .eq('nome_heroi', pendingUser);
+
+                if (updateAdminError) {
+                    mostrarMsgModal('Erro ao atualizar senha (admin_logins): ' + updateAdminError.message, 'error');
+                    return;
+                }
+
+                // Atualiza a senha na tabela 'users' (com hash)
+                const hashed = await hashPassword(nova);
+                const { error: updateUserError } = await supabaseClient
+                    .from('users')
+                    .update({ password: hashed, must_change_password: false })
+                    .eq('nick', pendingUser);
+
+                if (updateUserError) {
+                    mostrarMsgModal('Erro ao atualizar senha (users): ' + updateUserError.message, 'error');
+                    return;
+                }
+
+                mostrarMsgModal('✅ Senha alterada com sucesso! Redirecionando...', 'success');
+
+                localStorage.setItem('anomalia_user', pendingUser);
+
+                setTimeout(() => {
+                    document.getElementById('changePassModal').classList.remove('active');
+                    window.location.href = 'painel.html';
+                }, 800);
+
+            } catch (err) {
+                console.error('Erro ao trocar senha:', err);
+                mostrarMsgModal('❌ Erro ao trocar senha: ' + err.message, 'error');
+            }
+        };
+
+        // ================================================================
+        // FUNÇÃO PARA FECHAR MODAL
+        // ================================================================
+        window.fecharModalSenha = function() {
+            document.getElementById('changePassModal').classList.remove('active');
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('loginMsg').textContent = '';
+            document.getElementById('loginMsg').className = 'login-msg';
+        };
+
+        // ================================================================
+        // VERIFICAR SESSÃO EXISTENTE
+        // ================================================================
+        async function verificarSessao() {
+            const saved = localStorage.getItem('anomalia_user');
+            if (!saved) return;
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('users')
+                    .select('must_change_password')
+                    .eq('nick', saved)
+                    .maybeSingle();
+
+                if (error) {
+                    console.warn('Erro ao verificar sessão:', error);
+                    localStorage.removeItem('anomalia_user');
+                    return;
+                }
+
+                if (data) {
+                    if (data.must_change_password === true) {
+                        pendingUser = saved;
+                        document.getElementById('loginForm').style.display = 'none';
+                        document.getElementById('changePassModal').classList.add('active');
+                        mostrarMsgModal('⚠️ Você precisa definir uma nova senha.', 'info');
+                        document.getElementById('newPass1').value = '';
+                        document.getElementById('newPass2').value = '';
+                        return;
+                    }
+                    window.location.href = 'painel.html';
+                    return;
+                } else {
+                    localStorage.removeItem('anomalia_user');
+                }
+            } catch (err) {
+                console.warn('Erro ao verificar sessão:', err);
+                localStorage.removeItem('anomalia_user');
+            }
+        }
+
+        // ================================================================
+        // EVENTOS
+        // ================================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            verificarSessao();
+
+            document.getElementById('loginPass').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') window.login();
+            });
+            document.getElementById('loginNick').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') document.getElementById('loginPass').focus();
+            });
+            document.getElementById('newPass2').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') window.trocarSenha();
+            });
+
+            document.getElementById('changePassModal').addEventListener('click', function(e) {
+                if (e.target === this) fecharModalSenha();
+            });
+        });
+    </script>
+</body>
+</html>
