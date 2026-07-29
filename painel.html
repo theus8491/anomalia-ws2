@@ -7,9 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Bibliotecas para PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ===== TODOS OS ESTILOS EXISTENTES ===== */
         .glass-card { background: rgba(40,40,45,0.35) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(120,120,130,0.15) !important; }
         .glass-card-dark { background: rgba(30,30,35,0.4) !important; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgba(80,80,90,0.12) !important; }
         .glass-header { background: rgba(35,35,40,0.4) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 2px solid rgba(120,120,130,0.2) !important; }
@@ -24,9 +28,6 @@
         .glass-badge { background: rgba(30,30,35,0.35) !important; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: 1px solid rgba(80,80,90,0.2) !important; }
         .glass-footer { background: rgba(30,30,35,0.15) !important; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-top: 1px solid rgba(80,80,90,0.1) !important; }
         .border-amber-subtle { border-color: rgba(120,120,130,0.15) !important; }
-        .text-amber-100, .text-amber-200, .text-amber-300, .text-amber-400, .text-amber-500, .text-amber-600, .text-amber-700 { color: #d0d0d0 !important; }
-        .text-emerald-400 { color: #6ee7b7 !important; }
-        .text-red-400 { color: #fca5a5 !important; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0d0b09 radial-gradient(circle at 50% 10%, #291c13 0%, #0d0b09 60%); color: #e8e8e8; min-height: 100vh; }
         h1, h2, h3, .font-rpg { font-family: 'Cinzel', serif; }
 
@@ -61,6 +62,11 @@
         .btn-glass-gold:hover { background: rgba(212,175,55,0.2); border-color: rgba(212,175,55,0.5); }
         .btn-glass-whatsapp { background: rgba(37,211,102,0.15); border-color: rgba(37,211,102,0.3); color: #25d366; }
         .btn-glass-whatsapp:hover { background: rgba(37,211,102,0.25); border-color: rgba(37,211,102,0.5); }
+        .btn-glass-table { background: rgba(139,92,246,0.15); border-color: rgba(139,92,246,0.3); color: #a78bfa; }
+        .btn-glass-table:hover { background: rgba(139,92,246,0.25); border-color: rgba(139,92,246,0.5); }
+        .btn-glass-table.active { background: rgba(139,92,246,0.3); border-color: #a78bfa; }
+        .btn-glass-pdf { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.3); color: #fca5a5; }
+        .btn-glass-pdf:hover { background: rgba(239,68,68,0.25); border-color: rgba(239,68,68,0.5); }
 
         .pvp-rank-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 12px; border-radius: 20px; font-size: 10px; font-weight: 700; font-family: 'Cinzel', serif; letter-spacing: 0.5px; }
         .pvp-rank-badge.elite { background: rgba(139,92,246,0.2); border: 1px solid rgba(139,92,246,0.4); color: #a78bfa; }
@@ -68,7 +74,6 @@
         .pvp-rank-badge.medio { background: rgba(251,191,36,0.2); border: 1px solid rgba(251,191,36,0.4); color: #fbbf24; }
         .pvp-rank-badge.ruim { background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); color: #fca5a5; }
         .pvp-rank-badge.pessimo { background: rgba(100,100,100,0.2); border: 1px solid rgba(100,100,100,0.4); color: #94a3b8; }
-
         .badge-pvp { display: inline-block; padding: 1px 10px; border-radius: 12px; font-weight: 700; font-size: 10px; }
         .badge-pvp.critico { background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); color: #fca5a5; }
         .badge-pvp.medio { background: rgba(251,191,36,0.2); border: 1px solid rgba(251,191,36,0.4); color: #fbbf24; }
@@ -109,7 +114,6 @@
         .preview-modal .preview-box .preview-info-extra .extra-item .extra-value { color: #e8d5b8; font-weight: 600; }
         .preview-modal .preview-box .preview-info-extra .extra-item.sim { background: rgba(16,185,129,0.15); color: #6ee7b7; }
         .preview-modal .preview-box .preview-info-extra .extra-item.nao { background: rgba(239,68,68,0.1); color: #fca5a5; }
-        .preview-modal .preview-box .preview-status { display: none; }
         .preview-modal .preview-box .preview-sets { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 8px; font-size: 10px; }
         .preview-modal .preview-box .preview-sets .ps-item { display: flex; justify-content: space-between; padding: 3px 8px; border-radius: 4px; background: rgba(30,30,35,0.2); }
         .preview-modal .preview-box .preview-sets .ps-item .ps-label { color: rgba(180,180,190,0.4); font-size: 9px; text-transform: uppercase; }
@@ -118,10 +122,6 @@
         .preview-modal .preview-box .preview-sets .ps-item .ps-value.roxo { color: #a78bfa; }
         .preview-modal .preview-box .preview-sets .ps-item .ps-value.vermelho { color: #fca5a5; }
         .preview-modal .preview-box .preview-sets .ps-item .ps-value.ouro { color: #fbbf24; }
-        .preview-modal .preview-box .preview-sets .ps-item .ps-value .nao-tenho-item { color: #fca5a5; font-size: 9px; }
-        .preview-modal .preview-box .preview-sets .ps-item .ps-value .equipado-item { color: #6ee7b7; font-size: 9px; }
-        .preview-modal .preview-box .preview-sets .ps-item .ps-value .amp { color: #a78bfa; font-size: 9px; }
-        .preview-modal .preview-box .preview-sets .ps-item .ps-value .variant { color: #fbbf24; font-size: 9px; margin-left: 3px; }
 
         .btn-preview { background: rgba(148,163,184,0.1); border: 1px solid rgba(148,163,184,0.15); border-radius: 6px; padding: 2px 10px; font-size: 10px; color: #94a3b8; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 4px; font-family: 'Cinzel', serif; }
         .btn-preview:hover { background: rgba(148,163,184,0.2); border-color: rgba(148,163,184,0.3); color: #cbd5e1; }
@@ -156,9 +156,6 @@
         .pvp-explicacao .item { font-size: 11px; color: #d0d0d0; padding: 2px 0; }
         .pvp-explicacao .item .label { color: #94a3b8; }
         .pvp-explicacao .item .valor { font-weight: 600; }
-        .pvp-explicacao .item .gz { color: #a78bfa; }
-        .pvp-explicacao .item .ap { color: #fca5a5; }
-        .pvp-explicacao .item .resistir { color: #6ee7b7; }
         .pvp-explicacao .rank-item { display: inline-flex; align-items: center; gap: 4px; padding: 1px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; margin: 2px 4px 2px 0; }
         .pvp-explicacao .rank-elite { background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.3); color: #a78bfa; }
         .pvp-explicacao .rank-bom { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #6ee7b7; }
@@ -223,245 +220,120 @@
         .membro-pt-item { position: relative; cursor: pointer; }
         .membro-pt-item .tooltip-preview { visibility: hidden; opacity: 0; position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(10px); background: rgba(20,15,10,0.95); backdrop-filter: blur(12px); border: 1px solid rgba(180,150,100,0.2); border-radius: 12px; padding: 12px 14px; width: 380px; max-height: 460px; overflow-y: auto; z-index: 100; transition: all 0.3s ease; box-shadow: 0 20px 60px rgba(0,0,0,0.8); pointer-events: none; }
         .membro-pt-item:hover .tooltip-preview { visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0); }
-        .membro-pt-item .tooltip-preview::-webkit-scrollbar { width: 4px; }
-        .membro-pt-item .tooltip-preview::-webkit-scrollbar-track { background: rgba(30,30,35,0.3); border-radius: 10px; }
-        .membro-pt-item .tooltip-preview::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.3); border-radius: 10px; }
-        .membro-pt-item .tooltip-preview::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 8px solid transparent; border-top-color: rgba(180,150,100,0.2); }
-        .membro-pt-item .tooltip-preview .preview-nome { font-family: 'Cinzel', serif; font-weight: 700; color: #e8d5b8; font-size: 14px; border-bottom: 1px solid rgba(180,150,100,0.15); padding-bottom: 6px; margin-bottom: 8px; }
-        .membro-pt-item .tooltip-preview .preview-classe { font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 8px; }
-        .membro-pt-item .tooltip-preview .preview-ramos { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; margin: 6px 0; font-size: 9px; }
-        .membro-pt-item .tooltip-preview .preview-ramos .pr { background: rgba(40,30,20,0.4); border-radius: 6px; padding: 6px 6px; text-align: center; border-left: 3px solid #94a3b8; }
-        .membro-pt-item .tooltip-preview .preview-ramos .pr .pr-label { color: #e8d5b8; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
-        .membro-pt-item .tooltip-preview .preview-ramos .pr .pr-value { color: #b8a088; font-size: 7px; text-transform: uppercase; letter-spacing: 0.3px; }
-        .membro-pt-item .tooltip-preview .preview-ramos .pr .pr-detail { color: #8a9b8a; font-size: 8px; }
-        .membro-pt-item .tooltip-preview .preview-ramos .pr .pr-talentos { color: #b8a088; font-size: 7px; background: rgba(40,30,20,0.3); padding: 1px 6px; border-radius: 8px; display: inline-block; margin-top: 1px; }
-        .membro-pt-item .tooltip-preview .preview-info-extra { display: flex; gap: 6px; flex-wrap: wrap; margin: 4px 0; font-size: 9px; }
-        .membro-pt-item .tooltip-preview .preview-info-extra .extra-item { background: rgba(40,30,20,0.3); padding: 2px 8px; border-radius: 10px; color: #b8a088; font-size: 8px; }
-        .membro-pt-item .tooltip-preview .preview-info-extra .extra-item .extra-value { color: #e8d5b8; font-weight: 600; }
-        .membro-pt-item .tooltip-preview .preview-info-extra .extra-item.sim { background: rgba(16,185,129,0.15); color: #6ee7b7; }
-        .membro-pt-item .tooltip-preview .preview-info-extra .extra-item.nao { background: rgba(239,68,68,0.1); color: #fca5a5; }
-        .membro-pt-item .tooltip-preview .preview-status { display: none; }
-        .membro-pt-item .tooltip-preview .preview-sets { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 4px; font-size: 8px; }
-        .membro-pt-item .tooltip-preview .preview-sets .ps-item { display: flex; justify-content: space-between; padding: 2px 4px; border-radius: 3px; background: rgba(30,30,35,0.2); }
-        .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-label { color: rgba(180,180,190,0.4); font-size: 7px; text-transform: uppercase; }
-        .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-value { font-weight: 600; font-size: 8px; }
-        .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-value.verde { color: #6ee7b7; }
-        .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-value.roxo { color: #a78bfa; }
-        .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-value.vermelho { color: #fca5a5; }
-        .membro-pt-item .tooltip-preview .preview-sets .ps-item .ps-value.ouro { color: #fbbf24; }
 
-        /* HISTÓRICO */
-        .historico-item-card {
-            background: rgba(30,30,35,0.3);
-            border: 1px solid rgba(80,80,90,0.12);
-            border-radius: 12px;
-            padding: 14px 16px;
-            margin-bottom: 10px;
-            transition: all 0.2s;
-            cursor: pointer;
+        .historico-item-card { background: rgba(30,30,35,0.3); border: 1px solid rgba(80,80,90,0.12); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; transition: all 0.2s; cursor: pointer; }
+        .historico-item-card:hover { border-color: rgba(148,163,184,0.3); background: rgba(40,40,45,0.3); }
+        .historico-item-card .cabecalho { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #94a3b8; margin-bottom: 8px; }
+        .historico-item-card .cabecalho .data { color: rgba(180,180,190,0.5); }
+        .historico-item-card .cabecalho .badge-versao { font-family: 'Cinzel', serif; font-weight: 700; font-size: 10px; padding: 2px 12px; border-radius: 20px; background: rgba(148,163,184,0.1); border: 1px solid rgba(148,163,184,0.2); color: #94a3b8; }
+        .historico-item-card .cabecalho .badge-versao.atual { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.3); color: #6ee7b7; }
+        .historico-item-card .alteracoes { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; }
+        .historico-item-card .alteracoes .alteracao { font-size: 11px; padding: 3px 8px; border-radius: 4px; display: flex; align-items: center; gap: 6px; }
+        .historico-item-card .alteracoes .alteracao .campo { color: #94a3b8; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 0.3px; }
+        .historico-item-card .alteracoes .alteracao .antigo { color: #fca5a5; text-decoration: line-through; font-size: 10px; }
+        .historico-item-card .alteracoes .alteracao .seta { color: rgba(180,180,190,0.3); font-size: 10px; }
+        .historico-item-card .alteracoes .alteracao .novo { color: #6ee7b7; font-weight: 600; font-size: 10px; }
+        .historico-item-card .alteracoes .alteracao.sem-mudanca { color: rgba(180,180,190,0.4); font-size: 11px; font-style: italic; }
+        .historico-item-card .btn-ver-detalhes { margin-top: 8px; background: rgba(148,163,184,0.08); border: 1px solid rgba(148,163,184,0.12); border-radius: 8px; padding: 4px 14px; font-size: 10px; color: #94a3b8; cursor: pointer; transition: all 0.2s; font-family: 'Cinzel', serif; }
+        .historico-item-card .btn-ver-detalhes:hover { background: rgba(148,163,184,0.15); border-color: rgba(148,163,184,0.25); color: #cbd5e1; }
+        .historico-item-card.nova-versao { border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.05); border-left: 4px solid #6ee7b7; }
+        .historico-item-card.nova-versao .cabecalho .badge-versao { background: rgba(16,185,129,0.2); border-color: rgba(16,185,129,0.3); color: #6ee7b7; }
+
+        .historico-detalhe-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(16px); z-index: 999999; align-items: center; justify-content: center; padding: 20px; }
+        .historico-detalhe-modal.active { display: flex; }
+        .historico-detalhe-modal .modal-box { background: rgba(20,15,10,0.98); border: 1px solid rgba(180,150,100,0.2); border-radius: 20px; padding: 28px 32px; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 30px 80px rgba(0,0,0,0.9); animation: modalFadeIn 0.3s ease; position: relative; }
+        .historico-detalhe-modal .modal-box .close-detalhe { position: sticky; top: 0; float: right; background: transparent; border: none; color: rgba(180,180,190,0.4); font-size: 1.4rem; cursor: pointer; transition: color 0.2s; z-index: 10; }
+        .historico-detalhe-modal .modal-box .close-detalhe:hover { color: #fca5a5; }
+        .historico-detalhe-modal .modal-box .detalhe-titulo { font-family: 'Cinzel', serif; font-weight: 700; color: #e8d5b8; font-size: 18px; border-bottom: 1px solid rgba(180,150,100,0.15); padding-bottom: 8px; margin-bottom: 16px; margin-top: 0; }
+        .historico-detalhe-modal .modal-box .detalhe-conteudo { max-height: 60vh; overflow-y: auto; }
+        .historico-detalhe-modal .modal-box .detalhe-conteudo .diff-linha { display: flex; align-items: center; gap: 8px; padding: 4px 8px; border-radius: 4px; font-size: 12px; border-bottom: 1px solid rgba(80,80,90,0.05); }
+        .historico-detalhe-modal .modal-box .detalhe-conteudo .diff-linha .campo { color: #94a3b8; font-weight: 600; min-width: 120px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; }
+        .historico-detalhe-modal .modal-box .detalhe-conteudo .diff-linha .antigo { color: #fca5a5; text-decoration: line-through; }
+        .historico-detalhe-modal .modal-box .detalhe-conteudo .diff-linha .seta { color: rgba(180,180,190,0.3); }
+        .historico-detalhe-modal .modal-box .detalhe-conteudo .diff-linha .novo { color: #6ee7b7; font-weight: 600; }
+        .historico-detalhe-modal .modal-box .detalhe-conteudo .diff-linha.sem-mudanca { color: rgba(180,180,190,0.4); font-style: italic; }
+        .historico-detalhe-modal .modal-box .detalhe-conteudo .json-view { background: rgba(10,10,12,0.6); border-radius: 8px; padding: 12px 14px; font-size: 10px; font-family: monospace; white-space: pre-wrap; word-break: break-all; max-height: 300px; overflow-y: auto; color: #d0d0d0; margin-top: 12px; }
+        .historico-detalhe-modal .modal-box .detalhe-footer { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(80,80,90,0.1); display: flex; justify-content: flex-end; gap: 8px; }
+
+        .pt-table-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
         }
-        .historico-item-card:hover {
-            border-color: rgba(148,163,184,0.3);
-            background: rgba(40,40,45,0.3);
+        .pt-table-card {
+            border-radius: 16px;
+            padding: 16px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
-        .historico-item-card .cabecalho {
+        .pt-table-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        }
+        .pt-table-card .pt-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 12px;
-            color: #94a3b8;
-            margin-bottom: 8px;
-        }
-        .historico-item-card .cabecalho .data {
-            color: rgba(180,180,190,0.5);
-        }
-        .historico-item-card .cabecalho .badge-versao {
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            font-size: 10px;
-            padding: 2px 12px;
-            border-radius: 20px;
-            background: rgba(148,163,184,0.1);
-            border: 1px solid rgba(148,163,184,0.2);
-            color: #94a3b8;
-        }
-        .historico-item-card .cabecalho .badge-versao.atual {
-            background: rgba(16,185,129,0.15);
-            border-color: rgba(16,185,129,0.3);
-            color: #6ee7b7;
-        }
-        .historico-item-card .alteracoes {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            margin-top: 6px;
-        }
-        .historico-item-card .alteracoes .alteracao {
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .historico-item-card .alteracoes .alteracao .campo {
-            color: #94a3b8;
-            font-weight: 600;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-        .historico-item-card .alteracoes .alteracao .antigo {
-            color: #fca5a5;
-            text-decoration: line-through;
-            font-size: 10px;
-        }
-        .historico-item-card .alteracoes .alteracao .seta {
-            color: rgba(180,180,190,0.3);
-            font-size: 10px;
-        }
-        .historico-item-card .alteracoes .alteracao .novo {
-            color: #6ee7b7;
-            font-weight: 600;
-            font-size: 10px;
-        }
-        .historico-item-card .alteracoes .alteracao.sem-mudanca {
-            color: rgba(180,180,190,0.4);
-            font-size: 11px;
-            font-style: italic;
-        }
-        .historico-item-card .btn-ver-detalhes {
-            margin-top: 8px;
-            background: rgba(148,163,184,0.08);
-            border: 1px solid rgba(148,163,184,0.12);
-            border-radius: 8px;
-            padding: 4px 14px;
-            font-size: 10px;
-            color: #94a3b8;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Cinzel', serif;
-        }
-        .historico-item-card .btn-ver-detalhes:hover {
-            background: rgba(148,163,184,0.15);
-            border-color: rgba(148,163,184,0.25);
-            color: #cbd5e1;
-        }
-        .historico-item-card.nova-versao {
-            border-color: rgba(16,185,129,0.3);
-            background: rgba(16,185,129,0.05);
-            border-left: 4px solid #6ee7b7;
-        }
-        .historico-item-card.nova-versao .cabecalho .badge-versao {
-            background: rgba(16,185,129,0.2);
-            border-color: rgba(16,185,129,0.3);
-            color: #6ee7b7;
-        }
-
-        .historico-detalhe-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(16px);
-            z-index: 999999;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .historico-detalhe-modal.active { display: flex; }
-        .historico-detalhe-modal .modal-box {
-            background: rgba(20,15,10,0.98);
-            border: 1px solid rgba(180,150,100,0.2);
-            border-radius: 20px;
-            padding: 28px 32px;
-            max-width: 700px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.9);
-            animation: modalFadeIn 0.3s ease;
-            position: relative;
-        }
-        .historico-detalhe-modal .modal-box .close-detalhe {
-            position: sticky;
-            top: 0;
-            float: right;
-            background: transparent;
-            border: none;
-            color: rgba(180,180,190,0.4);
-            font-size: 1.4rem;
-            cursor: pointer;
-            transition: color 0.2s;
-            z-index: 10;
-        }
-        .historico-detalhe-modal .modal-box .close-detalhe:hover { color: #fca5a5; }
-        .historico-detalhe-modal .modal-box .detalhe-titulo {
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            color: #e8d5b8;
-            font-size: 18px;
-            border-bottom: 1px solid rgba(180,150,100,0.15);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             padding-bottom: 8px;
-            margin-bottom: 16px;
-            margin-top: 0;
+            margin-bottom: 10px;
         }
-        .historico-detalhe-modal .modal-box .detalhe-conteudo {
-            max-height: 60vh;
-            overflow-y: auto;
+        .pt-table-card .pt-header .pt-num {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.1rem;
         }
-        .historico-detalhe-modal .modal-box .detalhe-conteudo .diff-linha {
+        .pt-table-card .pt-header .pt-modo {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(0,0,0,0.3);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .pt-table-card .pt-lider {
+            font-size: 0.8rem;
+            color: #fbbf24;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            border-bottom: 1px solid rgba(80,80,90,0.05);
+            gap: 4px;
         }
-        .historico-detalhe-modal .modal-box .detalhe-conteudo .diff-linha .campo {
-            color: #94a3b8;
-            font-weight: 600;
-            min-width: 120px;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-        .historico-detalhe-modal .modal-box .detalhe-conteudo .diff-linha .antigo {
-            color: #fca5a5;
-            text-decoration: line-through;
-        }
-        .historico-detalhe-modal .modal-box .detalhe-conteudo .diff-linha .seta {
-            color: rgba(180,180,190,0.3);
-        }
-        .historico-detalhe-modal .modal-box .detalhe-conteudo .diff-linha .novo {
-            color: #6ee7b7;
-            font-weight: 600;
-        }
-        .historico-detalhe-modal .modal-box .detalhe-conteudo .diff-linha.sem-mudanca {
-            color: rgba(180,180,190,0.4);
-            font-style: italic;
-        }
-        .historico-detalhe-modal .modal-box .detalhe-conteudo .json-view {
-            background: rgba(10,10,12,0.6);
-            border-radius: 8px;
-            padding: 12px 14px;
-            font-size: 10px;
-            font-family: monospace;
-            white-space: pre-wrap;
-            word-break: break-all;
-            max-height: 300px;
-            overflow-y: auto;
-            color: #d0d0d0;
-            margin-top: 12px;
-        }
-        .historico-detalhe-modal .modal-box .detalhe-footer {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid rgba(80,80,90,0.1);
+        .pt-table-card .membro-item {
             display: flex;
-            justify-content: flex-end;
-            gap: 8px;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 0.9rem;
+        }
+        .pt-table-card .membro-item .membro-nome {
+            font-weight: 600;
+        }
+        .pt-table-card .membro-item .membro-classe {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            background: rgba(0,0,0,0.2);
+            padding: 0 8px;
+            border-radius: 10px;
+        }
+        .pt-table-card .membro-item.vazio {
+            color: rgba(255,255,255,0.25);
+            font-style: italic;
+            font-size: 0.8rem;
+        }
+        .pt-table-card .membro-item.lider {
+            border-left: 3px solid #fbbf24;
+            padding-left: 8px;
+        }
+        .pt-table-container {
+            background: rgba(30,30,35,0.2);
+            backdrop-filter: blur(6px);
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid rgba(120,120,130,0.12);
         }
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -475,6 +347,7 @@
     <img src="warspear.png" alt="Fundo Guilda Anomalia" class="fixed inset-0 w-full h-full object-cover z-0" />
     <div class="fixed inset-0 bg-black/70 z-[1]"></div>
 
+    <!-- MODAL PREVIEW -->
     <div id="previewModal" class="preview-modal">
         <div class="preview-box">
             <button class="close-preview" onclick="fecharPreview()"><i class="fa-solid fa-xmark"></i></button>
@@ -483,6 +356,7 @@
     </div>
 
     <main class="w-full max-w-7xl mx-auto my-auto relative z-10 space-y-4 p-2 sm:p-4">
+        <!-- HEADER -->
         <header class="glass-header rounded-2xl p-5 shadow-2xl relative overflow-hidden">
             <div class="absolute top-0 right-0 w-48 h-48 bg-slate-500/5 rounded-full blur-3xl pointer-events-none"></div>
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -504,6 +378,7 @@
             </div>
         </header>
 
+        <!-- ABAS -->
         <div class="flex flex-wrap items-center gap-2 border-b border-amber-subtle pb-3">
             <button onclick="mudarAba('membros')" id="btnTabMembros" class="tab-btn active"><i class="fa-solid fa-users"></i> Membros & Relatório</button>
             <button onclick="mudarAba('pts')" id="btnTabPts" class="tab-btn"><i class="fa-solid fa-people-group"></i> Formação de PTs</button>
@@ -511,7 +386,7 @@
             <button onclick="mudarAba('reservas')" id="btnTabReservas" class="tab-btn"><i class="fa-solid fa-users-slash"></i> Reservas (Fila)</button>
         </div>
 
-        <!-- MEMBROS -->
+        <!-- TAB MEMBROS -->
         <div id="tabMembros" class="space-y-4">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div class="stat-card"><div class="text-[10px] uppercase tracking-wider text-amber-500/80 font-bold">Total de Membros</div><div id="totalMembros" class="text-2xl font-black text-amber-100 font-rpg mt-0.5">0</div></div>
@@ -570,12 +445,14 @@
             </section>
         </div>
 
-        <!-- PTS -->
+        <!-- TAB PTS -->
         <div id="tabPts" class="space-y-4 hidden">
             <section class="glass-card rounded-2xl p-5 shadow-xl">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-amber-subtle pb-3 mb-4">
                     <div><h2 class="text-base font-bold text-white/90 font-rpg">Escalação de PTs (Grupos de até 5 Membros)</h2><p class="text-xs text-amber-500/60">Clique no botão <strong>👁️ Preview</strong> ao lado do nome para ver todos os detalhes do membro.</p></div>
                     <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="toggleModoTabela()" id="btnToggleTabela" class="btn-glass btn-glass-table"><i class="fa-solid fa-table"></i> 📊 Ver Tabela</button>
+                        <button onclick="baixarPDF()" id="btnBaixarPDF" class="btn-glass btn-glass-pdf" style="display:none;"><i class="fa-solid fa-file-pdf"></i> 📄 Baixar PDF</button>
                         <button onclick="adicionarPt()" id="btnNovaPt" class="btn-glass btn-glass-primary"><i class="fa-solid fa-plus"></i> Nova PT</button>
                         <button onclick="reconstruirPts()" id="btnReconstruirPts" class="btn-glass btn-glass-gold"><i class="fa-solid fa-arrows-rotate"></i> Reconstruir PTs</button>
                         <button onclick="copiarDiscord()" id="btnCopiarDiscord" class="btn-glass"><i class="fa-brands fa-discord text-indigo-400"></i> Discord</button>
@@ -634,16 +511,26 @@
                         </div>
                     </div></div>
                 </div>
-                <div id="gridPts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+                <div id="ptContainer">
+                    <div id="ptEditMode">
+                        <div id="gridPts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                    </div>
+                    <div id="ptTableMode" style="display:none;">
+                        <div class="pt-table-container">
+                            <div id="gridPtsTable" class="pt-table-grid"></div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
 
-        <!-- STATS -->
+        <!-- TAB STATS -->
         <div id="tabStats" class="space-y-4 hidden">
             <div class="grid grid-cols-1 gap-3"><div class="glass-card rounded-2xl p-5 shadow-xl"><h2 class="text-sm font-bold text-white/90 font-rpg border-b border-amber-subtle pb-3 mb-4">Distribuição de Classes</h2><div class="relative h-72 w-full"><canvas id="chartClasses"></canvas></div></div></div>
         </div>
 
-        <!-- RESERVAS -->
+        <!-- TAB RESERVAS -->
         <div id="tabReservas" class="space-y-4 hidden">
             <section class="glass-card rounded-2xl p-5 shadow-xl">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-amber-subtle pb-3 mb-4">
@@ -739,6 +626,7 @@
         let chartClassesInstance = null;
         var gruposPts = JSON.parse(localStorage.getItem('guilda_anomalia_pts')) || {};
         var reservas = [];
+        let modoTabelaAtivo = false;
 
         // ================================================================
         // FUNÇÕES AUXILIARES
@@ -771,6 +659,17 @@
             const hC = String(parseInt(document.getElementById('horaChegada').value) || 0).padStart(2, '0');
             const mC = String(parseInt(document.getElementById('minutoChegada').value) || 0).padStart(2, '0');
             return { dia, evento, horario: `${hI}:${mI} - ${hF}:${mF}`, chegada: `${hC}:${mC}` };
+        }
+
+        function getNomeEventoParaExibicao(evento) {
+            const mapa = {
+                '⚔️ Defesa (Castelo)': '⚔️ Defesa do Castelo',
+                '🗺️ Raid Mapa 5': '🗺️ Raid Mapa 5',
+                '🔥 Raid T5': '🔥 Raid T5',
+                '🎉 Aniversário': '🎉 Gvg Aniversário',
+                '⚔️ GvG Mermem': '⚔️ GvG Mermem'
+            };
+            return mapa[evento] || evento;
         }
 
         // ================================================================
@@ -1590,32 +1489,60 @@
             renderPts();
         }
 
+        // ===== FUNÇÃO PRINCIPAL: ESCALAR MEMBRO COM VALIDAÇÃO DE DUPLICIDADE =====
         function escalarMembro(ptId, slotIndex, membroId) {
-            if (!gruposPts[ptId]) gruposPts[ptId] = { slots: [null, null, null, null, null], modo: 'normal', lider: null };
-            if (membroId) {
-                const jaAlocado = Object.keys(gruposPts).some(id => {
-                    if (String(id) === String(ptId)) return false;
-                    const slots = gruposPts[id].slots || [];
-                    return slots.some(s => s && String(s.id) === String(membroId));
-                });
-                if (jaAlocado) {
-                    alert('⚠️ Este membro já está alocado em outra PT!');
-                    renderPts();
-                    return;
-                }
+            if (!gruposPts[ptId]) {
+                gruposPts[ptId] = { slots: [null, null, null, null, null], modo: 'normal', lider: null };
             }
-            gruposPts[ptId].slots[slotIndex] = membroId ? (cache.find(m => String(m.id) === String(membroId)) || null) : null;
+
+            // Se for vazio (membroId vazio), apenas remove
+            if (!membroId) {
+                gruposPts[ptId].slots[slotIndex] = null;
+                salvarPtsStorage();
+                renderPts();
+                return;
+            }
+
+            // VERIFICA SE O MEMBRO JÁ ESTÁ EM ALGUMA PT (INCLUINDO A ATUAL)
+            const membroJaAlocado = Object.keys(gruposPts).some(id => {
+                const slots = gruposPts[id].slots || [];
+                return slots.some(s => s && String(s.id) === String(membroId));
+            });
+
+            if (membroJaAlocado) {
+                alert('⚠️ Este membro já está alocado em uma PT!');
+                // Reseta o select para o valor anterior
+                renderPts();
+                return;
+            }
+
+            // Busca o membro no cache
+            const membro = cache.find(m => String(m.id) === String(membroId));
+            if (!membro) {
+                alert('❌ Membro não encontrado!');
+                renderPts();
+                return;
+            }
+
+            // Escala o membro
+            gruposPts[ptId].slots[slotIndex] = membro;
             salvarPtsStorage();
             renderPts();
         }
 
         function getMembrosDisponiveis(ptId) {
+            // Pega todos os IDs de membros já alocados em QUALQUER PT
             const idsAlocados = new Set();
             Object.keys(gruposPts).forEach(id => {
-                if (String(id) === String(ptId)) return;
                 const slots = gruposPts[id].slots || [];
-                slots.forEach(s => { if (s && s.id) idsAlocados.add(String(s.id)); });
+                slots.forEach(s => { 
+                    if (s && s.id) {
+                        idsAlocados.add(String(s.id));
+                    }
+                });
             });
+
+            // Retorna apenas membros que NÃO estão alocados
             return cache.filter(m => !idsAlocados.has(String(m.id)));
         }
 
@@ -1625,7 +1552,16 @@
                 <div style="margin-top:4px;font-size:9px;color:#6ee7b7;text-align:center;border-top:1px solid rgba(80,80,90,0.1);padding-top:4px;"><i class="fa-solid fa-eye"></i> Clique para detalhes</div>`;
         }
 
+        // ================================================================
+        // RENDER PTs (EDIÇÃO E TABELA)
+        // ================================================================
         function renderPts() {
+            renderPtsEdit();
+            renderPtsTable();
+        }
+
+        // Modo Edição
+        function renderPtsEdit() {
             const container = document.getElementById('gridPts');
             container.innerHTML = '';
             const idsPt = Object.keys(gruposPts);
@@ -1638,6 +1574,8 @@
                 const modo = ptData.modo || 'normal';
                 const liderId = ptData.lider || null;
                 const liderMembro = liderId ? cache.find(m => String(m.id) === String(liderId)) : null;
+                
+                // Obtém membros disponíveis (NÃO alocados em nenhuma PT)
                 const membrosDisponiveis = getMembrosDisponiveis(ptId);
 
                 const ptCard = document.createElement('div');
@@ -1650,6 +1588,8 @@
                     const previewTooltip = membro ? gerarTooltipPreview(membro) : '';
 
                     let opcoes = `<option value="">(Vazio - Selecionar Membro)</option>`;
+                    
+                    // MOSTRA APENAS MEMBROS DISPONÍVEIS + O MEMBRO ATUAL (se houver)
                     const membrosParaMostrar = membro ? [...membrosDisponiveis, membro] : membrosDisponiveis;
                     const idsVistos = new Set();
                     membrosParaMostrar.forEach(m => {
@@ -1690,6 +1630,217 @@
             });
         }
 
+        // Modo Tabela
+        function renderPtsTable() {
+            const container = document.getElementById('gridPtsTable');
+            container.innerHTML = '';
+            const idsPt = Object.keys(gruposPts);
+            if (!idsPt.length) { container.innerHTML = '<div class="text-center py-10 text-amber-600 italic col-span-full">Nenhuma PT criada.</div>'; return; }
+
+            const cores = [
+                'linear-gradient(135deg, rgba(180,90,40,0.3), rgba(120,50,20,0.4))',
+                'linear-gradient(135deg, rgba(40,100,180,0.3), rgba(20,60,140,0.4))',
+                'linear-gradient(135deg, rgba(40,180,100,0.3), rgba(20,140,60,0.4))',
+                'linear-gradient(135deg, rgba(180,40,140,0.3), rgba(140,20,100,0.4))',
+                'linear-gradient(135deg, rgba(180,160,40,0.3), rgba(140,120,20,0.4))',
+                'linear-gradient(135deg, rgba(40,160,180,0.3), rgba(20,120,140,0.4))',
+                'linear-gradient(135deg, rgba(180,80,80,0.3), rgba(140,40,40,0.4))',
+                'linear-gradient(135deg, rgba(80,40,180,0.3), rgba(40,20,140,0.4))'
+            ];
+
+            const nomesModos = { normal: 'Padrão', gvg: 'GvG (PvP)', pve: 'PvE Geral', map5: 'Raide Mapa 5', t5: 'Raide T5' };
+
+            idsPt.forEach((ptId, index) => {
+                const ptData = gruposPts[ptId] || { slots: [null, null, null, null, null], modo: 'normal', lider: null };
+                const slots = ptData.slots || [null, null, null, null, null];
+                const modo = ptData.modo || 'normal';
+                const liderId = ptData.lider || null;
+                const cor = cores[index % cores.length];
+
+                const card = document.createElement('div');
+                card.className = 'pt-table-card';
+                card.style.background = cor;
+
+                let membrosHtml = slots.map((m, idx) => {
+                    if (m) {
+                        const isLider = liderId && String(m.id) === String(liderId);
+                        return `<div class="membro-item ${isLider ? 'lider' : ''}">
+                            <span class="membro-nome">${isLider ? '⭐ ' : ''}${m.char_name}</span>
+                            <span class="membro-classe">${m.char_class}</span>
+                        </div>`;
+                    } else {
+                        return `<div class="membro-item vazio">#${idx+1} — Vazio</div>`;
+                    }
+                }).join('');
+
+                const liderMembro = liderId ? cache.find(m => String(m.id) === String(liderId)) : null;
+                const liderNome = liderMembro ? `${liderMembro.char_name} (${liderMembro.char_class})` : 'Sem líder';
+
+                card.innerHTML = `
+                    <div class="pt-header">
+                        <span class="pt-num">PT ${index + 1}</span>
+                        <span class="pt-modo" style="background:rgba(0,0,0,0.4);">${nomesModos[modo] || 'Padrão'}</span>
+                    </div>
+                    <div class="pt-lider"><i class="fa-solid fa-crown"></i> Líder: ${liderNome}</div>
+                    ${membrosHtml}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // ================================================================
+        // ALTERNAR MODO TABELA
+        // ================================================================
+        function toggleModoTabela() {
+            modoTabelaAtivo = !modoTabelaAtivo;
+            const editMode = document.getElementById('ptEditMode');
+            const tableMode = document.getElementById('ptTableMode');
+            const btn = document.getElementById('btnToggleTabela');
+            const btnPDF = document.getElementById('btnBaixarPDF');
+
+            if (modoTabelaAtivo) {
+                editMode.style.display = 'none';
+                tableMode.style.display = 'block';
+                btn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> ✏️ Voltar à Edição';
+                btn.classList.add('active');
+                btnPDF.style.display = 'inline-flex';
+                renderPtsTable();
+            } else {
+                editMode.style.display = 'block';
+                tableMode.style.display = 'none';
+                btn.innerHTML = '<i class="fa-solid fa-table"></i> 📊 Ver Tabela';
+                btn.classList.remove('active');
+                btnPDF.style.display = 'none';
+                renderPtsEdit();
+            }
+        }
+
+        // ================================================================
+        // FUNÇÃO PARA BAIXAR PDF
+        // ================================================================
+        function baixarPDF() {
+            const tableContainer = document.getElementById('gridPtsTable');
+            if (!tableContainer || tableContainer.children.length === 0) {
+                alert('Nenhuma PT para exportar. Crie ou reconstrua as PTs primeiro.');
+                return;
+            }
+
+            const btnPDF = document.getElementById('btnBaixarPDF');
+            const originalHTML = btnPDF.innerHTML;
+            btnPDF.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando PDF...';
+            btnPDF.disabled = true;
+
+            const dadosEvento = getHorarioFormatado();
+            const agora = new Date();
+            const offsetBrasilia = -3;
+            const utc = agora.getTime() + (agora.getTimezoneOffset() * 60000);
+            const horaBrasilia = new Date(utc + (3600000 * offsetBrasilia));
+            const mes = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            const dataFormatada = `${dadosEvento.dia}, ${String(horaBrasilia.getDate()).padStart(2, '0')} de ${mes[horaBrasilia.getMonth()]} de ${horaBrasilia.getFullYear()}`;
+            const horaFormatada = `${String(horaBrasilia.getHours()).padStart(2, '0')}:${String(horaBrasilia.getMinutes()).padStart(2, '0')}`;
+            const eventoNome = getNomeEventoParaExibicao(dadosEvento.evento);
+
+            const headerDiv = document.createElement('div');
+            headerDiv.style.cssText = `
+                background: linear-gradient(135deg, #1a1410, #2a1f18);
+                padding: 12px 16px;
+                border-radius: 8px;
+                margin-bottom: 12px;
+                border: 1px solid rgba(180,150,100,0.2);
+                color: #e8e8e8;
+                font-family: 'Cinzel', serif;
+                text-align: center;
+            `;
+            headerDiv.innerHTML = `
+                <div style="font-size:16px; font-weight:700; color:#fbbf24;">⚔️ ESCALAÇÃO DE PTs - GUILDA ANOMALIA</div>
+                <div style="font-size:12px; margin-top:4px; color:#a78bfa;">📅 ${dataFormatada}</div>
+                <div style="font-size:12px; color:#6ee7b7;">⏰ ${dadosEvento.horario}</div>
+                <div style="font-size:11px; color:#fca5a5;">⏳ Chegada Máxima: ${dadosEvento.chegada} (ultrapassou, perdeu a vaga)</div>
+                <div style="font-size:11px; color:#fbbf24;">🏷️ ${eventoNome}</div>
+                <div style="font-size:10px; color:rgba(180,180,190,0.4); margin-top:2px;">🕐 Gerado: ${horaFormatada} (Brasília)</div>
+            `;
+
+            const clone = tableContainer.cloneNode(true);
+            clone.style.cssText = `
+                transform: scale(1);
+                background: transparent;
+                padding: 8px;
+                display: grid;
+                gap: 8px;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                font-size: 11px;
+            `;
+
+            const tempDiv = document.createElement('div');
+            tempDiv.style.cssText = `
+                position: fixed;
+                left: -9999px;
+                top: 0;
+                width: 800px;
+                background: #1a1410;
+                padding: 12px;
+                border-radius: 8px;
+            `;
+            tempDiv.appendChild(headerDiv);
+            tempDiv.appendChild(clone);
+            document.body.appendChild(tempDiv);
+
+            setTimeout(() => {
+                html2canvas(tempDiv, {
+                    scale: 1.2,
+                    useCORS: true,
+                    backgroundColor: '#1a1410',
+                    logging: false,
+                    allowTaint: true,
+                    width: 800,
+                    height: tempDiv.scrollHeight,
+                    windowHeight: tempDiv.scrollHeight,
+                    imageTimeout: 0,
+                    onclone: function(doc) {
+                        const allElements = doc.querySelectorAll('*');
+                        allElements.forEach(el => {
+                            if (el.style && el.style.boxShadow) {
+                                el.style.boxShadow = 'none';
+                            }
+                        });
+                    }
+                }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/jpeg', 0.70);
+                    
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF('l', 'mm', 'a4');
+                    const pdfWidth = pdf.internal.pageSize.getWidth();
+                    const pdfHeight = pdf.internal.pageSize.getHeight();
+
+                    const imgWidth = canvas.width;
+                    const imgHeight = canvas.height;
+                    const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+                    const finalWidth = imgWidth * ratio;
+                    const finalHeight = imgHeight * ratio;
+
+                    const xOffset = (pdfWidth - finalWidth) / 2;
+                    const yOffset = (pdfHeight - finalHeight) / 2;
+
+                    pdf.addImage(imgData, 'JPEG', xOffset, yOffset, finalWidth, finalHeight);
+                    pdf.save('escalacao_pts_anomalia.pdf');
+
+                    document.body.removeChild(tempDiv);
+                    btnPDF.innerHTML = originalHTML;
+                    btnPDF.disabled = false;
+                    document.getElementById('statusMensagem').textContent = '✅ PDF gerado com sucesso! (com dados do evento)';
+                }).catch(err => {
+                    console.error('Erro ao gerar PDF:', err);
+                    alert('Erro ao gerar o PDF. Tente novamente.');
+                    document.body.removeChild(tempDiv);
+                    btnPDF.innerHTML = originalHTML;
+                    btnPDF.disabled = false;
+                });
+            }, 200);
+        }
+
+        // ================================================================
+        // RECONSTRUIR PTs
+        // ================================================================
         function reconstruirPts() {
             if (!cache.length) { alert('Não há membros ativos para distribuir.'); return; }
             const rankOrder = { 'elite': 0, 'bom': 1, 'medio': 2, 'ruim': 3, 'pessimo': 4 };
@@ -1705,23 +1856,13 @@
             });
             salvarPtsStorage();
             renderPts();
+            if (modoTabelaAtivo) renderPtsTable();
             document.getElementById('statusMensagem').textContent = `✅ PTs reconstruídas com ${sorted.length} membros em ${grupos.length} grupos (ordenados por rank PvP).`;
         }
 
         // ================================================================
-        // COPIAR PARA DISCORD E WHATSAPP (SEM NOTAS)
+        // COPIAR PARA DISCORD E WHATSAPP
         // ================================================================
-        function getNomeEventoParaExibicao(evento) {
-            const mapa = {
-                '⚔️ Defesa (Castelo)': '⚔️ Defesa do Castelo',
-                '🗺️ Raid Mapa 5': '🗺️ Raid Mapa 5',
-                '🔥 Raid T5': '🔥 Raid T5',
-                '🎉 Aniversário': '🎉 Gvg Aniversário',
-                '⚔️ GvG Mermem': '⚔️ GvG Mermem'
-            };
-            return mapa[evento] || evento;
-        }
-
         function copiarDiscord() {
             const dados = getHorarioFormatado();
             const agora = new Date();
@@ -1812,6 +1953,7 @@
             document.getElementById('historicoDetalheModal').addEventListener('click', function(e) {
                 if (e.target === this) fecharDetalheHistorico();
             });
+            document.getElementById('btnBaixarPDF').style.display = 'none';
         });
     </script>
 </body>
