@@ -340,6 +340,61 @@
         ::-webkit-scrollbar-track { background: rgba(30,30,35,0.3); border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.3); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.5); }
+
+        /* ===== NOVOS ESTILOS PARA PERFIL COMPACTO ===== */
+        .perfil-compacto {
+            background: rgba(30,30,35,0.35);
+            border: 1px solid rgba(80,80,90,0.15);
+            border-radius: 12px;
+            padding: 10px 12px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+        }
+        .perfil-compacto:hover {
+            border-color: rgba(148,163,184,0.3);
+            background: rgba(40,40,45,0.3);
+            transform: scale(1.01);
+        }
+        .perfil-compacto .info-nome {
+            font-weight: 600;
+            color: #e8e8e8;
+            font-size: 0.9rem;
+        }
+        .perfil-compacto .info-classe {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            background: rgba(0,0,0,0.2);
+            padding: 1px 8px;
+            border-radius: 12px;
+        }
+        .perfil-compacto .info-rank {
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+        .modal-perfis {
+            max-width: 900px !important;
+            width: 95% !important;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-perfis .grid-perfis {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .modal-perfis .grid-perfis::-webkit-scrollbar {
+            width: 4px;
+        }
+        .modal-perfis .grid-perfis::-webkit-scrollbar-thumb {
+            background: rgba(148,163,184,0.3);
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-slate-400 selection:text-white p-2 sm:p-4 relative">
@@ -352,6 +407,18 @@
         <div class="preview-box">
             <button class="close-preview" onclick="fecharPreview()"><i class="fa-solid fa-xmark"></i></button>
             <div id="previewContent"></div>
+        </div>
+    </div>
+
+    <!-- MODAL VER TODOS OS PERFIS -->
+    <div id="modalTodosPerfis" class="modal-overlay">
+        <div class="modal-box modal-perfis">
+            <button class="btn-close" onclick="fecharModalPerfis()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-title">📋 Todos os Perfis</div>
+            <div id="conteudoPerfis" class="grid-perfis">
+                <div class="text-center py-6 text-amber-500/50 col-span-full">Carregando...</div>
+            </div>
+            <div class="text-center mt-3 text-[10px] text-amber-500/40">Clique em um card para ver detalhes completos</div>
         </div>
     </div>
 
@@ -426,6 +493,8 @@
                                 <optgroup label="Segunda Facção / Clãs da Montanha"><option value="Bárbaro">Bárbaro</option><option value="Ladino">Ladino</option><option value="Xamã">Xamã</option><option value="Caçador">Caçador</option><option value="Cacique">Cacique</option></optgroup>
                                 <optgroup label="Proscritos"><option value="Necromante">Necromante</option><option value="Cavaleiro da Morte">Cavaleiro da Morte</option><option value="Bruxo">Bruxo</option><option value="Encantador">Encantador</option><option value="Ceifador">Ceifador</option></optgroup>
                             </select>
+                            <!-- NOVO BOTÃO VER TODOS OS PERFIS -->
+                            <button onclick="abrirModalPerfis()" class="btn-glass btn-glass-primary"><i class="fa-regular fa-eye"></i> Ver todos os perfis</button>
                             <button onclick="resetarHerois()" id="btnResetHerois" class="btn-glass btn-glass-danger"><i class="fa-solid fa-trash-can"></i> Resetar Heróis</button>
                         </div>
                     </div>
@@ -458,6 +527,13 @@
                         <button onclick="copiarDiscord()" id="btnCopiarDiscord" class="btn-glass"><i class="fa-brands fa-discord text-indigo-400"></i> Discord</button>
                         <button onclick="copiarWhatsApp()" id="btnCopiarWhatsApp" class="btn-glass btn-glass-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
                     </div>
+                </div>
+                <!-- NOVO CAMPO PARA ADICIONAR POR NICK -->
+                <div class="flex flex-wrap items-center gap-2 mb-3 p-2 bg-[#130f0d] rounded-xl border border-amber-subtle">
+                    <span class="text-xs text-amber-400/70 font-rpg"><i class="fa-regular fa-pen-to-square"></i> Adicionar por nick:</span>
+                    <input type="text" id="inputNickManual" placeholder="Digite o nick..." class="glass-input rounded-xl px-3 py-1.5 text-sm w-40 focus:outline-none focus:border-amber-600">
+                    <button onclick="adicionarPorNick()" class="btn-glass btn-glass-success text-xs py-1.5"><i class="fa-solid fa-user-plus"></i> Adicionar</button>
+                    <span class="text-[9px] text-amber-500/50 ml-1">(ocupa o primeiro slot vago ou cria nova PT)</span>
                 </div>
                 <div class="config-block grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 mb-4">
                     <div><span class="label-config"><i class="fa-regular fa-calendar mr-1"></i> Dia</span>
@@ -993,6 +1069,48 @@
         document.getElementById('previewModal').addEventListener('click', function(e) { if (e.target === this) fecharPreview(); });
 
         // ================================================================
+        // MODAL VER TODOS OS PERFIS (NOVO)
+        // ================================================================
+        function abrirModalPerfis() {
+            const modal = document.getElementById('modalTodosPerfis');
+            const container = document.getElementById('conteudoPerfis');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            if (!cache.length) {
+                container.innerHTML = '<div class="text-center py-6 text-amber-500/50 col-span-full">Nenhum herói cadastrado.</div>';
+                return;
+            }
+
+            let html = '';
+            cache.forEach(m => {
+                const rank = calcularRankPvp(m);
+                const rankLabel = getRankLabel(rank.rank);
+                const rankClass = getRankClass(rank.rank);
+                html += `
+                    <div class="perfil-compacto" onclick="abrirPreview('${m.id}')" style="cursor:pointer;">
+                        <div>
+                            <div class="info-nome">${m.char_name || '-'}</div>
+                            <div class="info-classe">${m.char_class || '-'}</div>
+                        </div>
+                        <div class="info-rank">
+                            <span class="${rankClass}">${rankLabel}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function fecharModalPerfis() {
+            document.getElementById('modalTodosPerfis').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('modalTodosPerfis').addEventListener('click', function(e) {
+            if (e.target === this) fecharModalPerfis();
+        });
+
+        // ================================================================
         // RESERVAS
         // ================================================================
         async function carregarReservas() {
@@ -1489,13 +1607,12 @@
             renderPts();
         }
 
-        // ===== FUNÇÃO PRINCIPAL: ESCALAR MEMBRO COM VALIDAÇÃO DE DUPLICIDADE =====
+        // ===== ESCALAR MEMBRO COM VALIDAÇÃO DE DUPLICIDADE =====
         function escalarMembro(ptId, slotIndex, membroId) {
             if (!gruposPts[ptId]) {
                 gruposPts[ptId] = { slots: [null, null, null, null, null], modo: 'normal', lider: null };
             }
 
-            // Se for vazio (membroId vazio), apenas remove
             if (!membroId) {
                 gruposPts[ptId].slots[slotIndex] = null;
                 salvarPtsStorage();
@@ -1503,7 +1620,6 @@
                 return;
             }
 
-            // VERIFICA SE O MEMBRO JÁ ESTÁ EM ALGUMA PT (INCLUINDO A ATUAL)
             const membroJaAlocado = Object.keys(gruposPts).some(id => {
                 const slots = gruposPts[id].slots || [];
                 return slots.some(s => s && String(s.id) === String(membroId));
@@ -1511,12 +1627,10 @@
 
             if (membroJaAlocado) {
                 alert('⚠️ Este membro já está alocado em uma PT!');
-                // Reseta o select para o valor anterior
                 renderPts();
                 return;
             }
 
-            // Busca o membro no cache
             const membro = cache.find(m => String(m.id) === String(membroId));
             if (!membro) {
                 alert('❌ Membro não encontrado!');
@@ -1524,14 +1638,12 @@
                 return;
             }
 
-            // Escala o membro
             gruposPts[ptId].slots[slotIndex] = membro;
             salvarPtsStorage();
             renderPts();
         }
 
         function getMembrosDisponiveis(ptId) {
-            // Pega todos os IDs de membros já alocados em QUALQUER PT
             const idsAlocados = new Set();
             Object.keys(gruposPts).forEach(id => {
                 const slots = gruposPts[id].slots || [];
@@ -1541,8 +1653,6 @@
                     }
                 });
             });
-
-            // Retorna apenas membros que NÃO estão alocados
             return cache.filter(m => !idsAlocados.has(String(m.id)));
         }
 
@@ -1550,6 +1660,78 @@
             if (!membro) return '';
             return `<div style="display:flex;justify-content:space-between;"><span style="font-weight:700;color:#e8d5b8;">${membro.char_name}</span><span style="font-size:9px;color:#94a3b8;">${membro.char_class}</span></div>
                 <div style="margin-top:4px;font-size:9px;color:#6ee7b7;text-align:center;border-top:1px solid rgba(80,80,90,0.1);padding-top:4px;"><i class="fa-solid fa-eye"></i> Clique para detalhes</div>`;
+        }
+
+        // ================================================================
+        // ADICIONAR POR NICK (NOVO)
+        // ================================================================
+        function adicionarPorNick() {
+            const input = document.getElementById('inputNickManual');
+            const nick = input.value.trim();
+            if (!nick) { alert('Digite o nick do membro.'); return; }
+
+            // Verifica se já existe um membro com esse nick no cache
+            let membroExistente = cache.find(m => m.char_name && m.char_name.toLowerCase() === nick.toLowerCase());
+            let membroParaAdicionar;
+
+            if (membroExistente) {
+                // Se existe, usa o membro do cache
+                membroParaAdicionar = membroExistente;
+            } else {
+                // Se não existe, cria um objeto "fantasma"
+                membroParaAdicionar = {
+                    id: 'temp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                    char_name: nick,
+                    char_class: 'Desconhecido',
+                    // demais campos vazios
+                };
+                // Opcional: adicionar ao cache para referência futura? Não faremos para não poluir.
+            }
+
+            // Verifica se já está alocado em alguma PT
+            const jaAlocado = Object.keys(gruposPts).some(id => {
+                const slots = gruposPts[id].slots || [];
+                return slots.some(s => s && s.id === membroParaAdicionar.id);
+            });
+            if (jaAlocado) {
+                alert(`⚠️ ${nick} já está alocado em uma PT.`);
+                input.value = '';
+                return;
+            }
+
+            // Encontra a primeira PT com slot vago
+            let ptEncontrada = null;
+            let slotEncontrado = null;
+            const idsPt = Object.keys(gruposPts);
+            for (let id of idsPt) {
+                const slots = gruposPts[id].slots || [];
+                const idx = slots.findIndex(s => s === null);
+                if (idx !== -1) {
+                    ptEncontrada = id;
+                    slotEncontrado = idx;
+                    break;
+                }
+            }
+
+            if (ptEncontrada === null) {
+                // Nenhuma PT com vaga, cria uma nova
+                const num = Math.max(0, ...idsPt.map(Number)) + 1;
+                gruposPts[num] = { slots: [null, null, null, null, null], modo: 'normal', lider: null };
+                ptEncontrada = num;
+                slotEncontrado = 0;
+            }
+
+            // Adiciona o membro
+            gruposPts[ptEncontrada].slots[slotEncontrado] = membroParaAdicionar;
+            // Se não houver líder e for o primeiro membro, define como líder
+            if (!gruposPts[ptEncontrada].lider) {
+                gruposPts[ptEncontrada].lider = membroParaAdicionar.id;
+            }
+
+            salvarPtsStorage();
+            renderPts();
+            input.value = '';
+            document.getElementById('statusMensagem').textContent = `✅ ${nick} adicionado à PT ${ptEncontrada} (slot ${slotEncontrado+1}).`;
         }
 
         // ================================================================
@@ -1575,7 +1757,6 @@
                 const liderId = ptData.lider || null;
                 const liderMembro = liderId ? cache.find(m => String(m.id) === String(liderId)) : null;
                 
-                // Obtém membros disponíveis (NÃO alocados em nenhuma PT)
                 const membrosDisponiveis = getMembrosDisponiveis(ptId);
 
                 const ptCard = document.createElement('div');
@@ -1588,8 +1769,6 @@
                     const previewTooltip = membro ? gerarTooltipPreview(membro) : '';
 
                     let opcoes = `<option value="">(Vazio - Selecionar Membro)</option>`;
-                    
-                    // MOSTRA APENAS MEMBROS DISPONÍVEIS + O MEMBRO ATUAL (se houver)
                     const membrosParaMostrar = membro ? [...membrosDisponiveis, membro] : membrosDisponiveis;
                     const idsVistos = new Set();
                     membrosParaMostrar.forEach(m => {
@@ -1946,7 +2125,7 @@
             document.getElementById('eventoSelecionado').addEventListener('change', atualizarPreview);
             document.getElementById('diaSemana').addEventListener('change', atualizarPreview);
             atualizarPreview();
-            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { fecharPreview(); fecharHistoricoMembro(); fecharDetalheHistorico(); } });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { fecharPreview(); fecharHistoricoMembro(); fecharDetalheHistorico(); fecharModalPerfis(); } });
             document.getElementById('historicoMembroModal').addEventListener('click', function(e) {
                 if (e.target === this) fecharHistoricoMembro();
             });

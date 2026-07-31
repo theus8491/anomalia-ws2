@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-        /* ===== TODOS OS ESTILOS ===== */
+        /* ===== TODOS OS ESTILOS EXISTENTES ===== */
         .glass-card { background: rgba(40,40,45,0.35) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(120,120,130,0.15) !important; }
         .glass-card-dark { background: rgba(30,30,35,0.4) !important; backdrop-filter: blur(6px); border: 1px solid rgba(80,80,90,0.12) !important; }
         .glass-header { background: rgba(35,35,40,0.4) !important; backdrop-filter: blur(12px); border: 2px solid rgba(120,120,130,0.2) !important; }
@@ -117,8 +117,7 @@
 
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         .animate-float { animation: float 2.5s ease-in-out infinite; }
-        #submitBtn:hover .glass-submit { background: rgba(30,30,35,0.35) !important; border-color: rgba(255,215,100,0.6) !important; box-shadow: 0 0 30px rgba(255,200,50,0.15); }
-        #submitBtn:active .glass-submit { transform: scale(0.97); }
+
         .btn-glow { transition: box-shadow 0.4s ease; }
         #submitBtn:hover .btn-glow { box-shadow: 0 0 40px rgba(255,200,50,0.2), inset 0 0 30px rgba(255,200,50,0.05); }
 
@@ -230,7 +229,6 @@
         #loginScreen .login-box .login-msg.error { color: #fca5a5; }
         #loginScreen .login-box .login-msg.success { color: #6ee7b7; }
 
-        /* ===== BOTÃO PAINEL ADM ===== */
         #loginScreen .login-box .btn-painel-adm {
             width: 100%;
             padding: 12px;
@@ -487,7 +485,6 @@
             color: #cbd5e1;
         }
 
-        /* ===== SNAPSHOT VIEW ===== */
         .snapshot-view {
             display: none;
             margin-top: 16px;
@@ -561,6 +558,183 @@
         @keyframes modalFadeIn {
             from { opacity: 0; transform: scale(0.95) translateY(20px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* ===== NOVOS ESTILOS DO CHAT ===== */
+        #chatFab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: none;
+        }
+        #chatFab button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(212,175,55,0.2);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(212,175,55,0.3);
+            color: #fbbf24;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #chatFab button:hover {
+            background: rgba(212,175,55,0.35);
+            border-color: #fbbf24;
+            transform: scale(1.05);
+        }
+        #chatFab button .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 10px;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            border: 2px solid #0d0b09;
+        }
+
+        #chatModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        #chatModal.active { display: flex; }
+        #chatModal .chat-box {
+            background: rgba(20,15,10,0.96);
+            border: 1px solid rgba(180,150,100,0.2);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 480px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+            animation: modalFadeIn 0.3s ease;
+        }
+        #chatModal .chat-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(180,150,100,0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #chatModal .chat-header h3 {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #e8d5b8;
+            font-size: 16px;
+            margin: 0;
+        }
+        #chatModal .chat-header .close-chat {
+            background: transparent;
+            border: none;
+            color: rgba(180,180,190,0.4);
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        #chatModal .chat-header .close-chat:hover { color: #fca5a5; }
+
+        #chatMessages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 50vh;
+            min-height: 300px;
+        }
+        #chatMessages::-webkit-scrollbar { width: 6px; }
+        #chatMessages::-webkit-scrollbar-track { background: rgba(30,30,35,0.3); border-radius: 10px; }
+        #chatMessages::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.3); border-radius: 10px; }
+        #chatMessages::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.5); }
+
+        .chat-msg {
+            display: flex;
+            flex-direction: column;
+            background: rgba(30,30,35,0.3);
+            border: 1px solid rgba(80,80,90,0.1);
+            border-radius: 12px;
+            padding: 8px 14px;
+            max-width: 85%;
+        }
+        .chat-msg.me {
+            align-self: flex-end;
+            background: rgba(212,175,55,0.15);
+            border-color: rgba(212,175,55,0.2);
+        }
+        .chat-msg .msg-nick {
+            font-weight: 700;
+            font-size: 12px;
+            color: #fbbf24;
+            margin-bottom: 2px;
+        }
+        .chat-msg .msg-text {
+            font-size: 14px;
+            color: #e8e8e8;
+            word-wrap: break-word;
+        }
+        .chat-msg .msg-time {
+            font-size: 9px;
+            color: rgba(180,180,190,0.4);
+            align-self: flex-end;
+            margin-top: 2px;
+        }
+
+        #chatInputArea {
+            padding: 12px 20px 16px;
+            border-top: 1px solid rgba(180,150,100,0.1);
+            display: flex;
+            gap: 10px;
+        }
+        #chatInputArea input {
+            flex: 1;
+            background: rgba(25,25,30,0.5);
+            border: 1px solid rgba(80,80,90,0.3);
+            border-radius: 12px;
+            padding: 10px 14px;
+            color: #d0d0d0;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border 0.2s;
+        }
+        #chatInputArea input:focus { border-color: #94a3b8; }
+        #chatInputArea input::placeholder { color: rgba(160,160,170,0.4); }
+        #chatInputArea button {
+            background: rgba(212,175,55,0.2);
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 12px;
+            padding: 0 18px;
+            color: #fbbf24;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+        }
+        #chatInputArea button:hover {
+            background: rgba(212,175,55,0.35);
+            border-color: #fbbf24;
         }
     </style>
 </head>
@@ -919,6 +1093,31 @@
         </div>
     </main>
 
+    <!-- ===== FAB DO CHAT ===== -->
+    <div id="chatFab">
+        <button onclick="toggleChat()" title="Chat da Guilda">
+            <i class="fa-regular fa-comment-dots"></i>
+            <span class="badge" id="chatBadge" style="display:none;">0</span>
+        </button>
+    </div>
+
+    <!-- ===== MODAL DO CHAT ===== -->
+    <div id="chatModal">
+        <div class="chat-box">
+            <div class="chat-header">
+                <h3><i class="fa-regular fa-comment-dots text-amber-500 mr-2"></i>Chat da Guilda</h3>
+                <button class="close-chat" onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="chatMessages">
+                <!-- Mensagens aparecerão aqui -->
+            </div>
+            <div id="chatInputArea">
+                <input type="text" id="chatInput" placeholder="Digite sua mensagem..." maxlength="200" />
+                <button onclick="enviarMensagem()"><i class="fa-regular fa-paper-plane mr-1"></i> Enviar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== MODAL HISTÓRICO ===== -->
     <div id="historicoModal" class="historico-modal">
         <div class="modal-box">
@@ -1154,6 +1353,14 @@
             document.getElementById('loginNick').value = '';
             document.getElementById('loginPass').value = '';
             fecharHistorico();
+            // Fecha o chat e esconde o FAB
+            document.getElementById('chatModal').classList.remove('active');
+            document.getElementById('chatFab').style.display = 'none';
+            // Cancela inscrição do chat
+            if (window._chatSubscription) {
+                supabaseClient.removeChannel(window._chatSubscription);
+                window._chatSubscription = null;
+            }
         };
 
         // ================================================================
@@ -1220,11 +1427,17 @@
             document.getElementById('btnSair').classList.remove('hidden');
             document.getElementById('btnHistorico').classList.remove('hidden');
 
+            // Mostra o FAB do chat
+            document.getElementById('chatFab').style.display = 'block';
+
             const charNameInput = document.getElementById('charName');
             charNameInput.value = nick;
             updateCharCounter(charNameInput);
 
             carregarDadosMembro(nick);
+
+            // Inicia o chat
+            iniciarChat(nick);
         }
 
         // ================================================================
@@ -2126,7 +2339,6 @@
                         }]);
                     if (histError) {
                         console.warn('Erro ao salvar histórico:', histError);
-                        // Se o erro for porque a tabela não existe, ignore
                     } else {
                         console.log('✅ Histórico salvo com sucesso!');
                     }
@@ -2328,6 +2540,166 @@
                 btnText.textContent = 'ENVIAR DADOS DA GUILDA';
             }
         });
+
+        // ================================================================
+        // FUNÇÕES DO CHAT EM TEMPO REAL
+        // ================================================================
+        let chatChannel = null;
+        let chatMessages = [];
+
+        function iniciarChat(nick) {
+            if (!nick) return;
+            // Cancela inscrição anterior se existir
+            if (chatChannel) {
+                supabaseClient.removeChannel(chatChannel);
+                chatChannel = null;
+            }
+
+            carregarMensagensChat();
+
+            // Inscreve-se em novas mensagens
+            chatChannel = supabaseClient
+                .channel('chat_realtime')
+                .on('postgres_changes', {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'messages'
+                }, (payload) => {
+                    const novaMsg = payload.new;
+                    if (novaMsg) {
+                        adicionarMensagem(novaMsg, true);
+                    }
+                })
+                .subscribe();
+        }
+
+        async function carregarMensagensChat() {
+            const container = document.getElementById('chatMessages');
+            container.innerHTML = '<div class="text-center text-amber-500/50 py-8"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Carregando mensagens...</div>';
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('messages')
+                    .select('*')
+                    .order('created_at', { ascending: true })
+                    .limit(50);
+
+                if (error) throw error;
+
+                chatMessages = data || [];
+                container.innerHTML = '';
+                if (chatMessages.length === 0) {
+                    container.innerHTML = '<div class="text-center text-amber-500/50 py-8">Nenhuma mensagem ainda. Seja o primeiro!</div>';
+                } else {
+                    chatMessages.forEach(msg => adicionarMensagem(msg, false));
+                }
+            } catch (err) {
+                console.error('Erro ao carregar mensagens:', err);
+                container.innerHTML = '<div class="text-center text-red-400 py-8">Erro ao carregar mensagens.</div>';
+            }
+        }
+
+        function adicionarMensagem(msg, scroll = true) {
+            const container = document.getElementById('chatMessages');
+            // Remove placeholder se existir
+            const placeholder = container.querySelector('.py-8');
+            if (placeholder && placeholder.textContent.includes('Nenhuma mensagem')) {
+                container.innerHTML = '';
+            }
+
+            const isMe = msg.nick === currentUser;
+            const time = new Date(msg.created_at).toLocaleString('pt-BR', {
+                hour: '2-digit', minute: '2-digit'
+            });
+
+            const div = document.createElement('div');
+            div.className = `chat-msg ${isMe ? 'me' : ''}`;
+            div.innerHTML = `
+                <span class="msg-nick">${msg.nick}</span>
+                <span class="msg-text">${escapeHtml(msg.message)}</span>
+                <span class="msg-time">${time}</span>
+            `;
+            container.appendChild(div);
+
+            if (scroll) {
+                container.scrollTop = container.scrollHeight;
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        window.toggleChat = function() {
+            const modal = document.getElementById('chatModal');
+            const fab = document.getElementById('chatFab');
+            if (modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            } else {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                // Rola para o final
+                const container = document.getElementById('chatMessages');
+                container.scrollTop = container.scrollHeight;
+                // Limpa o badge
+                document.getElementById('chatBadge').style.display = 'none';
+            }
+        };
+
+        window.enviarMensagem = async function() {
+            const input = document.getElementById('chatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+            if (!currentUser) {
+                alert('Você precisa estar logado para enviar mensagens.');
+                return;
+            }
+
+            input.value = '';
+            input.disabled = true;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('messages')
+                    .insert([{
+                        nick: currentUser,
+                        message: msg,
+                        created_at: new Date().toISOString()
+                    }]);
+
+                if (error) throw error;
+            } catch (err) {
+                console.error('Erro ao enviar mensagem:', err);
+                alert('Erro ao enviar mensagem: ' + err.message);
+                input.value = msg;
+            } finally {
+                input.disabled = false;
+                input.focus();
+            }
+        };
+
+        document.getElementById('chatInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                window.enviarMensagem();
+            }
+        });
+
+        // Ao abrir o modal, marca como lido
+        document.getElementById('chatModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                window.toggleChat();
+            }
+        });
+
+        // (Opcional) Atualiza badge com novas mensagens se o chat estiver fechado
+        // como já fazemos o realtime, podemos incrementar um contador se o modal não estiver ativo
+        // Mas para simplificar, não implementamos contador.
+
+        console.log('✅ Chat em tempo real ativo!');
     </script>
 </body>
 </html>
