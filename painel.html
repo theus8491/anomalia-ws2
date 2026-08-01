@@ -395,6 +395,24 @@
             background: rgba(148,163,184,0.3);
             border-radius: 10px;
         }
+        /* Estilo para o seletor de artefatos */
+        .artefato-select {
+            background: rgba(25,25,30,0.5);
+            border: 1px solid rgba(80,80,90,0.3);
+            border-radius: 6px;
+            color: #d0d0d0;
+            padding: 2px 6px;
+            font-size: 10px;
+            width: 90px;
+        }
+        .artefato-select:focus {
+            outline: none;
+            border-color: #94a3b8;
+        }
+        .artefato-select option {
+            background: #1a1a1e;
+            color: #d0d0d0;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-slate-400 selection:text-white p-2 sm:p-4 relative">
@@ -493,7 +511,6 @@
                                 <optgroup label="Segunda Facção / Clãs da Montanha"><option value="Bárbaro">Bárbaro</option><option value="Ladino">Ladino</option><option value="Xamã">Xamã</option><option value="Caçador">Caçador</option><option value="Cacique">Cacique</option></optgroup>
                                 <optgroup label="Proscritos"><option value="Necromante">Necromante</option><option value="Cavaleiro da Morte">Cavaleiro da Morte</option><option value="Bruxo">Bruxo</option><option value="Encantador">Encantador</option><option value="Ceifador">Ceifador</option></optgroup>
                             </select>
-                            <!-- NOVO BOTÃO VER TODOS OS PERFIS -->
                             <button onclick="abrirModalPerfis()" class="btn-glass btn-glass-primary"><i class="fa-regular fa-eye"></i> Ver todos os perfis</button>
                             <button onclick="resetarHerois()" id="btnResetHerois" class="btn-glass btn-glass-danger"><i class="fa-solid fa-trash-can"></i> Resetar Heróis</button>
                         </div>
@@ -1590,11 +1607,16 @@
         }
 
         // ================================================================
-        // FUNÇÕES DE PTs
+        // FUNÇÕES DE PTs (COM ARTEFATOS)
         // ================================================================
         function salvarPtsStorage() { localStorage.setItem('guilda_anomalia_pts', JSON.stringify(gruposPts)); }
 
-        function adicionarPt() { const num = Math.max(0, ...Object.keys(gruposPts).map(Number)) + 1; gruposPts[num] = { slots: [null, null, null, null, null], modo: 'normal', lider: null }; salvarPtsStorage(); renderPts(); }
+        function adicionarPt() {
+            const num = Math.max(0, ...Object.keys(gruposPts).map(Number)) + 1;
+            gruposPts[num] = { slots: [null, null, null, null, null], artefatos: [null, null, null, null, null], modo: 'normal', lider: null };
+            salvarPtsStorage();
+            renderPts();
+        }
 
         function removerPt(ptId) { delete gruposPts[ptId]; salvarPtsStorage(); renderPts(); }
 
@@ -1607,14 +1629,22 @@
             renderPts();
         }
 
-        // ===== ESCALAR MEMBRO COM VALIDAÇÃO DE DUPLICIDADE =====
+        function mudarArtefato(ptId, slotIndex, artefato) {
+            if (!gruposPts[ptId]) return;
+            if (!gruposPts[ptId].artefatos) gruposPts[ptId].artefatos = [null, null, null, null, null];
+            gruposPts[ptId].artefatos[slotIndex] = artefato || null;
+            salvarPtsStorage();
+            renderPts();
+        }
+
         function escalarMembro(ptId, slotIndex, membroId) {
             if (!gruposPts[ptId]) {
-                gruposPts[ptId] = { slots: [null, null, null, null, null], modo: 'normal', lider: null };
+                gruposPts[ptId] = { slots: [null, null, null, null, null], artefatos: [null, null, null, null, null], modo: 'normal', lider: null };
             }
 
             if (!membroId) {
                 gruposPts[ptId].slots[slotIndex] = null;
+                if (gruposPts[ptId].artefatos) gruposPts[ptId].artefatos[slotIndex] = null;
                 salvarPtsStorage();
                 renderPts();
                 return;
@@ -1639,6 +1669,8 @@
             }
 
             gruposPts[ptId].slots[slotIndex] = membro;
+            if (!gruposPts[ptId].artefatos) gruposPts[ptId].artefatos = [null, null, null, null, null];
+            gruposPts[ptId].artefatos[slotIndex] = null;
             salvarPtsStorage();
             renderPts();
         }
@@ -1663,32 +1695,26 @@
         }
 
         // ================================================================
-        // ADICIONAR POR NICK (NOVO)
+        // ADICIONAR POR NICK (COM ARTEFATO INICIAL NULO)
         // ================================================================
         function adicionarPorNick() {
             const input = document.getElementById('inputNickManual');
             const nick = input.value.trim();
             if (!nick) { alert('Digite o nick do membro.'); return; }
 
-            // Verifica se já existe um membro com esse nick no cache
             let membroExistente = cache.find(m => m.char_name && m.char_name.toLowerCase() === nick.toLowerCase());
             let membroParaAdicionar;
 
             if (membroExistente) {
-                // Se existe, usa o membro do cache
                 membroParaAdicionar = membroExistente;
             } else {
-                // Se não existe, cria um objeto "fantasma"
                 membroParaAdicionar = {
                     id: 'temp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
                     char_name: nick,
                     char_class: 'Desconhecido',
-                    // demais campos vazios
                 };
-                // Opcional: adicionar ao cache para referência futura? Não faremos para não poluir.
             }
 
-            // Verifica se já está alocado em alguma PT
             const jaAlocado = Object.keys(gruposPts).some(id => {
                 const slots = gruposPts[id].slots || [];
                 return slots.some(s => s && s.id === membroParaAdicionar.id);
@@ -1699,7 +1725,6 @@
                 return;
             }
 
-            // Encontra a primeira PT com slot vago
             let ptEncontrada = null;
             let slotEncontrado = null;
             const idsPt = Object.keys(gruposPts);
@@ -1714,16 +1739,15 @@
             }
 
             if (ptEncontrada === null) {
-                // Nenhuma PT com vaga, cria uma nova
                 const num = Math.max(0, ...idsPt.map(Number)) + 1;
-                gruposPts[num] = { slots: [null, null, null, null, null], modo: 'normal', lider: null };
+                gruposPts[num] = { slots: [null, null, null, null, null], artefatos: [null, null, null, null, null], modo: 'normal', lider: null };
                 ptEncontrada = num;
                 slotEncontrado = 0;
             }
 
-            // Adiciona o membro
             gruposPts[ptEncontrada].slots[slotEncontrado] = membroParaAdicionar;
-            // Se não houver líder e for o primeiro membro, define como líder
+            if (!gruposPts[ptEncontrada].artefatos) gruposPts[ptEncontrada].artefatos = [null, null, null, null, null];
+            gruposPts[ptEncontrada].artefatos[slotEncontrado] = null;
             if (!gruposPts[ptEncontrada].lider) {
                 gruposPts[ptEncontrada].lider = membroParaAdicionar.id;
             }
@@ -1751,8 +1775,9 @@
             const nomesModos = { normal: 'Padrão', gvg: 'GvG (PvP)', pve: 'PvE Geral', map5: 'Raide Mapa 5', t5: 'Raide T5' };
 
             idsPt.forEach((ptId, index) => {
-                const ptData = gruposPts[ptId] || { slots: [null, null, null, null, null], modo: 'normal', lider: null };
+                const ptData = gruposPts[ptId] || { slots: [null, null, null, null, null], artefatos: [null, null, null, null, null], modo: 'normal', lider: null };
                 const slots = ptData.slots || [null, null, null, null, null];
+                const artefatos = ptData.artefatos || [null, null, null, null, null];
                 const modo = ptData.modo || 'normal';
                 const liderId = ptData.lider || null;
                 const liderMembro = liderId ? cache.find(m => String(m.id) === String(liderId)) : null;
@@ -1767,6 +1792,7 @@
                     const isVazio = !membro;
                     const isLider = membro && liderId && String(membro.id) === String(liderId);
                     const previewTooltip = membro ? gerarTooltipPreview(membro) : '';
+                    const artefatoAtual = artefatos[slotIdx] || '';
 
                     let opcoes = `<option value="">(Vazio - Selecionar Membro)</option>`;
                     const membrosParaMostrar = membro ? [...membrosDisponiveis, membro] : membrosDisponiveis;
@@ -1778,6 +1804,17 @@
                         opcoes += `<option value="${m.id}" ${isSelected ? 'selected' : ''}>${m.char_name} (${m.char_class})</option>`;
                     });
 
+                    // Seletor de artefatos
+                    const artefatoSelect = membro ? `
+                        <select onchange="mudarArtefato('${ptId}', ${slotIdx}, this.value)" class="artefato-select">
+                            <option value="">Nenhum</option>
+                            <option value="Abutre" ${artefatoAtual === 'Abutre' ? 'selected' : ''}>Abutre</option>
+                            <option value="Escaravelho" ${artefatoAtual === 'Escaravelho' ? 'selected' : ''}>Escaravelho</option>
+                            <option value="Mardudin" ${artefatoAtual === 'Mardudin' ? 'selected' : ''}>Mardudin</option>
+                            <option value="Guardião" ${artefatoAtual === 'Guardião' ? 'selected' : ''}>Guardião</option>
+                        </select>
+                    ` : '';
+
                     return `<div class="flex items-center justify-between bg-[#130f0d] px-2.5 py-1.5 rounded-lg text-xs border border-[#352214] ${isLider ? 'border-l-4 border-l-yellow-400' : ''}">
                         <span class="text-amber-500 font-bold w-6">#${slotIdx + 1}</span>
                         <div class="flex-1 mx-2">
@@ -1788,7 +1825,15 @@
                                 ${membro ? `<div class="tooltip-preview">${previewTooltip}</div>` : ''}
                             </div>
                         </div>
-                        ${membro ? `<div class="flex items-center gap-2">${isLider ? '<span class="text-yellow-400 text-xs font-bold">⭐</span>' : ''}<button onclick="definirLider('${ptId}', '${membro.id}')" class="text-xs ${isLider ? 'text-yellow-400' : 'text-amber-600'} hover:text-yellow-400"><i class="fa-solid fa-star"></i></button><span class="text-[10px] text-amber-400/50">${membro.char_name}</span><button onclick="abrirPreview('${membro.id}')" class="btn-preview"><i class="fa-solid fa-eye"></i></button></div>` : ''}
+                        ${membro ? `
+                            <div class="flex items-center gap-2 flex-wrap">
+                                ${isLider ? '<span class="text-yellow-400 text-xs font-bold">⭐</span>' : ''}
+                                <button onclick="definirLider('${ptId}', '${membro.id}')" class="text-xs ${isLider ? 'text-yellow-400' : 'text-amber-600'} hover:text-yellow-400"><i class="fa-solid fa-star"></i></button>
+                                <span class="text-[10px] text-amber-400/50">${membro.char_name}</span>
+                                <button onclick="abrirPreview('${membro.id}')" class="btn-preview"><i class="fa-solid fa-eye"></i></button>
+                                ${artefatoSelect}
+                            </div>
+                        ` : ''}
                     </div>`;
                 }).join('');
 
@@ -1830,8 +1875,9 @@
             const nomesModos = { normal: 'Padrão', gvg: 'GvG (PvP)', pve: 'PvE Geral', map5: 'Raide Mapa 5', t5: 'Raide T5' };
 
             idsPt.forEach((ptId, index) => {
-                const ptData = gruposPts[ptId] || { slots: [null, null, null, null, null], modo: 'normal', lider: null };
+                const ptData = gruposPts[ptId] || { slots: [null, null, null, null, null], artefatos: [null, null, null, null, null], modo: 'normal', lider: null };
                 const slots = ptData.slots || [null, null, null, null, null];
+                const artefatos = ptData.artefatos || [null, null, null, null, null];
                 const modo = ptData.modo || 'normal';
                 const liderId = ptData.lider || null;
                 const cor = cores[index % cores.length];
@@ -1843,9 +1889,10 @@
                 let membrosHtml = slots.map((m, idx) => {
                     if (m) {
                         const isLider = liderId && String(m.id) === String(liderId);
+                        const artefato = artefatos[idx] || '';
                         return `<div class="membro-item ${isLider ? 'lider' : ''}">
                             <span class="membro-nome">${isLider ? '⭐ ' : ''}${m.char_name}</span>
-                            <span class="membro-classe">${m.char_class}</span>
+                            <span class="membro-classe">${m.char_class} ${artefato ? '🔹' + artefato : ''}</span>
                         </div>`;
                     } else {
                         return `<div class="membro-item vazio">#${idx+1} — Vazio</div>`;
@@ -1895,7 +1942,7 @@
         }
 
         // ================================================================
-        // FUNÇÃO PARA BAIXAR PDF
+        // FUNÇÃO PARA BAIXAR PDF (COM ARTEFATOS)
         // ================================================================
         function baixarPDF() {
             const tableContainer = document.getElementById('gridPtsTable');
@@ -2006,7 +2053,7 @@
                     document.body.removeChild(tempDiv);
                     btnPDF.innerHTML = originalHTML;
                     btnPDF.disabled = false;
-                    document.getElementById('statusMensagem').textContent = '✅ PDF gerado com sucesso! (com dados do evento)';
+                    document.getElementById('statusMensagem').textContent = '✅ PDF gerado com sucesso! (com dados do evento e artefatos)';
                 }).catch(err => {
                     console.error('Erro ao gerar PDF:', err);
                     alert('Erro ao gerar o PDF. Tente novamente.');
@@ -2018,7 +2065,7 @@
         }
 
         // ================================================================
-        // RECONSTRUIR PTs
+        // RECONSTRUIR PTs (COM ARTEFATOS)
         // ================================================================
         function reconstruirPts() {
             if (!cache.length) { alert('Não há membros ativos para distribuir.'); return; }
@@ -2029,9 +2076,10 @@
             gruposPts = {};
             grupos.forEach((grupo, idx) => {
                 const slots = [null, null, null, null, null];
-                grupo.forEach((membro, slotIdx) => { if (slotIdx < 5) slots[slotIdx] = membro; });
+                const artefatos = [null, null, null, null, null];
+                grupo.forEach((membro, slotIdx) => { if (slotIdx < 5) { slots[slotIdx] = membro; artefatos[slotIdx] = null; } });
                 const lider = grupo.length > 0 ? grupo[0].id : null;
-                gruposPts[idx + 1] = { slots, modo: 'normal', lider };
+                gruposPts[idx + 1] = { slots, artefatos, modo: 'normal', lider };
             });
             salvarPtsStorage();
             renderPts();
@@ -2040,7 +2088,7 @@
         }
 
         // ================================================================
-        // COPIAR PARA DISCORD E WHATSAPP
+        // COPIAR PARA DISCORD E WHATSAPP (COM ARTEFATOS)
         // ================================================================
         function copiarDiscord() {
             const dados = getHorarioFormatado();
@@ -2059,14 +2107,17 @@
             const nomesModos = { normal: 'Padrão', gvg: 'GvG (PvP)', pve: 'PvE Geral', map5: 'Raide Mapa 5', t5: 'Raide T5' };
             idsPt.forEach((ptId, index) => {
                 const ptData = gruposPts[ptId] || {};
+                const slots = ptData.slots || [null, null, null, null, null];
+                const artefatos = ptData.artefatos || [null, null, null, null, null];
                 const liderId = ptData.lider || null;
                 const liderMembro = liderId ? cache.find(m => String(m.id) === String(liderId)) : null;
                 const liderNome = liderMembro ? `${liderMembro.char_name} (${liderMembro.char_class})` : 'Sem líder';
                 texto += `🔹 **PT ${index + 1}** [Modo: ${nomesModos[ptData.modo || 'normal']}] ⭐ Líder: ${liderNome}\n`;
-                (ptData.slots || []).forEach((m, sIdx) => {
+                slots.forEach((m, sIdx) => {
                     const isLider = m && liderId && String(m.id) === String(liderId);
+                    const artefato = artefatos[sIdx] || '';
                     if (m && m.char_name) {
-                        texto += `> ${sIdx + 1}. ${isLider ? '⭐ ' : ''}${m.char_name} (${m.char_class})\n`;
+                        texto += `> ${sIdx + 1}. ${isLider ? '⭐ ' : ''}${m.char_name} (${m.char_class})${artefato ? ` 🔹${artefato}` : ''}\n`;
                     } else {
                         texto += `> ${sIdx + 1}. [Vazio]\n`;
                     }
@@ -2094,15 +2145,17 @@
             idsPt.forEach((ptId, index) => {
                 const ptData = gruposPts[ptId] || {};
                 const slots = ptData.slots || [null, null, null, null, null];
+                const artefatos = ptData.artefatos || [null, null, null, null, null];
                 const modo = ptData.modo || 'normal';
                 const liderId = ptData.lider || null;
                 const liderMembro = liderId ? cache.find(m => String(m.id) === String(liderId)) : null;
                 const liderNome = liderMembro ? `${liderMembro.char_name} (${liderMembro.char_class})` : 'Sem líder';
                 texto += `🔹 PT ${index + 1} [${nomesModos[modo]}] ⭐ Líder: ${liderNome}\n`;
                 slots.forEach((m, sIdx) => {
+                    const artefato = artefatos[sIdx] || '';
                     if (m && m.char_name) {
                         const isLider = liderId && String(m.id) === String(liderId);
-                        texto += `   ${sIdx + 1}. ${isLider ? '⭐ ' : ''}${m.char_name} (${m.char_class})\n`;
+                        texto += `   ${sIdx + 1}. ${isLider ? '⭐ ' : ''}${m.char_name} (${m.char_class})${artefato ? ` 🔹${artefato}` : ''}\n`;
                     } else {
                         texto += `   ${sIdx + 1}. [Vazio]\n`;
                     }
@@ -2137,3 +2190,4 @@
     </script>
 </body>
 </html>
+```
